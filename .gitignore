@@ -1,0 +1,64 @@
+# Vivado project files
+*.jou
+*.log
+*.str
+*.cache/
+*.webtalk/
+*.hw/
+*.runs/
+*.sim/
+*.ip_user_files/
+*.xpr~backup
+*.data/
+*.temp/
+*.wdb
+
+# Vivado-generated constraints and synthesis outputs
+*.dcp
+*.edf
+*.edn
+*.bit
+*.bin
+*.ltx
+*.svf
+*.xsa
+*.mmi
+
+# Other temporary or backup files
+*.bak
+*~ 
+*.tmp
+*.swp
+*.swo
+
+# Vivado HLS
+*.hls/
+*.hls_prj/
+*.solution/
+*.log
+.vscode/
+
+# Vivado SDK / Vitis
+.sdk/
+.vitis/
+*.xsa
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# redundant files
+*.p
+*.pkl
+*.npy
+*.xlsx
+*.txt
+*.log
+*.rar
+*.zip
+*.7z
+*.csv
+*.jpg
+*.JPEG
+*.pdf
+*.vsdx

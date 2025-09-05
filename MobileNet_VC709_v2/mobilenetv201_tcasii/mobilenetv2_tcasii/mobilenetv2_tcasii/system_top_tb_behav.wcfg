@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="system_top_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="system_top_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="40236619766666fs"></ZoomStartTime>
+      <ZoomEndTime time="40236890166667fs"></ZoomEndTime>
+      <Cursor1Time time="40236785000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="266"></NameColumnWidth>
+      <ValueColumnWidth column_width="258"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="51" />
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/mode_arbiter0/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/central_control0/cnt_layer" type="array">
+      <obj_property name="ElementShortName">cnt_layer[6:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt_layer[6:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/BRAM_DMA0/Ofmap_hori_num" type="array">
+      <obj_property name="ElementShortName">Ofmap_hori_num[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Ofmap_hori_num[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/BRAM_DMA0/Ofmap_vert_num" type="array">
+      <obj_property name="ElementShortName">Ofmap_vert_num[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Ofmap_vert_num[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/BRAM_DMA0/Ifmap_hori_num" type="array">
+      <obj_property name="ElementShortName">Ifmap_hori_num[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Ifmap_hori_num[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/BRAM_DMA0/Ifmap_vert_num" type="array">
+      <obj_property name="ElementShortName">Ifmap_vert_num[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Ifmap_vert_num[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/Ifmap_hori_base_cnt" type="array">
+      <obj_property name="ElementShortName">Ifmap_hori_base_cnt[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Ifmap_hori_base_cnt[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/Ifmap_vert_base_cnt" type="array">
+      <obj_property name="ElementShortName">Ifmap_vert_base_cnt[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Ifmap_vert_base_cnt[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/Channel_cnt" type="array">
+      <obj_property name="ElementShortName">Channel_cnt[9:0]</obj_property>
+      <obj_property name="ObjectShortName">Channel_cnt[9:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/ifmap_channel" type="array">
+      <obj_property name="ElementShortName">ifmap_channel[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_channel[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/read_h_block_idx" type="array">
+      <obj_property name="ElementShortName">read_h_block_idx[7:0]</obj_property>
+      <obj_property name="ObjectShortName">read_h_block_idx[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/read_v_block_idx" type="array">
+      <obj_property name="ElementShortName">read_v_block_idx[7:0]</obj_property>
+      <obj_property name="ObjectShortName">read_v_block_idx[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/row_block_num" type="array">
+      <obj_property name="ElementShortName">row_block_num[7:0]</obj_property>
+      <obj_property name="ObjectShortName">row_block_num[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/shortcut_addr_sel" type="logic">
+      <obj_property name="ElementShortName">shortcut_addr_sel</obj_property>
+      <obj_property name="ObjectShortName">shortcut_addr_sel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/Mode" type="array">
+      <obj_property name="ElementShortName">Mode[2:0]</obj_property>
+      <obj_property name="ObjectShortName">Mode[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/bram_st" type="array">
+      <obj_property name="ElementShortName">bram_st[1:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_st[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/BRAM_DMA0/read_scenarios_mux" type="array">
+      <obj_property name="ElementShortName">read_scenarios_mux[3:0]</obj_property>
+      <obj_property name="ObjectShortName">read_scenarios_mux[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/complete" type="logic">
+      <obj_property name="ElementShortName">complete</obj_property>
+      <obj_property name="ObjectShortName">complete</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/SC_base_addr" type="array">
+      <obj_property name="ElementShortName">SC_base_addr[17:0]</obj_property>
+      <obj_property name="ObjectShortName">SC_base_addr[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/BRAM_DMA0/Ifmap_base_addr" type="array">
+      <obj_property name="ElementShortName">Ifmap_base_addr[17:0]</obj_property>
+      <obj_property name="ObjectShortName">Ifmap_base_addr[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/shortcut_addr_sel" type="logic">
+      <obj_property name="ElementShortName">shortcut_addr_sel</obj_property>
+      <obj_property name="ObjectShortName">shortcut_addr_sel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/u_shortcut/x_zero" type="array">
+      <obj_property name="ElementShortName">x_zero[7:0]</obj_property>
+      <obj_property name="ObjectShortName">x_zero[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/u_shortcut/Fx_zero" type="array">
+      <obj_property name="ElementShortName">Fx_zero[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Fx_zero[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/u_shortcut/sc_zero" type="array">
+      <obj_property name="ElementShortName">sc_zero[7:0]</obj_property>
+      <obj_property name="ObjectShortName">sc_zero[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/u_shortcut/m0" type="array">
+      <obj_property name="ElementShortName">m0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">m0[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/u_shortcut/m1" type="array">
+      <obj_property name="ElementShortName">m1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">m1[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/data" type="array">
+      <obj_property name="ElementShortName">data[71:0]</obj_property>
+      <obj_property name="ObjectShortName">data[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/Write_Channel_cnt" type="array">
+      <obj_property name="ElementShortName">Write_Channel_cnt[10:0]</obj_property>
+      <obj_property name="ObjectShortName">Write_Channel_cnt[10:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/write_valid" type="logic">
+      <obj_property name="ElementShortName">write_valid</obj_property>
+      <obj_property name="ObjectShortName">write_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/ofmap_channel" type="array">
+      <obj_property name="ElementShortName">ofmap_channel[10:0]</obj_property>
+      <obj_property name="ObjectShortName">ofmap_channel[10:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/data_bram_ena" type="logic">
+      <obj_property name="ElementShortName">data_bram_ena</obj_property>
+      <obj_property name="ObjectShortName">data_bram_ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/bram_write_wea" type="array">
+      <obj_property name="ElementShortName">bram_write_wea[8:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_write_wea[8:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/ofmap_write_0" type="array">
+      <obj_property name="ElementShortName">ofmap_write_0[71:0]</obj_property>
+      <obj_property name="ObjectShortName">ofmap_write_0[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/bram_write_wea" type="array">
+      <obj_property name="ElementShortName">bram_write_wea[8:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_write_wea[8:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/mode_arbiter0/sum_valid" type="logic">
+      <obj_property name="ElementShortName">sum_valid</obj_property>
+      <obj_property name="ObjectShortName">sum_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/ifmap_size" type="array">
+      <obj_property name="ElementShortName">ifmap_size[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_size[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/counter_dw0/Kernel_cnt" type="array">
+      <obj_property name="ElementShortName">Kernel_cnt[10:0]</obj_property>
+      <obj_property name="ObjectShortName">Kernel_cnt[10:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/kernel0_read_input" type="array">
+      <obj_property name="ElementShortName">kernel0_read_input[71:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel0_read_input[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/kernel1_read_input" type="array">
+      <obj_property name="ElementShortName">kernel1_read_input[71:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel1_read_input[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/kernel2_read_input" type="array">
+      <obj_property name="ElementShortName">kernel2_read_input[71:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel2_read_input[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/kernel3_read_input" type="array">
+      <obj_property name="ElementShortName">kernel3_read_input[71:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel3_read_input[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/kernel4_read_input" type="array">
+      <obj_property name="ElementShortName">kernel4_read_input[71:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel4_read_input[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/kernel5_read_input" type="array">
+      <obj_property name="ElementShortName">kernel5_read_input[71:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel5_read_input[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/kernel6_read_input" type="array">
+      <obj_property name="ElementShortName">kernel6_read_input[71:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel6_read_input[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/kernel7_read_input" type="array">
+      <obj_property name="ElementShortName">kernel7_read_input[71:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel7_read_input[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/kernel8_read_input" type="array">
+      <obj_property name="ElementShortName">kernel8_read_input[71:0]</obj_property>
+      <obj_property name="ObjectShortName">kernel8_read_input[71:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/zero_mux" type="array">
+      <obj_property name="ElementShortName">zero_mux[7:0]</obj_property>
+      <obj_property name="ObjectShortName">zero_mux[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/u_MAC1/data" type="array">
+      <obj_property name="ElementShortName">data[8:0]</obj_property>
+      <obj_property name="ObjectShortName">data[8:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/u_MAC1/weight" type="array">
+      <obj_property name="ElementShortName">weight[7:0]</obj_property>
+      <obj_property name="ObjectShortName">weight[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/u_MAC1/psum_out" type="array">
+      <obj_property name="ElementShortName">psum_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">psum_out[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/system_top_tb/system_top0/mac_array_x9/u_mac_array1/u_MAC1/acc_reg" type="array">
+      <obj_property name="ElementShortName">acc_reg[31:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_reg[31:0]</obj_property>
+   </wvobject>
+</wave_config>

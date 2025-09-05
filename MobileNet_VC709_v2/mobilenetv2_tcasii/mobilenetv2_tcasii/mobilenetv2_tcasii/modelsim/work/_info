@@ -1,0 +1,155 @@
+m255
+K4
+z2
+!s11f vlog 2019.2 2019.04, Apr 17 2019
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dD:/fpga_par3/FC_TOP/FC_TOP/modelsim
+T_opt
+!s110 1631174940
+VOk>@HKj5lG?Ak2lGML>A@1
+04 15 4 work tb_mac_array_x9 fast 0
+=1-b025aa4071b4-6139c11c-fd-7058
+o-quiet -auto_acc_if_foreign -work work +acc
+Z0 tCvgOpt 0
+n@_opt
+OL;O;2019.2;69
+vadder_tree_9
+Z1 !s110 1631174930
+!i10b 1
+!s100 bamF12Nc3Fgeddz:3n@[g1
+!s11b 8g<L_2XVV8VC9>Z6Sm9gl3
+I3F?ZhgE=VQ0fZT6S2RaMJ3
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 dD:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/modelsim
+w1631089910
+8D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/adder_tree_9.v
+FD:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/adder_tree_9.v
+L0 1
+Z4 OL;L;2019.2;69
+r1
+!s85 0
+31
+Z5 !s108 1631174930.000000
+!s107 D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/adder_tree_9.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/adder_tree_9.v|
+!i113 0
+Z6 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R0
+vm0xsigma_plus_m1
+R1
+!i10b 1
+!s100 Z[VU0o[]COhSTVcHV_e^?1
+!s11b cTYSdi4coGgc7E?2YXUgn0
+I6G4g2YFYWPO9]ZOh6POk[3
+R2
+R3
+w1631174649
+8D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/m0xsigma_plus_m1.v
+FD:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/m0xsigma_plus_m1.v
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/m0xsigma_plus_m1.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/m0xsigma_plus_m1.v|
+!i113 0
+R6
+R0
+vMAC
+R1
+!i10b 1
+!s100 _4bAh:gAXWbBoKW8DkSbi0
+!s11b >DB^kg@hHkb>j;nd8WAL03
+I6aRzIiHPAnfa7ZZ4ACUM61
+R2
+R3
+w1631173213
+8D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/MAC.v
+FD:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/MAC.v
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/MAC.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/MAC.v|
+!i113 0
+R6
+R0
+n@m@a@c
+vmac_array
+R1
+!i10b 1
+!s100 AzND@d7QM_88LF?2P^=KT1
+!s11b 6d?0Zede=VA44cVXcKzNX3
+I67?6XN0^:8T5d30Y`@cdR3
+R2
+R3
+w1631173717
+8D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/mac_array.v
+FD:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/mac_array.v
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/mac_array.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/mac_array.v|
+!i113 0
+R6
+R0
+vmac_array_x9
+R1
+!i10b 1
+!s100 ]L3EGJ>ao[@6>gFQ?1YXD0
+!s11b R1LfL18bEM>jM=@86T4CT1
+IoZ_BDJTnLeh2Dm@BgOZ7c1
+R2
+R3
+w1631174699
+8D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/mac_array_x9.v
+FD:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/mac_array_x9.v
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/mac_array_x9.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/new/mac_array_x9.v|
+!i113 0
+R6
+R0
+vtb_mac_array_x9
+DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+R1
+!i10b 1
+!s100 hF]JXD;S5DKQF7XVDChmF2
+!s11b IcADJC_adFfH266dKOlTN1
+Ic9_ka@OHVGMf@l>SQNmHC3
+R2
+S1
+R3
+w1631174912
+8D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sim_1/new/tb_mac_array_x9.sv
+FD:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sim_1/new/tb_mac_array_x9.sv
+L0 3
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sim_1/new/tb_mac_array_x9.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|D:/MobilenetV2_FPGA/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sim_1/new/tb_mac_array_x9.sv|
+!i113 0
+o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R0

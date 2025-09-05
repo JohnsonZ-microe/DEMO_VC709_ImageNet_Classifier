@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="PointwiseCNN_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="PointwiseCNN_tb" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="1475833333fs"></ZoomStartTime>
+      <ZoomEndTime time="2164833334fs"></ZoomEndTime>
+      <Cursor1Time time="2050000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="79"></NameColumnWidth>
+      <ValueColumnWidth column_width="72"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="21" />
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Ifmap_hori_base_cnt" type="array">
+      <obj_property name="ElementShortName">Ifmap_hori_base_cnt[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Ifmap_hori_base_cnt[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Ifmap_vert_base_cnt" type="array">
+      <obj_property name="ElementShortName">Ifmap_vert_base_cnt[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Ifmap_vert_base_cnt[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Channel_cnt" type="array">
+      <obj_property name="ElementShortName">Channel_cnt[10:0]</obj_property>
+      <obj_property name="ObjectShortName">Channel_cnt[10:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Conv33_local_vert_cnt" type="array">
+      <obj_property name="ElementShortName">Conv33_local_vert_cnt[2:0]</obj_property>
+      <obj_property name="ObjectShortName">Conv33_local_vert_cnt[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Weight_load_cnt" type="array">
+      <obj_property name="ElementShortName">Weight_load_cnt[8:0]</obj_property>
+      <obj_property name="ObjectShortName">Weight_load_cnt[8:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Ofmap_channel_round_cnt" type="array">
+      <obj_property name="ElementShortName">Ofmap_channel_round_cnt[3:0]</obj_property>
+      <obj_property name="ObjectShortName">Ofmap_channel_round_cnt[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Bram0_data_addr" type="array">
+      <obj_property name="ElementShortName">Bram0_data_addr[18:0]</obj_property>
+      <obj_property name="ObjectShortName">Bram0_data_addr[18:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Bram1_data_addr" type="array">
+      <obj_property name="ElementShortName">Bram1_data_addr[18:0]</obj_property>
+      <obj_property name="ObjectShortName">Bram1_data_addr[18:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Bram2_data_addr" type="array">
+      <obj_property name="ElementShortName">Bram2_data_addr[18:0]</obj_property>
+      <obj_property name="ObjectShortName">Bram2_data_addr[18:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/bram_st" type="array">
+      <obj_property name="ElementShortName">bram_st[2:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_st[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/weight_loaded" type="logic">
+      <obj_property name="ElementShortName">weight_loaded</obj_property>
+      <obj_property name="ObjectShortName">weight_loaded</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/channel_load" type="logic">
+      <obj_property name="ElementShortName">channel_load</obj_property>
+      <obj_property name="ObjectShortName">channel_load</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/channel_disboarding" type="logic">
+      <obj_property name="ElementShortName">channel_disboarding</obj_property>
+      <obj_property name="ObjectShortName">channel_disboarding</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/ifmap_size" type="array">
+      <obj_property name="ElementShortName">ifmap_size[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_size[7:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/ifmap_channel" type="array">
+      <obj_property name="ElementShortName">ifmap_channel[10:0]</obj_property>
+      <obj_property name="ObjectShortName">ifmap_channel[10:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/ofmap_channel" type="array">
+      <obj_property name="ElementShortName">ofmap_channel[10:0]</obj_property>
+      <obj_property name="ObjectShortName">ofmap_channel[10:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Mode" type="array">
+      <obj_property name="ElementShortName">Mode[1:0]</obj_property>
+      <obj_property name="ObjectShortName">Mode[1:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Ofmap_channel_round_cnt" type="array">
+      <obj_property name="ElementShortName">Ofmap_channel_round_cnt[3:0]</obj_property>
+      <obj_property name="ObjectShortName">Ofmap_channel_round_cnt[3:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/PointwiseCNN_tb/PointwiseCNN0/Ofmap_channel_cnt" type="array">
+      <obj_property name="ElementShortName">Ofmap_channel_cnt[10:0]</obj_property>
+      <obj_property name="ObjectShortName">Ofmap_channel_cnt[10:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>

@@ -1,0 +1,832 @@
+<DesignHubDefinition editVersion="1.0" modified="2018-05-08" title="UltraFast Design Methodology Checklist" formatVersion="1.1" projectName="" hubTemplate="http://www.xilinx.com/support/documentation/navigator/checklists/dc0001-vivado-design-methodology-checklist-template.xchk" templateVersion="2.6" hubType="Checklist" created="2021-11-11" hubTitle="My Methodology Checklist">
+  <Page migID="2013#10#1" title="Title Page">
+    <Section migID="2013#10#2" title="Design Checklist Instructions" sectionType="HTML">
+      <HTMLContent><![CDATA[<P>Review the questions in this UltraFast Design Methodology Checklist to determine if your design or design process has any of the issues identified. Below each question is a list of suggested actions for resolving the question. In the References column, the checklist provides links and pointers to relevant information in the <A HREF="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf">UltraFast Design Methodology Guide for the Vivado Design Suite</A> and other related documentation.<P>The <A HREF="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf">UltraFast Design Methodology Guide</A> provides higher level recommendations and directives. The User Guides and Tutorials provide more instructional information on how to operate the tools to support the methodology.<P><B>Editing the Status, Verbosity Level, and Visibility of Checklist Questions</B><UL><LI>The first column in the checklist displays and allows you to edit the status of individual items.</LI><LI>To modify the status or the verbosity level of an individual question or all the questions in a section or subsection, click the status icon.</LI><LI>To hide or show a group of questions, click the expand/collapse button to the right of the section title.</LI></UL><P><B>Adding, Editing, and Displaying User Notes</B><UL><LI>To add User Notes to a question, click the status icon for that question.</LI><LI>To highlight all User Notes in red, set the user preference in the Settings Dialog available from the main toolbar.</LI><LI>To show or hide the User Notes for individual questions, click the stauts icon and edit the verbosity level.</LI></UL><P><B>Saving, Exporting, and Importing Design Checklists</B><UL><LI>The Design Checklist automatically saves changes, but you need to manually save backups or additional copies as needed.</LI><LI>To export a checklist attach the XCHK file and send it via email to the desired recipient.</LI><LI>To import a checklist, right-click in the tree view and select "Import Design Checklist...".</LI><LI>To modify the Project Overiew or Project Notes for a specific checklist, right-click the checklist name in the tree view and select "Edit Design Checklist Properties...".</LI></UL>]]></HTMLContent>
+    </Section>
+    <Section migID="2013#10#3" title="Project Overview" sectionType="ChecklistProperties"/>
+    <Section migID="2013#10#4" title="Project Notes" sectionType="HTML">
+      <HTMLContent getContentFromProjectProperty="ProjectNotes"/>
+    </Section>
+  </Page>
+  <Page migID="2013#10#5" title="Project Management">
+    <Section migID="2013#10#6" title="General Project Overview" disableHeader="true" sectionType="CheckList">
+      <SubSection title="General Project Overview">
+        <QGroup migID="2013#10#7" title="Design Review">
+          <QuestionItem migID="2013#10#8" description="Have you had an introductory design review and planning meeting with a Xilinx representative yet?">
+            <Actions>
+              <Action description="Set up a kickoff meeting with a Xilinx representative to discuss the design and implementation strategy."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Design Team">
+          <QuestionItem migID="2016#01#01" description="Have you assigned responsibilities for:&lt;P>1) Board level interfaces and System level design - Review the Schematic checklist&lt;BR>2) I/O pin and clock planning - Create Vivado Project to assign and validate I/O and clock constraints&lt;BR>3) Top level Designer for assembly, verification, and design closure of entire design.&lt;BR>4) Designers for each significant sub block.">
+            <Actions>
+              <Action description="Establish the design team and define level of interaction."/>
+              <Action description="Define frequency of future meetings."/>
+              <Action description="Checklist action tracking requirements."/>
+              <Action description="Define process for Xilinx support access to design, if needed."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Xilinx Training">
+        <QGroup migID="2013#10#10" title="Vivado Training">
+          <QuestionItem migID="2013#10#11" description="Are you and your team proficient with the Vivado Design Suite?&lt;P>Have you investigated the latest Vivado Training offerings?&lt;P>The Vivado Design Suite has evolved into a premier design environment with a lot of capabilities and user options. Proper training can ensure the design team quickly becomes efficient with Vivado tools.">
+            <References>
+              <Doc title="Xilinx.com > Support - Training" description="Available Training Classes, Resources, and Materials" url="http://www.xilinx.com/training/"/>
+              <Doc title="Xilinx.com > QuickTake Landing Page" description="Vivado Video Tutorials" url="http://www.xilinx.com/video/category/vivado.html?resultsTablePreSelect=videotype:Training"/>
+              <Doc title="Vivado Software Tutorials" description="Displays a list of Vivado Software Tutorials in the Catalog View" url="http://www.xilinx.com/cgi-bin/docs/rdoc?v=latest;t=vivado+tutorials"/>
+              <Doc title="Vivado User Guides" description="Displays a list of Vivado User Guides in the Catalog View" url="http://www.xilinx.com/cgi-bin/docs/rdoc?v=latest;t=vivado+userguides"/>
+              <Doc title="UG892: Design Flows Overview" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug892-vivado-design-flows-overview.pdf" deriveURL="true" docID="ug892"/>
+            </References>
+            <Actions>
+              <Action description="Attend a regularly scheduled Xilinx training class or request an onsite class."/>
+              <Action description="Perform Web-based online training classes."/>
+              <Action description="Perform software tutorials and watch QuickTake video tutorials."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Documentation Navigator">
+          <QuestionItem migID="2016#06#02" description="Are you using the Xilinx Documentation Navigator?&lt;P>Have you investigated Design Hubs in Documentation Navigator yet?&lt;P>The Documentation Navigator is installed with Vivado Design Suite. It provides an environment to view, search, and download Xilinx documentation and collateral. The environment can be filtered to quickly locate the desired information. Design Hubs are provided to quickly gather relevant information on specific design tasks.">
+            <References>
+              <Doc title="UG949: Accessing Additional Documentation and Training" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xAccessingAdditionalDocumentationAndTraining" deriveURL="true" docID="ug949"/>
+              <Doc title="UG910: Getting Started" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug910-vivado-getting-started.pdf" deriveURL="true" docID="ug910"/>
+              <Doc title="Vivado Design Hubs" deriveDescription="true" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0001-ultrafast-design-flow-hub.xml" deriveURL="true" docID="dh0001"/>
+            </References>
+            <Actions>
+              <Action description="The Documentation Navigator &quot;DocNav&quot; should be used to access all Xilinx documentation and collateral."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Design Checklists">
+          <QuestionItem migID="2016#06#03" description="Are you familiar with the other checklists available for different design tasks such as embedded design, memory interface design, and power analysis?">
+            <References>
+              <Doc title="UltraFast Embedded Design Methodology Checklist" url="http://www.xilinx.com/support/documentation/sw_manuals/xtp397-embedded-design-methodology-checklist.zip"/>
+              <Doc title="Software Development Kit Design Hub" description="Software Development Kit Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/embedded/2017_1/dh0015-sdk-hub.xml" docID="dh0015"/>
+              <Doc title="Memory Interface UltraScale Design Checklist" url="http://www.xilinx.com/support/documentation/ip_documentation/ultrascale_memory_ip/xtp359-memory-ip-ultrascale-design-checklist.zip"/>
+              <Doc title="XPower Analyzer Accuracy Checklist" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx14_7/xpa_c_accuracy_checklist.htm"/>
+            </References>
+            <Actions>
+              <Action description="If you are doing an embedded processor design, refer to the Embedded Design Methodology checklist."/>
+              <Action description="If you are doing memory interface design, refer to the Memory Interface IP Design Checklist for UltraScale Devices."/>
+              <Action description="If you are doing power analysis, refer to the XPower Analyzer Accuracy Checklist."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Device and IP Notifications">
+        <QGroup migID="2013#10#18" title="Design Advisories">
+          <QuestionItem migID="2013#10#19" description="Have you subscribed to appropriate Design Advisories?&lt;P>Have you read all Customer Notices, Errata, and Answer Records related to the target device and IP?&lt;P>Have you subscribed to the appropriate Xilinx Technical Forums?">
+            <References>
+              <Doc title="Xilinx.com > Support" description="Xilinx Support Page" url="http://www.xilinx.com/support/"/>
+            </References>
+            <Actions>
+              <Action description="Subscribe to the Design and IP advisories to get the latest information about the device and IP you are using in the design."/>
+              <Action description="Participate in the technical forums to seek help and to review past user experiences."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Xilinx Support">
+          <QuestionItem migID="2013#10#20" description="Do you have a Xilinx support account ready for when support is needed?&lt;P>Have you accessed the forums for support?&lt;P>Have you submitted any Service Requests (SRs) for your design project yet?&lt;BR>If so, have you included the project name in any SRs you have submitted?">
+            <References>
+              <Doc title="Xilinx.com > Support" description="Xilinx Support Page" url="http://www.xilinx.com/support/"/>
+            </References>
+            <Actions>
+              <Action description="Forums allow support access for all customers. These are monitored by Xilinx Application Engineers.&lt;P>Service Requests are an additional service offered to certain Xilinx customers. Including the project name allows you and Xilinx to search SRs specific to the project."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Source Management">
+        <QGroup migID="2016#06#04" title="Revision Control">
+          <QuestionItem migID="2016#06#05" description="Are you planning on managing design sources and/or results with a revision control system?&lt;P>Are you aware of the various options for generating and managing IP sources?&lt;P>If you are using the IP Integrator, are you aware of the various options for generating and managing block design sources?">
+            <Actions>
+              <Action description="Vivado enables a variety of methods to generate and manage IP and block design sources for flexibility when interacting with source revision control systems. Vivado IP and block design sources can be generated locally in the design project or they can configured and managed remotely. For those that want a self-contained and easily portable design, local project sources may be desired.&lt;P>IP sources can be stored as individual files within the IP directory or bundled into a single binary file called a core container. Core containers drastically reduce the number of files that need to be managed with Xilinx IP."/>
+            </Actions>
+            <References>
+              <Doc title="UG892: Interfacing with Revision Control Systems" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug892-vivado-design-flows-overview.pdf#nameddest=xInterfacingWithSourceVersionControlSystems" deriveURL="true" docID="ug892"/>
+              <Doc title="QuickTake Video: Using Vivado Design Suite with Revision Control" deriveDescription="true" docKey="URL" url="http://www.xilinx.com/video/hardware/vivado-design-suite-revision-control.html"/>
+              <Doc title="UG896: Designing with IP > IP Basics" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug896-vivado-ip.pdf#nameddest=xIPBasics" deriveURL="true" docID="ug896"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Design Migration">
+          <QuestionItem migID="2016#06#06" description="Are you planning to migrate your design forward as new releases of Vivado are introduced?">
+            <Actions>
+              <Action description="Xilinx recommends always migrating designs and IP to new releases, as they become available. There are rules on which IP versions can be used with which software release.&lt;P>In order to configure any IP, it must be done in the software release that the IP version is available in. In other words a previous version of IP cannot be re-configured in future software releases. However, previous versions of IP can be used but they are locked with the current configuration.&lt;P>Updating IP can sometimes require logic updates to the design, so using locked IP may be desired at times."/>
+            </Actions>
+            <References>
+              <Doc title="Designing with the IP Design Hub" description="Designing with the IP Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0003-vivado-designing-with-ip-hub.xml" docID="dh0003"/>
+              <Doc title="UG896: Designing with IP - > IP Basics" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug896-vivado-ip.pdf#nameddest=xIPBasics" deriveURL="true" docID="ug896"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Design Flows">
+        <QGroup migID="2013#10#21" title="Design Flow Options">
+          <QuestionItem migID="2013#10#22" description="Are you familiar with the different recommended design flow options for Vivado Design Suite?&lt;P>Vivado Design Suite users now have design flow options, for example, that allow for FPGA design analysis at each step of the design process vs. waiting until the end of the flow to evaluate the design.&lt;P>This flow can help reduce debug cycles and achieve faster design closure.">
+            <References>
+              <Doc title="UG896: Designing with IP" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug896-vivado-ip.pdf" deriveURL="true" docID="ug896"/>
+              <Doc title="UG949: Taking Advantage of Rapid Validation" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=RapidValidation" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Baselining the Design" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xBaseliningTheDesign" deriveURL="true" docID="ug949"/>
+              <Doc title="QuickTake Video: Design Flows Overview" deriveDescription="true" docKey="URL" url="http://www.xilinx.com/video/hardware/vivado-design-flows-overview.html"/>
+              <Doc title="UG888: Design Flows Overview Tutorial" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug888-vivado-design-flows-overview-tutorial.pdf" deriveURL="true" docID="ug888"/>
+              <Doc title="UG892: Design Flows Overview User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug892-vivado-design-flows-overview.pdf" deriveURL="true" docID="ug892"/>
+              <Doc title="UG1197: UltraFast High-Level Productivity Design Methodology Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/ug1197-vivado-high-level-productivity.pdf" deriveURL="true" docID="ug1197"/>
+            </References>
+            <Actions>
+              <Action description="Consider adopting the recommended Vivado design flow where results are analyzed at each step, rather relying solely on implementation results. It can help reduce debug cycles and achieve faster design closure."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Third-Party Synthesis">
+          <QuestionItem migID="2013#10#33" description="Are you using third-party synthesis with Xilinx IP?">
+            <References>
+              <Doc title="UG892: Using Third-Party Design Software Tools" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug892-vivado-design-flows-overview.pdf#nameddest=xUsingThirdPartyDesignSoftwareTools" deriveURL="true" docID="ug892"/>
+              <Doc title="UG896: Using Xilinx IP with Third-Party Synthesis Tools" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug896-vivado-ip.pdf#nameddest=UsingXilinxIPWithThirdPartySynthesisTools" deriveURL="true" docID="ug896"/>
+              <Doc title="QuickTake Video: Configuring and Managing Reusable IP" deriveDescription="true" docKey="URL" url="http://www.xilinx.com/video/hardware/configuring-managing-reusable-ip-vivado.html"/>
+            </References>
+            <Actions>
+              <Action description="Appropriate IP output products are generated to support using third-party synthesis with Xilinx IP.&lt;P>The Vivado Design Suite only supports using Vivado tools to synthesize the IP itself. Port stub files are provided for each IP to allow the IP to be black-boxed during third-party synthesis.&lt;P>Vivado IP is not intended to be synthesized with any tool other than Vivado synthesis."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+    </Section>
+  </Page>
+  <Page migID="2013#10#49" title="Board and Device Planning">
+    <Section migID="2013#10#50" title="Board and Device Planning" disableHeader="true" sectionType="CheckList">
+      <SubSection title="Documentation and Knowledge" status="">
+        <QGroup migID="2016#06#07" title="Xilinx Documentation">
+          <QuestionItem migID="2016#06#08" description="Have you reviewed all of the Xilinx documentation and collateral relevant to Board and Device Planning?">
+            <Actions>
+              <Action description="Review the available collateral for Board and Device Planning."/>
+            </Actions>
+            <References>
+              <Doc title="UG483: 7 Series FPGAs PCB Design and Pin Planning Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/user_guides/ug483_7Series_PCB.pdf" deriveURL="true" docID="UG483"/>
+              <Doc title="UG949: Board and Device Planning" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xBoardAndDevicePlanning" deriveURL="true" docID="ug949"/>
+              <Doc title="I/O and Clock Planning Design Hub" description="I/O and Clock Planning Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0007-vivado-pin-planning-hub.xml" docID="dh0007"/>
+              <Doc title="UG583: UltraScale Architecture PCB Design User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/user_guides/ug583-ultrascale-pcb-design.pdf" deriveURL="true" docID="UG583"/>
+              <Doc title="UG476: 7 Series FPGAs GTX/GTH Transceivers User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/user_guides/ug476_7Series_Transceivers.pdf" deriveURL="true" docID="ug476"/>
+              <Doc title="UG576: UltraScale Architecture GTH Transceivers User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/user_guides/ug576-ultrascale-gth-transceivers.pdf" deriveURL="true" docID="ug576"/>
+              <Doc title="UG578: UltraScale Architecture GTY Transceivers User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/user_guides/ug578-ultrascale-gty-transceivers.pdf" deriveURL="true" docID="ug578"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Device Errata">
+          <QuestionItem migID="2016#06#09" description="Have you read the documentation and errata related to your target device(s)?">
+            <Actions>
+              <Action description="Review the available collateral and errata for your target device(s).&lt;P>To do this in DocNav go to the filter pane of the main grid view and select your target device under the Silicon Devices and &quot;Errata&quot; under Document Types."/>
+            </Actions>
+            <References>
+              <Doc title="Silicon Documentation" url="http://www.xilinx.com/support.html#documentation"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Device Planning" status="">
+        <QGroup migID="2016#06#10" title="Pin Out">
+          <QuestionItem migID="2016#06#11" description="Have you defined the pin out within a project in the Vivado IDE?&lt;P>Have you used the IP generation tools to help select the pinouts for Memory and GT based IP?&lt;P>Have you put 'prohibits' on needed Vref pins to avoid assigning to other I/Os to them?&lt;P>Have you set the required device properties?&lt;P>Have you run &lt;I>report_drc&lt;/I> and &lt;I>report_ssn&lt;/I> on the fully defined IO project?">
+            <Actions>
+              <Action description="In order to implement the design and to generate a bitstream, a target part must be selected and all physical I/O constraints need to be defined. The I/O planning features of the Vivado IDE can help you assign and validate the I/O constraints. The Vivado IDE has a comprehensive I/O planning environment that facilitates I/O planning at various stages of the design process. A Pin Planning project is used to facilitate early I/O planning prior to having top-level RTL. An RTL project is used after the top-level RTL has been created. Defining or validating the I/O pinout after synthesis is recommended, as the netlist is now clock aware.&lt;P>The required information to provide is:&lt;P>I/O locations&lt;BR>Direction of I/Os&lt;BR>Part compatibility&lt;BR>Configuration method&lt;BR>I/O standard&lt;BR>Drive Strength&lt;BR>Slew Rates&lt;BR>Pullups/pulldowns&lt;BR>DCI cascade&lt;P>Device properties like configuration method, CFGBVS etc. enable greater DRC checking.&lt;P>Vivado has the &lt;I>report_drc&lt;/I> and &lt;I>report_ssn&lt;/I> commands to help you validate the I/O pinout and to perform signal noise analysis."/>
+            </Actions>
+            <References>
+              <Doc title="I/O and Clock Planning Design Hub" description="I/O and Clock Planning Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0007-vivado-pin-planning-hub.xml" docID="dh0007"/>
+              <Doc title="UG899: I/O and Clock Planning User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug899-vivado-io-clock-planning.pdf" deriveURL="true" docID="ug899"/>
+              <Doc title="QuickTake Video: I/O Planning Overview" deriveDescription="true" docKey="URL" url="http://www.xilinx.com/video/hardware/i-and-o-planning-overview.html"/>
+              <Doc title="QuickTake Video: Designing with UltraScale Memory IP" deriveDescription="true" docKey="URL" url="http://www.xilinx.com/video/hardware/designing-with-ultrascale-memory-ip.html"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="SSI Technology">
+          <QuestionItem migID="2013#10#62" description="Are you using stacked silicon interconnect (SSI) technology?&lt;P>Have you planned the logic intended for each SLR, including clocks, GTs, and memory interfaces?">
+            <Actions>
+              <Action description="SSI technology requires special attention during I/O planning. Familiarize yourself with the SSI technology requirements and recommendations.&lt;P>To optimize performance when designing with SSI technology devices, partition the design using floorplanning techniques to target specific SLRs, keeping the utilization of each SLR within guidelines. Attempt to reduce the number of critical signals crossing SLR boundaries. This also involves proper planning of the I/O interfaces, clocks and logic associated with the floorplan.&lt;P>If possible, with a floorplan in mind, ascertain if crossing SLRs in the SSI device is a bottleneck."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Designing with SSI Devices" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=SSIConsiderations" deriveURL="true" docID="ug949"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Data Flow">
+          <QuestionItem migID="2016#06#12" description="Have you considered the flow of data through the FPGA and planned the pin out with this in mind?">
+            <Actions>
+              <Action description="For example, is data that needs buffering in an external memory close to the memory devices?"/>
+            </Actions>
+            <References>
+              <Doc title="UG949: PCB Layout Recommendations" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=PCBLayoutRecommendations" deriveURL="true" docID="ug949"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Part Compatibility">
+          <QuestionItem migID="2016#06#13" description="Have you considered part compatibility?&lt;P>Has a pinout compatible with the next smaller or larger device in a given package been considered?">
+            <Actions>
+              <Action description="If your design size may fluctuate, it's a good idea to ensure I/O pin compatibility to the next smallest or larger device in case unexpected events require a smaller or larger part.&lt;P>Use the Vivado IDE to set Alternate Parts within a common physical package to enable I/O planning compatible across those selected devices."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: I/O Planning Design Flows > Defining Alternate Devices" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xDefiningAlternateDevices" deriveURL="true" docID="ug949"/>
+              <Doc title="UG899: I/O Pin Planning > Defining Alternate Compatible Parts" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug899-vivado-io-clock-planning.pdf#nameddest=xDefiningAlternateCompatibleParts" deriveURL="true" docID="ug899"/>
+              <Doc title="UG583: UltraScale Architecture PCB Design User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/user_guides/ug583-ultrascale-pcb-design.pdf" deriveURL="true" docID="UG583"/>
+              <Doc title="UG575: UltraScale and UltraScale+ FPGAs Packaging and Pinouts Product Specification User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/user_guides/ug575-ultrascale-pkg-pinout.pdf" deriveURL="true" docID="ug575"/>
+              <Doc title="UG475: 7 Series FPGAs Packaging and Pinouts Product Specification User Guide" deriveDescription="true" docKey="URL" url="http://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf" deriveURL="true" docID="ug475"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Example Projects">
+          <QuestionItem migID="2016#06#14" description="Have you validated your synchronous interfaces, memory interfaces, and transceiver IP pin outs using example projects?&lt;P>Have you considered using these projects for an interface test?">
+            <Actions>
+              <Action description="Creating separate small projects for each IP that is a transceiver IP, memory interface, and source synchronous I/O can help you define and validate your configuration and pin outs. This method enables I/O planning in isolation for that interface. Those I/O constraints can then be merged with the top-level design.&lt;P>You can use the example design for each IP to generate a test that can be used when the board returns. These small interface designs are excellent vehicles to iterate quickly for debugging and introducing new features."/>
+            </Actions>
+            <References>
+              <Doc title="UG896: Designing with IP > Using IP Example Designs" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug896-vivado-ip.pdf#nameddest=xUsingIPExampleDesigns" deriveURL="true" docID="ug896"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Memory Controller IPs">
+          <QuestionItem migID="2016#06#15" description="If you are using one or more Memory Controller IPs, have you analyzed the placement of the Memory Interfaces to avoid overly congested areas?">
+            <Actions>
+              <Action description="Inherently, each memory interface uses a high number of fabric resources in one or two clock regions. Plan carefully to ensure multiple interfaces do not cause congested areas on the die.&lt;P>This is especially important when using devices with I/O columns through the center of the device, such as with some of the UltraScale devices."/>
+            </Actions>
+            <References>
+              <Doc title="Memory Interface IP Design Checklists" description="" url="http://www.xilinx.com/products/intellectual-property/mig.html"/>
+              <Doc title="UG586: Zynq-7000 SoC and 7 Series Devices Memory Interface Solutions User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/ip_documentation/mig_7series/v4_1/ug586_7Series_MIS.pdf" deriveURL="true" docID="ug586"/>
+              <Doc title="UG899: I/O Planning for UltraScale Architecture Memory IP" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug899-vivado-io-clock-planning.pdf#nameddest=xIOPlanningForUltraScaleMemoryIP" deriveURL="true" docID="ug899"/>
+              <Doc title="QuickTake Video: Designing with UltraScale Memory IP" deriveDescription="true" docKey="URL" url="http://www.xilinx.com/video/hardware/designing-with-ultrascale-memory-ip.html"/>
+              <Doc title="PG150: UltraScale Architecture-Based FPGAs Memory IP Product Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/ip_documentation/ultrascale_memory_ip/v1_3/pg150-ultrascale-memory-ip.pdf" deriveURL="true" docID="pg150"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Clock Topology">
+          <QuestionItem migID="2016#06#16" description="Have you considered creating a skeleton design for clocking testing?&lt;P>Have you run &lt;I>report_drc&lt;/I>, &lt;I>report_ssn&lt;/I> post synthesis?&lt;P>Have you run &lt;I>report_clock_utilization&lt;/I>, &lt;I>report_drc&lt;/I>, &lt;I>report_route_status&lt;/I> post implementation?">
+            <Actions>
+              <Action description="It is recommended to have clock topology known and ideally documented in a block diagram through MS Visio or equivalent. At this point, building on the pinout design, use the clocking wizard to add this clocking configuration to a design. Also add simple registers to input and output to stop the tools optimizing the clocks away.&lt;P>Running reports as you progress through the flow improves the quality of information available that can be used to improve confidence in the board design."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="System-Level Test Design">
+          <QuestionItem migID="2016#06#17" description="Have you considered building a system-level test design to verify component level interfaces on the FPGA?">
+            <Actions>
+              <Action description="The clocking design can be expanded to have IPs and stimulus blocks. Stimulus blocks can be example design stimulus or AXI traffic generators. It is usually possible to use the small IP test designs and merge these into the project.&lt;P>A production test design could have a processor inside it. This could be the early software development vehicle allowing register reads/writes to IPs, access to clocking information, multiboot etc."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Board and Device Planning > Interface Bandwidth Validation" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=InterfaceBandwidthValidation" deriveURL="true" docID="ug949"/>
+              <Doc title="UG896: Designing with IP > Using IP Example Designs" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug896-vivado-ip.pdf#nameddest=xUsingIPExampleDesigns" deriveURL="true" docID="ug896"/>
+              <Doc title="PG125: AXI Traffic Generator Product Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/ip_documentation/axi_traffic_gen/v2_0/pg125-axi-traffic-gen.pdf" deriveURL="true" docID="pg125"/>
+              <Doc title="PG103: Video Test Pattern Generator Product Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/ip_documentation/v_tpg/v7_0/pg103-v-tpg.pdf" deriveURL="true" docID="pg103"/>
+              <Doc title="PG174: JTAG to AXI Master Product Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/ip_documentation/jtag_axi/v1_2/pg174-jtag-axi.pdf" deriveURL="true" docID="pg174"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="FPGA Power Planning and Analysis">
+        <QGroup migID="2013#10#87" title="Power Analysis">
+          <QuestionItem migID="2013#10#88" description="Has the Xilinx Power Estimator (XPE) or &lt;I>report_power&lt;/I> been run?">
+            <Actions>
+              <Action description="Perform early power analysis using Xilinx XPE and final analysis with the Vivado &lt;I>report_power&lt;/I> command."/>
+              <Action description="Measure power at each stage of the design and make power reducing design modifications, if needed."/>
+            </Actions>
+            <References>
+              <Doc title="UG907: Power Analysis and Optimization > Estimating Power - Initial Evaluation Stage" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug907-vivado-power-analysis-optimization.pdf#nameddest=PowerEstimationMethodologyInitialEvaluationStage" deriveURL="true" docID="UG907"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Power Budget">
+          <QuestionItem migID="2016#06#18" description="Has the design exceeded its Power budget?">
+            <Actions>
+              <Action description="Examine:&lt;BR>Voltage settings in the part&lt;BR>Terminations&lt;BR>FPGA to FPGA links"/>
+            </Actions>
+            <References>
+              <Doc title="UG904: Implementation User Guide > Power Optimization" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug904-vivado-implementation.pdf#nameddest=xPowerOptimization" deriveURL="true" docID="ug904"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="XADC/System Monitor">
+          <QuestionItem migID="2016#06#19" description="Is XADC/System Monitor being used?">
+            <Actions>
+              <Action description="XADC/System monitor can be used to examine voltage on different rails and die temperature as well as set alarms for in system warnings."/>
+            </Actions>
+            <References>
+              <Doc title="UG480: 7 Series FPGAs and Zynq-7000 SoC XADC Dual 12-Bit 1 MSPS Analog-to-Digital Converter User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/user_guides/ug480_7Series_XADC.pdf" docID="ug480"/>
+              <Doc title="UG580: UltraScale Architecture System Monitor User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/user_guides/ug580-ultrascale-sysmon.pdf" deriveURL="true" docID="ug580"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Board Planning">
+        <QGroup migID="2016#06#20" title="Schematic Review Spreadsheet">
+          <QuestionItem migID="2016#06#21" description="Has the schematic review spreadsheet been completed?">
+            <Actions>
+              <Action description="Using the Schematic Review Spreadsheet will catch many system issues such as physical interfaces, configuration support, supplies and power, system monitor, and debug pins.&lt;P>It is vital that there is good communication between the FPGA and board designer. Ensure requirements for DCI, configuration, clocking, pin swapping rules, and so on are effectively communicated and understood.&lt;P>Ask your FAE for assistance with the schematic review checklist."/>
+            </Actions>
+            <References>
+              <Doc title="XMP277: 7 Series Schematic Review Checklist" description="7 Series Schematic Review Recommendations" url="https://secure.xilinx.com/webreg/clickthrough.do?cid=198776" docID="xmp277"/>
+              <Doc title="XTP344: UltraScale Schematic Review Checklist" description="UltraScale Architecture Schematic Review Checklist" url="https://www.xilinx.com/cgi-bin/docs/ctdoc?cid=359174;d=xtp344-ultrascale-schematic-review-checklist.zip" docID="xtp344"/>
+              <Doc title="XTP427: UltraScale+ FPGA and Zynq UltraScale+ MPSoC Schematic Review Checklist" description="This ZIP file contains the spreadsheet with UltraScale+ FPGA and Zynq UltraScale+ MPSoC schematic review checklists." url="https://www.xilinx.com/cgi-bin/docs/ctdoc?cid=423500;d=xtp427-ultrascale-plus-schematic-review-checklist.zip" docID="xtp427"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="IBIS Models">
+          <QuestionItem migID="2016#06#22" description="Do you have the latest pinout and IBIS model from the FPGA design?&lt;P>Are the pins that have internal termination or pins that require termination highlighted?">
+            <Actions>
+              <Action description="Vivado has the Export I/Os and Export IBIS commands to help you facilitate interfacing with the PCB designer."/>
+            </Actions>
+            <References>
+              <Doc title="UG899: I/O and Clock Planning User Guide > Interfacing with the System Designer" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug899-vivado-io-clock-planning.pdf#nameddest=xInterfacingWithTheSystemDesigner" deriveURL="true" docID="ug899"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Power Supplies">
+          <QuestionItem migID="2016#06#23" description="Is the FPGA driving any power supplies?">
+            <Actions>
+              <Action description="FPGA I/Os have limited drive strength and should be considered when sinking/sourcing current to any active or passive component.&lt;P>Also the behavior of some pins may be different before, during and after FPGA programming and should be considered when connecting to any sensitive circuitry."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Configuration">
+        <QGroup migID="2013#10#96" title="Configuration">
+          <QuestionItem migID="2013#10#97" description="Is the targeted memory device and memory solution supported by Xilinx for FPGA configuration?&lt;P>Is the chosen device large enough to accommodate the bitstream or multiple bitstreams if using Multiboot?&lt;P>Have you considered configuration time when selecting a device?&lt;P>Do you have a JTAG connector planned for the board? Will you be able to isolate the FPGA if configuration debug is needed? Will you be able to probe the config signals if needed to isolate any config issues?&lt;P>Does the FPGA configuration need to be held off at startup?">
+            <Actions>
+              <Action description="Verify the desired memory device is supported by Xilinx.&lt;P>In order to control FPGA configuration, INIT can be used to delay configuration."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Configuration" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xConfiguration" deriveURL="true" docID="ug949"/>
+              <Doc title="UG908: Programming and Debugging" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug908-vivado-programming-debugging.pdf" deriveURL="true" docID="ug908"/>
+              <Doc title="XMP277: 7 Series Schematic Review Checklist" description="7 Series Schematic Review Recommendations" url="https://secure.xilinx.com/webreg/clickthrough.do?cid=198776" docID="xmp277"/>
+              <Doc title="XTP344: UltraScale Schematic Review Checklist" description="UltraScale Architecture Schematic Review Checklist" url="https://www.xilinx.com/cgi-bin/docs/ctdoc?cid=359174;d=xtp344-ultrascale-schematic-review-checklist.zip" docID="xtp344"/>
+              <Doc title="XTP427: UltraScale+ FPGA and Zynq UltraScale+ MPSoC Schematic Review Checklist" description="This ZIP file contains the spreadsheet with UltraScale+ FPGA and Zynq UltraScale+ MPSoC schematic review checklists." url="https://www.xilinx.com/cgi-bin/docs/ctdoc?cid=423500;d=xtp427-ultrascale-plus-schematic-review-checklist.zip" docID="xtp427"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+    </Section>
+  </Page>
+  <Page migID="2016#06#25" title="IP and SubModule Creation">
+    <Section migID="2016#06#26" title="IP and SubModule Creation" disableHeader="true" sectionType="CheckList">
+      <SubSection title="Documentation and Knowledge">
+        <QGroup migID="2016#06#27" title="IP and Design Creation">
+          <QuestionItem migID="2016#06#28" description="Have you reviewed the documentation and collateral relevant to IP and Design Creation?">
+            <Actions>
+              <Action description="Review the availale collateral for IP and Design creation."/>
+            </Actions>
+            <References>
+              <Doc title="UG895: System-Level Design Entry" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug895-vivado-system-level-design-entry.pdf" deriveURL="true" docID="UG895"/>
+              <Doc title="Applying Design Constraints Design Hub" description="Applying Design Constraints Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0004-vivado-applying-design-constraints-hub.xml" docID="dh0004"/>
+              <Doc title="Designing with IP Design Hub" description="Designing with IP Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0003-vivado-designing-with-ip-hub.xml" docID="dh0003"/>
+              <Doc title="Logic Synthesis Design Hub" description="Logic Synthesis Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0018-vivado-synthesis-hub.xml" docID="dh0018"/>
+              <Doc title="Using IP Integrator Design Hub" description="Using IP Integrator Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0009-vivado-using-ip-integrator-hub.xml" docID="dh0009"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="RTL Coding Guidelines">
+          <QuestionItem migID="2016#06#29" description="Have you reviewed the RTL coding guidelines to help avoid sub-optimal RTL?">
+            <Actions>
+              <Action description="The RTL Guidelines are to help you design the most effective, small, and high performing designs possible with Vivado synthesis."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: RTL Coding Guidelines" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xRTLCodingGuidelines" deriveURL="true" docID="ug949"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="XDC Constraint Guidelines">
+          <QuestionItem migID="2016#06#30" description="Have you reviewed the XDC constraint guidelines to ensure proper coverage?">
+            <Actions>
+              <Action description="The Constraints Guidelines are to help achieve proper design constraint coverage. Under constraining the design can lead to timing failures and over constraining can lead to long runtimes and high memory usage. Defining the minimal set of constraints needed to ensure proper coverage is key."/>
+            </Actions>
+            <References>
+              <Doc title="UG903: Using Constraints User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug903-vivado-using-constraints.pdf" deriveURL="true" docID="ug903"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Vivado IP">
+          <QuestionItem migID="2016#06#31" description="Do you have a good understanding of the various methods to configure and manage Vivado IP?&lt;P>Are you aware of the various IP output products and their use?">
+            <Actions>
+              <Action description="The Vivado Design Suite offers options for IP configuration and management flows. Familiarize yourself with the options and define an IP management strategy for your design.&lt;P>The Vivado Design Suite enables IP to be managed in two different ways:&lt;BR>(1) Managed from within a design project.&lt;BR>(2) Managed remotely within a Manage IP Location project.&lt;P>Each method has advantages and disadvantages. Familiarize yourself with these various options and decide which one works best for you."/>
+            </Actions>
+            <References>
+              <Doc title="Designing with IP Design Hub" description="Designing with IP Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0003-vivado-designing-with-ip-hub.xml" docID="dh0003"/>
+              <Doc title="QuickTake Video: Configuring and Managing Reusable IP" deriveDescription="true" docKey="URL" url="http://www.xilinx.com/video/hardware/configuring-managing-reusable-ip-vivado.html"/>
+              <Doc title="UG896: Designing with IP User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug896-vivado-ip.pdf" deriveURL="true" docID="ug896"/>
+              <Doc title="UG939: Designing with IP Tutorial" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug939-vivado-designing-with-ip-tutorial.pdf" deriveURL="true" docID="ug939"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Block Designs">
+          <QuestionItem migID="2016#06#32" description="If you intend to include any IP integrator block designs in the project, are you familiar with the block design capabilities of the IP integrator?&lt;P>Are you aware of the various block design (.BD) output products and their use?">
+            <Actions>
+              <Action description="The block designs created in IP Integrator also require a management strategy over the life of the design. Familiarize yourself with the various options to configure and manage block designs as well as the IP contained in them and decide on an upgrade strategy.&lt;P>The Vivado Design Suite enables BDs to be managed in two different ways:&lt;BR>(1) Managed from within a design project.&lt;BR> (2) managed remotely within a Manage IP Location project.&lt;P>Each method has advantages and disadvantages. Familiarize yourself with these various options and decide which one works best for you."/>
+            </Actions>
+            <References>
+              <Doc title="UG994: Designing IP Subsystems using IP Integrator" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug994-vivado-ip-subsystems.pdf" deriveURL="true" docID="UG994"/>
+              <Doc title="UG1118: Creating and Packaging Custom IP > Packaging a Block Design" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug1118-vivado-creating-packaging-custom-ip.pdf#nameddest=CreatingAndPackagingCustomIPInIPIntegrator" deriveURL="true" docID="ug1118"/>
+              <Doc title="UG1197: UltraFast High-Level Productivity Design Methodology Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/ug1197-vivado-high-level-productivity.pdf" deriveURL="true" docID="ug1197"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Microprocessor Based Designs">
+          <QuestionItem migID="2016#06#33" description="Is your device a Zynq device?&lt;P>Does your design contain a microprocessor?">
+            <Actions>
+              <Action description="Review the Embedded Methodology Guide for information on microprocessor based designs."/>
+            </Actions>
+            <References>
+              <Doc title="Software Development Kit Design Hub" description="Software Development Kit Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/embedded/2017_1/dh0015-sdk-hub.xml" docID="dh0015"/>
+              <Doc title="UG1046: UltraFast Embedded Design Methodology Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/ug1046-ultrafast-design-methodology-guide.pdf" deriveURL="true" docID="ug1046"/>
+              <Doc title="XTP397: UltraFast Embedded Design Methodology Checklist" description="UltraFast Embedded Design Methodology Checklist" url="http://www.xilinx.com/support/documentation/sw_manuals/xtp397-embedded-design-methodology-checklist.zip" docID="xtp397"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="SubModule Creation">
+        <QGroup migID="2016#06#34" title="RTL Creation">
+          <QuestionItem migID="2016#06#35" description="Are you using the Vivado Design Suite HDL Templates?&lt;P>Are DSPs and RAMs correctly pipelined?&lt;P>Is the correct reset strategy being used?&lt;P>Is consideration to cross clocking domains being considered and managed?&lt;P>Are high fanout nets being considered?&lt;P>Are boundaries registered to ensure timing between different blocks is preserved?&lt;P>Are power considerations taken into account?">
+            <Actions>
+              <Action description="Considering HDL coding up front is key to effective FPGA design. UG949 Chapter 3 Design Creation outlines the key points to create a successful FPGA design.&lt;P>Helpers such as the HDL templates provide recommended coding styles and instantiation templates for targeting Xilinx FPGAs. It is suggested to use these to ensure best results. It is especially important to use these when inferring blocks such as Block RAMs and DSP functions."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Design Creation" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xDesignCreation" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Using Vivado Design Suite HDL Templates" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=UsingVivadoDesignSuiteHDLTemplates" deriveURL="true" docID="ug949"/>
+              <Doc title="UG895: System-Level Design Entry > Editing Source Files" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug895-vivado-system-level-design-entry.pdf#nameddest=xEditingSourceFiles" deriveURL="true" docID="UG895"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="RTL Checks">
+          <QuestionItem migID="2016#06#36" description="Is your RTL compliant with the recommended RTL Coding Guidelines?&lt;P>Have you run the RTL DRCs to determine if your code has conditions that may limit functionality or performance?&lt;P>Were the violations addressed?">
+            <Actions>
+              <Action description="The Vivado Design Suite has an ever-expanding set of UltraFast Methodology RTL checks that can be run on the Elaborated RTL design.&lt;BR>First, elaborate your design and analyze the Messages view to find any potential RTL code structure issues.&lt;BR>Second, run the &lt;I>report_methodology&lt;/I> command to ensure your RTL is compliant with the UltraFast Methodology RTL rules."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: RTL Coding Guidelines > Running RTL DRCs" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=RTLDRC" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Implementation > Moving Past Synthesis" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=MovingPastSynthesis" deriveURL="true" docID="ug949"/>
+              <Doc title="UG906: Validating Design Methodology DRCs" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf#nameddest=ValidatingDesignMethodologyLogicDRCs" deriveURL="true" docID="ug906"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="RTL Simulation">
+          <QuestionItem migID="2016#06#37" description="Are you planning on using logic simulation to verify any portion of the design?&lt;P>Do you need to generate output simulation sources for a third-party simulator?">
+            <Actions>
+              <Action description="The Vivado simulator can be used to validate logic modules with either behavioral or structural sources.&lt;P>Vivado supports several third party simulators. There are options for creating and managing simulation sources that you should familiarize yourself with."/>
+            </Actions>
+            <References>
+              <Doc title="Logic Simulation Design Hub" description="Logic Simulation Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0010-vivado-simulation-hub.xml" docID="dh0010"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Constraint Creation">
+          <QuestionItem migID="2016#06#38" description="Are your XDC constraints compliant with the recommended guidelines?&lt;P>Do they accurately reflect clocking on the top level?&lt;P>Are constraints created in a manner that will not affect other parts of the design once integrated?">
+            <Actions>
+              <Action description="During the SubModule design phase, a dummy top level constraints file can provide clocks to the SubModule. At this stage, inter clock paths may not be correctly defined. Ensure that invalid inter clock paths are correctly constrained using &lt;I>report_clocks&lt;/I> and &lt;I>report_clock_interaction&lt;/I> and &lt;I>report_timing&lt;/I> Tcl commands.&lt;P>At this stage, clock constraints will not accurately model skew. Improve accuracy of sub module timing by including a full clock network back to source pins.&lt;P>When submodules are implemented standalone, care must be taken with definition of cells to ensure that after integration with the top level, extra cells are not included in exceptions."/>
+            </Actions>
+            <References>
+              <Doc title="Applying Design Constraints Design Hub" description="Applying Design Constraints Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0004-vivado-applying-design-constraints-hub.xml" docID="dh0004"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Hardware Debug">
+          <QuestionItem migID="2016#06#39" description="Have you planned your hardware debug strategy?">
+            <Actions>
+              <Action description="You should plan a strategy while architecting the design. Vivado has flexibility to enable debug logic to be inserted into the RTL, the synthesized netlist, or after implementation using incremental techniques. Debug ports are also occasionally desired, so it may have an effect on I/O planning.&lt;P>Other factors to consider are:&lt;BR>What is best to debug in hardware and what is best to simulate?&lt;BR>How to reduce implementation times. E.g., Can you have more debug in a small interface project?&lt;BR>How to maximize visibility of downloaded designs, processor registers, and the number of signals probed by Vivado debugger?&lt;P>Note: IPs exist such as JTAG2AXI, AXI protocol checker, AXI traffic generators to aid in debug."/>
+            </Actions>
+            <References>
+              <Doc title="UG908: In-System Logic Design Debugging Flows" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug908-vivado-programming-debugging.pdf#nameddest=InSystemLogicDesignDebuggingFlows" deriveURL="true" docID="ug908"/>
+              <Doc title="Programming and Debug Design Hub" description="Programming and Debug Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0011-vivado-programming-and-debug-hub.xml" docID="dh0011"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Post Synthesis Performance Estimation">
+          <QuestionItem migID="2016#06#40" description="Have you validated the constraints coverage and timing for synthesized design?&lt;P>Does the synthesized design meet timing?">
+            <Actions>
+              <Action description="It is important to perform post-synthesis timing analysis after development of each sub-block to ensure proper constraints coverage and design performance. If the design is not close to meeting timing after synthesis, it likely will not after implementation either. Timing failures should be fixed on the front end through RTL and constraints changes.&lt;P>To validate timing, open the synthesized design and run the following commands to analyze the results:&lt;P>1) Run &lt;I>report_timing&lt;/I> or &lt;I>report_timing_summary&lt;/I>.&lt;BR>2) Run &lt;I>report_clock_interaction&lt;/I>.&lt;BR>3) Run &lt;I>report_design_analysis&lt;/I>.&lt;BR>4) Run &lt;I>report_cdc&lt;/I>."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Implementation > Moving Past Synthesis" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=MovingPastSynthesis" deriveURL="true" docID="ug949"/>
+              <Doc title="UG906: Validating Design Methodology DRCs" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf#nameddest=ValidatingDesignMethodologyLogicDRCs" deriveURL="true" docID="ug906"/>
+              <Doc title="UG901: Synthesis User Guide > Using Block Synthesis" deriveDescription="true" docKey="docID" url="https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug901-vivado-synthesis.pdf#nameddest=xUsingBlockSynthesis" deriveURL="true" docID="ug901"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Post Synthesis Validation">
+          <QuestionItem migID="2016#06#41" description="Have you validated the integrity and utilization of the synthesized design?&lt;P>Have you checked the synthesis log file and examined all warnings, especially fixing all critical warnings and errors?">
+            <Actions>
+              <Action description="It is important to perform post-synthesis analysis after development of each sub block to ensure the problems that show up by running these checks does not snowball into a huge effort.&lt;P>To validate the integrity of the synthesized netlist and constraints, open the synthesized design and run the following commands:&lt;P>1) Report Methodology - The design and constraints integrity can be validated by running the &lt;I>report_methodology&lt;/I> command.&lt;BR>2) Report DRC - The design integrity can be validated by running the &lt;I>report_drc command&lt;/I>.&lt;BR>3) Report Utilization - The resource utilization of the device can often effect overall system performance. Ensure the subblock is not consuming too many resources."/>
+            </Actions>
+            <References>
+              <Doc title="UG906: Validating Design Methodology DRCs" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf#nameddest=ValidatingDesignMethodologyLogicDRCs" deriveURL="true" docID="ug906"/>
+              <Doc title="UG901: Synthesis User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug901-vivado-synthesis.pdf" deriveURL="true" docID="ug901"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Post Implementation Timing">
+          <QuestionItem migID="2016#06#100" description="Have you implemented the module and ensure it meets timing without having to use advanced implementation options?&lt;P>Does the implemented design meet timing with default options?&lt;P>Have you identified a synthesis strategy that yields better results?">
+            <Actions>
+              <Action description="Using non-default settings for implementation of any submodule limits the implementation flow options you can use to address problems such as congestion or high utilization in the full design. You can synthesize submodules with different optimizations using the block-level synthesis strategies. Submodules cannot use different implementation settings from the top-level design.&lt;P>Refer to the steps in the Successful Implementation section in the Top-Level Design Closure tab for guidance on improving timing. Provide this information to the top level designer."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Implementation > Moving Past Synthesis" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=MovingPastSynthesis" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Specifying Timing Exceptions" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xSpecifyingTimingExceptions" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Closure" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xDesignClosure" deriveURL="true" docID="ug949"/>
+              <Doc title="UG904: Implementation User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug904-vivado-implementation.pdf" deriveURL="true" docID="ug904"/>
+              <Doc title="UG901: Using Block Synthesis" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug901-vivado-synthesis.pdf#nameddest=xUsingBlockSynthesis" deriveURL="true" docID="ug901"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Using Xilinx IP">
+        <QGroup migID="2016#06#42" title="IP and BD Management">
+          <QuestionItem migID="2016#06#43" description="Are all your IP and BDs up to date with the required output products generated?&lt;P>Have you planned an IP and BD management strategy for migrating your design to new Vivado releases as they become available?">
+            <Actions>
+              <Action description="Vivado IP can be managed several different ways. It is always recommended to use the latest version of the IP and software. It recommended that you generate output products when customizing your IP and BDs to ensure easier use in future software releases. Generating the output products for BDs also performs a series of integrity checks on the BD to ensure it is logically feasible. This will also help to reduce synthesis run time, especially if out-of-context (OOC) synthesis is being used.&lt;P>When migrating to new software releases, you can use your IP generated from previous versions, as along as the output products are generated. It is locked and is not available for recustomization in the new releases, but can be modified in the original software version. Discussions on preferred strategy should take place."/>
+            </Actions>
+            <References>
+              <Doc title="UG896: Designing with IP > Generating Output Products" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug896-vivado-ip.pdf#nameddest=xGeneratingOutputProducts" deriveURL="true" docID="ug896"/>
+              <Doc title="UG896: Designing with IP > Upgrading IP" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug896-vivado-ip.pdf#nameddest=xUpgradingIP" deriveURL="true" docID="ug896"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="IP Level Constraints">
+          <QuestionItem migID="2016#06#44" description="Are you familiar with IP level constraints and how they are processed?">
+            <Actions>
+              <Action description="Most Vivado IP includes various constraint files that are used in different scenarios.&lt;P>The IP needs to be timing correct when implemented standalone and in the context of the top-level design. Some IP also contain physical I/O constraints that must be considered during I/O planning."/>
+            </Actions>
+            <References>
+              <Doc title="UG896: Designing with IP > Managing IP Constraints" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug896-vivado-ip.pdf#nameddest=WorkingWithIPConstraints" deriveURL="true" docID="ug896"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Custom IP Creation">
+        <QGroup migID="2016#06#45" title="IP Packaging">
+          <QuestionItem migID="2016#06#46" description="Do you intend to package any custom IP for use with the IP Catalog or IP Integrator?&lt;P>Do you need to create a custom interface for any of your IP?">
+            <Actions>
+              <Action description="Familiarize yourself with the data requirements to package custom IP. Use the Vivado Package IP capabilities to prepare your IP for use with Vivado tools.&lt;P>The Create and Package IP Wizard will create AXI compliant templates that are a good starting point for creating IP. Additionally, this will start off the packaging phase that enables creation of Vivado IP.&lt;P>When targeting IP Integrator with RTL blocks, the Module Reference flow allows usage in a block diagram of RTL modules without having to go through the packager through using attributes."/>
+            </Actions>
+            <References>
+              <Doc title="UG1118: Creating and Packaging Custom IP" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug1118-vivado-creating-packaging-custom-ip.pdf" deriveURL="true" docID="ug1118"/>
+              <Doc title="UG994: Designing IP Subsystems using IP Integrator > Referencing RTL Modules" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug994-vivado-ip-subsystems.pdf#nameddest=xReferencingAModule" deriveURL="true" docID="UG994"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="RTL Modules">
+          <QuestionItem migID="2016#06#47" description="Do you have any RTL modules you would like to include in your IP Integrator block design?">
+            <Actions>
+              <Action description="The Vivado IP Integrator enables custom RTL modules to be added to a block design. There are a few requirements about the RTL that you should familiarize yourself with."/>
+            </Actions>
+            <References>
+              <Doc title="UG994: Designing IP Subsystems using IP Integrator > Referencing RTL Modules" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug994-vivado-ip-subsystems.pdf#nameddest=xReferencingAModule" deriveURL="true" docID="UG994"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="ISE PCores">
+          <QuestionItem migID="2016#06#48" description="Are you migrating any existing pcores used in ISE to Vivado Design Suite?">
+            <Actions>
+              <Action description="The Vivado IP Integrator replaces the Xilinx Platform Studio (XPS). The ISE packaged IP outputs were called pcores. There is a process for replicating pcores in the IP Integrator."/>
+            </Actions>
+            <References>
+              <Doc title="UG911: ISE to Vivado Design Suite Migration Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug911-vivado-migration.pdf" deriveURL="true" docID="ug911"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+    </Section>
+  </Page>
+  <Page migID="2016#06#49" title="Top-Level Design Closure">
+    <Section migID="2016#06#50" title="Top-Level Design Closure" disableHeader="true" sectionType="CheckList">
+      <SubSection title="Documentation and Knowledge">
+        <QGroup migID="2016#06#51" title="Ultrafast Methodology">
+          <QuestionItem migID="2016#06#52" description="Have you reviewed the relevant sections in the Design Creation and Implementation sections within the Ultrafast Methodology Guide?">
+            <Actions>
+              <Action description="Review the relevant collateral for Implementation, Timing Closure, and Power Analysis and Optimization."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Design Creation" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xDesignCreation" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Implementation" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=Implementation" deriveURL="true" docID="ug949"/>
+              <Doc title="Implementation Design Hub" description="Designing with IP Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0019-vivado-implementation-hub.xml" docID="dh0019"/>
+              <Doc title="Timing Closure and Design Analysis Design Hub" description="Timing Closure and Design Analysis Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0006-vivado-design-analysis-and-timing-closure-hub.xml" docID="dh0006"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Design Creation">
+        <QGroup migID="2016#06#53" title="Clocking">
+          <QuestionItem migID="2016#06#54" description="Has the clocking wizard IP been used to generate the required clocks for the design or are the clocking components instantiated in the RTL?&lt;P>Are gated clocks avoided?&lt;P>Are clocking components at the top level?&lt;P>Are clocks on dedicated clocking lines and not using local routing?&lt;P>Ultrascale Only:&lt;P>Have the clocking topology recommendations outlined in UG949 to optimize performance been followed?">
+            <Actions>
+              <Action description="It is much easier to share clocking resources when they are at the top-level of the design, thus improving place and route, timing, and/or power in the design. Proper top-level clock planning is essential to ensure optimal performance and clock resource contentions avoidance.&lt;P>Constraining and debugging clocks is also generally easier when placed at the top-level of hierarchy compared to when they are buried in the design.&lt;P>Ultrascale's flexible clocking structure offers new possibilities that require a correct RTL definition up front to take full advantage of.&lt;P>Verify that the structure of the clock tree remains as expected throughout opt_design and place_design. If not, consider adding the DONT_TOUCH property on the optimized buffer."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Clocking Guidelines" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xClockingGuidelines" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Creation > Place Clocking Elements Toward the Top Level" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xPlaceClockingElementsTowardsTheTopLevel" deriveURL="true" docID="ug949"/>
+              <Doc title="UG903: Using Constraints User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug903-vivado-using-constraints.pdf" deriveURL="true" docID="ug903"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Resets">
+          <QuestionItem migID="2016#06#55" description="Does the reset functionality follow Xilinx guidelines?&lt;P>Does the design have a reset that guarantees a safe startup?">
+            <Actions>
+              <Action description="You should: minimize the number of resets; reset control logic only, and avoid resetting the datapath; avoid active low resets. Run the &lt;I>report_reset_signals.tcl&lt;/I> custom Tcl script to ensure proper use of resets.&lt;P>Global resets are often not necessary in FPGA design and can consume large amounts of routing and can cause timing issues both inside and outside the reset timing paths. It is suggested to only code resets in the portions of the design that are necessary for proper operation and avoid resets in all other areas of the design.&lt;P>Resets should be synchronized in their own clock domain.&lt;P>Consider keeping key parts of the design held in reset until all clocks are stable."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Design Creation > Resets" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xResets" deriveURL="true" docID="ug949"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Constraints">
+          <QuestionItem migID="2016#06#101" description="Have you explored the timing constraint wizard to generate all the constraints for design?&lt;P>Did you explore the Vivado Messages for reported issues that need resolving?&lt;P>Have you thoroughly reviewed your top-level constraints file?&lt;P>Have you run &lt;I>report_timing_summary&lt;/I> and examined the timing report for anything unusual?&lt;P>Have you analyzed the clock interactions to ensure proper clocking constraints are specified?&lt;P>Have you validated the synthesized design constraints by running DRCs and Methodology checks?">
+            <Actions>
+              <Action description="On a post synthesized design, run through the timing constraint wizard and generate all the constraints for design and thoroughly review the XDC file.&lt;P>Open the Synthesized design and examine the Messages window for reported issues that need resolving.&lt;P>Run &lt;I>report_timing_summary&lt;/I> and &lt;I>check_timing&lt;/I> to ensure that all messages are checked and resolved if required. Examine the timing report for anything unusual.&lt;P>Clock interactions are often the cause for poor timing results. to ensure proper clock relationships are defined, run the report &lt;I>report_clock_interaction&lt;/I> command. Adjust or define clock groups and set_max_delay -datapath_only constraints as required.&lt;P>Run the &lt;I>report_drc&lt;/I> and &lt;I>report_methodology&lt;/I> commands to ensure there are no messages regarding the constraints.&lt;P>For first implementation passes, Xilinx recommends using a basline set of constraints. This covers internal FPGA paths only and removes the complexity of IO constraints. Once a baseline is complete, migrate to include IO constraints also."/>
+            </Actions>
+            <References>
+              <Doc title="Applying Design Constraints Design Hub" description="Applying Design Constraints Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0004-vivado-applying-design-constraints-hub.xml" docID="dh0004"/>
+              <Doc title="UG906: Design Analysis and Closure Techniques" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf" deriveURL="true" docID="ug906"/>
+              <Doc title="UG949: Design Closure > Timing Closure" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xTimingClosure" deriveURL="true" docID="ug949"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Debug">
+          <QuestionItem migID="2016#06#56" description="Are key probe points in the design considered?&lt;P>Is the debug logic IP configured and instantiated properly in the design?&lt;P>Is the correct clock being targeted for connections to the ILA?&lt;P>Is the amount of storage that can be used optimal?">
+            <Actions>
+              <Action description="Debug IP should be in the same clock domain as the source signals it is probing.&lt;P>Available storage can vary with design cycle. Usually later in the FPGA design cycle the part is fuller so there is less RAM to use."/>
+            </Actions>
+            <References>
+              <Doc title="Programming and Debug Design Hub" description="Programming and Debug Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0011-vivado-programming-and-debug-hub.xml" docID="dh0011"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Post Synthesis Checks">
+        <QGroup migID="2016#06#57" title="Design Integrity">
+          <QuestionItem migID="2016#06#58" description="Have you checked the synthesis log file, examined all warnings, and fixed all critical warnings and errors?&lt;P>Have you validated the design by running DRCs and the UltraFast Methodology checks?">
+            <Actions>
+              <Action description="It is recommended that all critical warnings are fixed. Typically these will cause errors later in the flow. Additionally, all warnings should be checked.&lt;P>DRC checks different things at different stages of the flow. These should be checked regularly and resolved to prevent having a build up of these issues to resolve at the end before release to production."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Implementation > Moving Past Synthesis" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=MovingPastSynthesis" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Closure > Checking That Your Design is Properly Constrained" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xCheckingThatYourDesignIsProperlyConstrained" deriveURL="true" docID="ug949"/>
+              <Doc title="UG901: Synthesis User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug901-vivado-synthesis.pdf" deriveURL="true" docID="ug901"/>
+              <Doc title="UG906: Design Analysis and Closure Techniques" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf" deriveURL="true" docID="ug906"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Utilization">
+          <QuestionItem migID="2016#06#59" description="Run &lt;I>report_utilization&lt;/I>.&lt;P>Is the design within expected utilization targets?&lt;P>Are there any attributes that need to be applied, or removed from the code in order to improve performance utilization?&lt;P>Do sub modules need optimization?&lt;P>Do synthesis strategies improve area and still meet performance?">
+            <Actions>
+              <Action description="Vivado Synthesis offers several Synthesis Strategies and directives to control behavior for various logic scenarios. Review the available options and experiment to achieve improved synthesis results."/>
+            </Actions>
+            <References>
+              <Doc title="UG901: Synthesis User Guide" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug901-vivado-synthesis.pdf" deriveURL="true" docID="ug901"/>
+              <Doc title="UG906: Design Analysis and Closure Techniques" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf" deriveURL="true" docID="ug906"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Performance">
+          <QuestionItem migID="2016#06#60" description="Run &lt;I>report_timing_summary&lt;/I>.&lt;P>Do any design performance issues require resolving?&lt;P>Clocking, constraints, logic levels should be resolved at this point before proceeding to implementation.&lt;P>Do sub modules need to be optimized?&lt;P>Are High Fanout Nets Monitored?">
+            <Actions>
+              <Action description="Vivado allows comprehensive analysis of timing and netlist objects after synthesis. Poor results at this stage drastically impact implementation and slow design closure. Xilinx recommends a design closes timing or is very close to closing timing post synthesis before implementation is run. Use the block-level synthesis strategies to improve the netlist for critical submodules.&lt;P>Xilinx recommends baselining a design before inclusion of IO constraints to analyse internal FPGA performance.&lt;P>Try using &lt;I>power_opt_design -hier_fanout_limit&lt;/I> and &lt;I>place_design -fanout_opt&lt;/I> to optimize high fanout nets throughout the flow."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Implementation > Meeting Post-Synthesis Timing" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=MeetPostSynthesisTiming" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Closure > Checking that Your Design is Properly Constrained" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xCheckingThatYourDesignIsProperlyConstrained" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Closure > Baselining and Timing Constraints Validation Procedure" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xBaseliningAndTimingConstraintsValidationProcedure" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Closure > Analyzing and Resolving Timing Violations" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xAnalyzingAndResolvingTimingViolations" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Timing Closure > Applying Common Timing Closure Techniques" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xApplyingCommonTimingClosureTechniques" deriveURL="true" docID="ug949"/>
+              <Doc title="UG906: Design Analysis and Closure Techniques" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf" deriveURL="true" docID="ug906"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Design Reliability">
+          <QuestionItem migID="2016#06#61" description="Have the cross clock domain paths been correctly synchronized?">
+            <Actions>
+              <Action description="Run &lt;I>report_cdc&lt;/I> after each major module update. Review the violations, and waive any violations that you can safely ignore.&lt;P>Subblocks may be designed with different top level constraints and problems with CDCs may not show up until integration."/>
+            </Actions>
+            <References>
+              <Doc title="UG906: Design Analysis and Closure Techniques" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf" deriveURL="true" docID="ug906"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="SSI Designs">
+          <QuestionItem migID="2016#06#62" description="For high performance designs, is a floorplan created to lock logic to a particular SLR?&lt;P>Is hierarchy maintained to compliment the floorplan?&lt;P>Are the SLR boundaries registered on both input and output side?">
+            <Actions>
+              <Action description="Floorplanning can help guide the tools when placing a design. It helps prevent unnecessary crossing of SLRs.&lt;P>It is best to avoid resource sharing across SLRs when creating a floorplan that locks logic to a particular SLR. This is best achieved using keep_hierarchy constraints at synthesis at the SLR boundary.&lt;P>Registering input and output of each SLR is recommended."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Board and Device Planning > Designing with SSI Devices" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=SSIConsiderations" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Closure > Considering Floorplan" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xConsideringFloorplan" deriveURL="true" docID="ug949"/>
+              <Doc title="UG906: Design Analysis and Closure Techniques" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf" deriveURL="true" docID="ug906"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Successful Implementation">
+        <QGroup migID="2016#06#63" title="Design Integrity">
+          <QuestionItem migID="2016#06#64" description="Have the warnings been checked, the critical warnings and errors been resolved?&lt;P>Has the drc report been generated and messages checked?&lt;P>Has the methodology report been generated and messages checked?">
+            <Actions>
+              <Action description="Experiment with implementation strategies and directives to improve design targets.&lt;P>It is recommended to validate the design by re-running the DRCs and Methodology checks after implementation. Review the violations, and waive any violations that you can safely ignore."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Design Closure > Checking that Your Design is Properly Constrained" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xCheckingThatYourDesignIsProperlyConstrained" deriveURL="true" docID="ug949"/>
+              <Doc title="UG906: Design Analysis and Closure Techniques" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf" deriveURL="true" docID="ug906"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Performance">
+          <QuestionItem migID="2016#06#65" description="Have you performed the Baselining and Constraints Validation procedure?&lt;P>Have the design been analyzed for timing errors at each stage of the flow?&lt;P>Have various implementation run strategies and directives been explored to improve performance or power?&lt;P>Have you reviewed the recommendations provied by QoR suggestions before placement, after placement, and after routing?&lt;P>Has a detailed analysis of failing timing paths been carried out?">
+            <Actions>
+              <Action description="Baselining is a technique to define and validate timing constraints in a sequential manner. It can help ensure timing constraints are properly assigned and implemented.&lt;P>Perform the step-by-step procedure outlined in the Baselining and Timing Constraints Validation Procedure in the &lt;I>UltraFast Design Methodology Guide for the Vivado Design Suite&lt;/I>."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Design Closure > Checking that Your Design is Properly Constrained" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xCheckingThatYourDesignIsProperlyConstrained" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Closure > Baselining and Timing Constraints Validation Procedure" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xBaseliningAndTimingConstraintsValidationProcedure" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Closure > Analyzing and Resolving Timing Violations" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xAnalyzingAndResolvingTimingViolations" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Closure > Applying Common Timing Closure Techniques" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xApplyingCommonTimingClosureTechniques" deriveURL="true" docID="ug949"/>
+              <Doc title="UG906: Design Analysis > Report QoR Suggestions" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug906-vivado-design-analysis.pdf#nameddest=xReportQoRSuggestions" deriveURL="true" docID="ug906"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Placement Issues">
+          <QuestionItem migID="2016#06#66" description="Has the design been analyzed for control set issues?&lt;P>Are high fanout nets negatively impacting placement?">
+            <Actions>
+              <Action description="Excessive number of control signals can degrade the placement quality by reducing the number of valid placement solutions.&lt;P>Examine the control sets in the design and take steps to reduce them if needed. Synthesis provides some control on the minimum fanout of clock enable and synchronous set/reset signals to be preserved.&lt;P>High fan out nets can be timing critical and pull logic closer together during placement. Some times this can adversely impact other parts of the design."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Design Closure > Applying Common Timing Closure Techniques" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xApplyingCommonTimingClosureTechniques" deriveURL="true" docID="ug949"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Routing Issues">
+          <QuestionItem migID="2016#06#67" description="Does the design exhibit routing congestion?&lt;P>Is the router having difficulties fixing hold time violations?">
+            <Actions>
+              <Action description="Routing congestion can be the cause of differences in timing estimates between a placed design and a routed design. It is best identified in the early stages of routing in the log file. Level 5 or above is concerning. More detailed analysis can be carried out using &lt;I>report_design_analysis&lt;/I>.&lt;P>Synthesis options such as LUT combining, MUXFx optimization, carry chain length and SRL optimization can drastically influence routing congestion. Alternatively, you can use opt_design to reduce MUXF*/CARRY*/SRL* in the modules located in the congested areas. You can also remove the LUT combining properties before place_design. Use &lt;I>report_qor_suggestions&lt;/I> to automatically generate these suggestions using the Vivado tools.&lt;P>Vivado also has implementation strategies that are specifically targeted at reducing routing congestion. You can reduce congestion on congested modules using the CELL_BLOAT_FACTOR property.&lt;P>Use the &lt;I>phys_opt_design&lt;/I> hold fixing options to reduce the number of hold violations before routing. These options also help to reduce congestion."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Design Closure > Addressing Congestion" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xAddressingCongestion" deriveURL="true" docID="ug949"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Implementation Options">
+          <QuestionItem migID="2016#06#68" description="Have you tried a number of design run strategies to improve runtime and implementation consistency?&lt;P>Have you done a thorough analysis for each implementation run?&lt;P>Are implementation options used to improve runtime and consistency?">
+            <Actions>
+              <Action description="Vivado allows previous DCP checkpoint files to be used as part of an incremental flow when minimal changes have been made. This helps improve design consistency and can help runtime when minor changes to the database have been made.&lt;P>Vivado allows parallelism through out of context synthesis and implementation. Are BDs and IPs synthesized in out of context fashion? This is the simplist way to improve run time. Further enhancements can be made by using the bottom up flow for other RTL blocks.&lt;P>Vivado allows post implementation database edits. In particular, this can be used to modify debug probes for the ILA and connections to debug IOs.&lt;P>Consistency can be achieved by locking down hard blocks such as block RAM and DSP slices from a previous run. This can improve the number of strategies meeting timing on each run.&lt;P>Vivado allows usage up to 8 cores. On Windows machines, is this set to the maximum for the machine in use? The default for Linux is 8."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Implementation > Using Incremental Compile Flows" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=IncrementalFlows" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Implementation > Block-Level Synthesis Strategy" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xBottomUpFlow" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Design Closure > Tuning the Compilation Flow" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xTuningTheCompilationFlow" deriveURL="true" docID="ug949"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="SSI Designs">
+          <QuestionItem migID="2016#06#69" description="For a high performance design, has a floorplan been created that partitions the design into SLRs?&lt;P>Is the resource utilization balanced across SLRs?&lt;P>Is there high utilization of SLLs crossing between SLRs?&lt;P>Is clocking optimal for SSI based designs? Are there any timing issues going between SLRs?&lt;P>Have you explored using floorplanning techniques to partition logic into specific SLRs?">
+            <Actions>
+              <Action description="Once the design has been implemented, double checking the clocking constraints implementation, as well as SLR utilization can help uncover any potential performance issues.&lt;P>Utilization estimates can help identify any highly utilized SLRs. Run the &lt;I>report_utlization -slr&lt;/I> command to identify and highly utlized SLRs."/>
+            </Actions>
+            <References>
+              <Doc title="UG949: Board and Device Planning > SLR Utilization Considerations" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xSLRUtilizationConsiderations" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: RTL Coding Guidelines > Pipelining Considerations" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xPipeliningConsiderations" deriveURL="true" docID="ug949"/>
+              <Doc title="UG949: Tuning the Compilation Flow > SSI Technology Considerations" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xSSITechnologyConsiderations" deriveURL="true" docID="ug949"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Meeting Power Budget">
+        <QGroup migID="2016#06#70" title="Power Management">
+          <QuestionItem migID="2016#06#71" description="Has &lt;I>report_power&lt;/I> been run on the complete design? Alternatively, has power been measured on the board?&lt;P>If using &lt;I>report_power&lt;/I> to estimate power, are the high power consuming signals like clocks accurately set?&lt;P>Does the design meet its power budget? If not, have you explored options to reduce power?">
+            <Actions>
+              <Action description="If using &lt;I>report_power&lt;/I> to estimate power then it is important the estimate is accurate. Ensure high power consuming signals like clocks are correctly set and high fanout nets have their toggle rates correctly set. High effort changes should only be undertaken when the estimate is considered accurate. Use the power constraints advisor for assistance. For board measurements it is useful to split out the power measurements for each supply and take static and dynamic measurements.&lt;P>Low effort changes:&lt;BR>Run &lt;I>power_opt_design&lt;/I>.&lt;BR>Switch to lower power speed grade.&lt;BR>Switching off clocks when not required.&lt;P>Higher effort changes:&lt;BR>High level restructuring of the design.&lt;BR>Recoding of RTL to control enable signals and use power efficient features in FPGA like power down on RAMs."/>
+            </Actions>
+            <References>
+              <Doc title="Power Estimation and Optimization Design Hub" description="Power Estimation and Optimization Design Hub" url="http://www.xilinx.com/support/documentation/navigator/hubs/sw_manuals/2017_3/dh0008-vivado-power-estimation-and-optimization-hub.xml" docID="dh0008"/>
+              <Doc title="UG907: Power Analysis and Optimization" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug907-vivado-power-analysis-optimization.pdf" deriveURL="true" docID="UG907"/>
+              <Doc title="UG949: Design Closure > Power Analysis and Optimization" deriveDescription="true" docKey="docID" url="http://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_3/ug949-vivado-design-methodology.pdf#nameddest=xPowerOptimizationInImplementation" deriveURL="true" docID="ug949"/>
+            </References>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+      <SubSection title="Signoff">
+        <QGroup migID="2016#06#72" title="DRC Warnings">
+          <QuestionItem migID="2016#06#73" description="Have the DRC warnings received during configuration bitstream generation been reviewed and corrected?">
+            <Actions>
+              <Action description="Review the generate bitstream DRC warnings and ensure they are corrected."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+        <QGroup migID="2016#06#200" title="Timing Constraints">
+          <QuestionItem migID="2016#06#74" description="Are your timing constraints signoff quality?">
+            <Actions>
+              <Action description="Review the &lt;I>check_timing&lt;/I> report (also included in the timing summary report).&lt;P>Also review the User Ignored Paths and Unconstrained Paths section of the timing summary report to waive any ignored path."/>
+            </Actions>
+          </QuestionItem>
+        </QGroup>
+      </SubSection>
+    </Section>
+  </Page>
+  <ProjectProperties>
+    <Property value="Johnson Zhao" label="Customer Name"/>
+    <Property value="MobileNet_VC709" label="Project Name"/>
+    <Property value="" label="PCB Designer"/>
+    <Property value="" label="I/O Planner"/>
+    <Property value="" label="Top-Level Design"/>
+    <Property value="" label="IP &amp; SubModule Designer(s)"/>
+    <Property value="" label="Project Revision"/>
+    <Property value="" label="Date"/>
+    <Property value="" label="Email Contact"/>
+  </ProjectProperties>
+  <ProjectNotes><![CDATA[]]></ProjectNotes>
+</DesignHubDefinition>
