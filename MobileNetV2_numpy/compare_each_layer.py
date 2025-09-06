@@ -7,7 +7,7 @@ from torchvision import transforms
 from PIL import Image
 import torchextractor as tx
 import pandas as pd
-from conv_norm_compare import QuantizedConv2D_M, pw1_dw_pw2_M, get_element_numbers, compare_2_numpy, short_cut_M
+from conv_accelerate import QuantizedConv2D_M, pw1_dw_pw2_M, get_element_numbers, compare_2_numpy, short_cut_M
 import torch
 import xlsxwriter
 from decimal import Decimal, ROUND_HALF_EVEN
@@ -487,9 +487,9 @@ for n, (start_idx, kernel_size_list, stride_list, padding_list,ofm_size_list, ha
         #####_int_n_list[0][1])
         output_scale = output_scale_list[start_idx+3+shortcut_para_idx]
         M0_save = M0_SC_int_n_list[shortcut_para_idx][0]
-        M0_cal = int(round(2 ** 16 * x_s / Sc_s))
+        M0_cal = 2 ** 16 * x_s / Sc_s
         M1_save = M1_SC_int_n_list[shortcut_para_idx][0]
-        M1_cal = np.round(2 ** 16 * Fx_s / Sc_s)
+        M1_cal = 2 ** 16 * Fx_s / Sc_s
 
         ofmp[start_idx+3] = short_cut_M(x, Fx, x_s, x_z, Fx_s, Fx_z, Sc_s, Sc_z, M0_cal, M1_cal, n1)
 
@@ -526,9 +526,9 @@ ofm_size = 7
 conv_mode = 2
 
 M0_save = np.round(M0)
-M0_cal = np.round(2 ** 16 * input_scale * weight_scale / output_scale)
+M0_cal = 2 ** 16 * input_scale * weight_scale / output_scale
 M1_save = M1
-M1_cal = np.round(2 ** 16 * bias / output_scale)
+M1_cal = 2 ** 16 * bias / output_scale
 print("M0 == M0_cal " + str(M0_save == M0_cal))
 print("M1 == M1_cal " + str(compare_2_numpy(M1_save, M1_cal)))
 M0 = M0_cal
@@ -579,7 +579,10 @@ output_1000 = np.zeros(1000)
 M0 = M0_int_n_list[52][0]
 n = M0_int_n_list[52][1]
 M1 = M1_list[52]
-
+M0_cal = 2 ** 16 * input_scale * weight_scale / output_scale
+M1_cal = 2 ** 16 * bias / output_scale
+M0 = M0_cal
+M1 = M1_cal
 for i in range(1000):
     w_mul_x = np.multiply(weight_quantized[i] - weight_zero, input_quantized - input_zero).sum()
     output_1000[i] = np.round(
