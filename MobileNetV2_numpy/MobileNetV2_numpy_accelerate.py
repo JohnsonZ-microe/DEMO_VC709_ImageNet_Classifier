@@ -558,6 +558,7 @@ output1000_extract = output_fm_list[62]
 output_1000_save = output_1000.reshape(1000,1,1)
 ofmp_file_name = f"outputs\\software_output_layer54.npy"
 np.save(ofmp_file_name, output_1000_save)
+# np.savetxt("outputs\\software_output_layer54.csv",output_1000)
 flag = np.zeros(output_1000.shape)
 for i in range(output_1000.shape[0]):
     if (abs(output_1000[i] - output1000_extract[i]) == 0):
@@ -589,7 +590,8 @@ output_scale = 0.15309934318065643
 output_zero = 75
 output_1000 = output_scale * (output_1000 - output_zero)
 output_1000_tensor = torch.from_numpy(output_1000).clone().detach()
-
+ofmp_file_name = f"outputs\\software_output_softmax.csv"
+np.savetxt(ofmp_file_name, output_1000, delimiter=",")
 probabilities = torch.nn.functional.softmax(output_1000_tensor, dim=0)
 
 with open("imagenet_classes.txt", "r") as f:

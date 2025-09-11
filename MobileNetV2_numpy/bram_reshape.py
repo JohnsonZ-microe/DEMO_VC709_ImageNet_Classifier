@@ -42,14 +42,76 @@ def hex_to_channels(hex_strings, base_addr, pos, num_channels):
     all_values = []
     for addr_offset, hex_str in enumerate(hex_strings):
         # 确保72位（18个十六进制字符）并按小端模式解析
-        groups = [hex_str[i*2:(i+1)*2] for i in range(9)][::-1]  # 低位在前
+        groups = [hex_str[i * 2:(i + 1) * 2] for i in range(9)][::-1]  # 低位在前
         for group_idx, group in enumerate(groups):
             try:
                 all_values.append(int(group, 16))
             except ValueError:
                 all_values.append(0)
-                print(f"警告: BRAM{pos} 地址{base_addr+addr_offset} 组{group_idx}无效，用0代替")
+                print(f"警告: BRAM{pos} 地址{base_addr + addr_offset} 组{group_idx}无效，用0代替")
     return all_values[:num_channels]
+
+
+def parse_top5_indices(hex_str):
+    """
+    解析top5索引：每12位一个idx，从高位到低位代表top1-top5（修正顺序）
+    hex_str应为15个字符（60位）
+    """
+    # 确保十六进制字符串长度正确
+    if len(hex_str) < 15:
+        hex_str = hex_str.zfill(15)  # 不足补零
+    else:
+        hex_str = hex_str[-15:]  # 超过截取后15位
+
+    # 转换为二进制字符串，确保60位，小端模式
+    bin_str = bin(int(hex_str, 16))[2:].zfill(60)
+
+    # 从高位到低位提取5个12位的索引（修正顺序）
+    top5 = []
+    for i in range(5):
+        # 计算当前12位在二进制字符串中的位置（修正为从高位开始）
+        start = 60 - (i + 1) * 12
+        end = 60 - i * 12
+        if start < 0:
+            top5.append(0)
+            continue
+        # 提取12位并转换为整数
+        idx_bin = bin_str[start:end]
+        idx = int(idx_bin, 2)
+        top5.append(idx)
+
+    return top5
+
+
+def parse_softmax_results(hex_str):
+    """
+    解析softmax结果：每8位一个小数，共5个，从高位到低位对应top1-top5（修正顺序）
+    hex_str应为10个字符（40位）
+    """
+    # 确保十六进制字符串长度正确
+    if len(hex_str) < 10:
+        hex_str = hex_str.zfill(10)  # 不足补零
+    else:
+        hex_str = hex_str[-10:]  # 超过截取后10位
+
+    # 从高位到低位解析，每个8位一组（修正顺序）
+    softmax = []
+    # 反转分组顺序以匹配top5索引
+    for i in range(4, -1, -1):
+        start = i * 2
+        end = start + 2
+        if end > 10:
+            softmax.append(0.0)
+            continue
+        # 提取8位并转换为小数（假设是0-255表示0-1）
+        byte_hex = hex_str[start:end]
+        try:
+            value = int(byte_hex, 16) / 255.0  # 转换为0-1之间的小数
+            softmax.append(round(value, 6))
+        except ValueError:
+            softmax.append(0.0)
+
+    return softmax
 
 
 def calculate_parameters(output_shape, window_size):
@@ -67,12 +129,13 @@ def calculate_parameters(output_shape, window_size):
 
 
 def process_single_config(config):
-    """处理单个配置"""
+    """处理单个配置，包括可能的top5和softmax结果"""
     # 提取配置参数
     output_shape = config["output_shape"]
     start_addr, end_addr = config["start_addr"], config["end_addr"]
     bram_files, window_size = config["bram_files"], config.get("window_size", 3)
     output_prefix, output_dir = config.get("output_prefix", "output"), config.get("output_dir")
+    top5_addr = config.get("top5_addr")  # 获取top5地址（如果有）
     output_dir = "outputs"
 
     # 输出路径处理
@@ -87,12 +150,12 @@ def process_single_config(config):
 
     # 地址数量验证
     if (end_addr - start_addr + 1) != params["required_addrs"]:
-        print(f"\n错误：地址数量不匹配（需要{params['required_addrs']}，实际{end_addr-start_addr+1}）")
+        print(f"\n错误：地址数量不匹配（需要{params['required_addrs']}，实际{end_addr - start_addr + 1}）")
         return False
 
     # BRAM文件数量验证
     if len(bram_files) != window_size * window_size:
-        print(f"\n错误：BRAM文件数量不匹配（需要{window_size*window_size}，实际{len(bram_files)}）")
+        print(f"\n错误：BRAM文件数量不匹配（需要{window_size * window_size}，实际{len(bram_files)}）")
         return False
 
     # 读取BRAM数据
@@ -132,7 +195,7 @@ def process_single_config(config):
 
     # 输出结果
     print("\n处理完成")
-    print(f"输出数组形状: {result.shape}, 非零值比例: {np.count_nonzero(result)/result.size:.2%}")
+    print(f"输出数组形状: {result.shape}, 非零值比例: {np.count_nonzero(result) / result.size:.2%}")
 
     # 保存NPY文件
     npy_file = output_path(f"{output_prefix}.npy")
@@ -149,13 +212,61 @@ def process_single_config(config):
     else:
         print("通道数过多，未生成Excel文件")
 
+    # 处理top5和softmax结果（如果指定了top5地址）
+    if top5_addr is not None:
+        print(f"\n开始处理top5索引和softmax结果，top5地址: {top5_addr}")
+        softmax_addr = top5_addr + 1  # softmax地址为top5地址的下一个地址
+
+        # 读取top5和softmax数据（从第一个BRAM文件读取）
+        top5_data = None
+        softmax_data = None
+        if bram_files:
+            # 读取top5地址数据
+            top5_addr_data = read_address_range(bram_files[0], top5_addr, top5_addr)
+            if top5_addr in top5_addr_data:
+                top5_data = top5_addr_data[top5_addr]
+
+            # 读取softmax地址数据
+            softmax_addr_data = read_address_range(bram_files[0], softmax_addr, softmax_addr)
+            if softmax_addr in softmax_addr_data:
+                softmax_data = softmax_addr_data[softmax_addr]
+
+        # 解析数据
+        if top5_data is not None and softmax_data is not None:
+            top5_indices = parse_top5_indices(top5_data)
+            softmax_results = parse_softmax_results(softmax_data)
+
+            # 输出结果
+            print("\n===== Top5结果 =====")
+            for i in range(5):
+                print(f"Top{i + 1}: 索引={top5_indices[i]}, 概率={softmax_results[i]:.6f}")
+
+            # 保存结果
+            top5_result = pd.DataFrame({
+                '排名': [f'Top{i + 1}' for i in range(5)],
+                '索引': top5_indices,
+                '概率': softmax_results
+            })
+
+            # 保存为Excel和NPY
+            top5_excel = output_path(f"{output_prefix}_top5.xlsx")
+            top5_result.to_excel(top5_excel, index=False)
+            print(f"Top5结果已保存为: {top5_excel}")
+
+            top5_npy = output_path(f"{output_prefix}_top5.npy")
+            np.savez(top5_npy, indices=top5_indices, probabilities=softmax_results)
+            print(f"Top5结果(NPY)已保存为: {top5_npy}")
+        else:
+            print(f"警告: 无法读取top5地址({top5_addr})或softmax地址({softmax_addr})的数据")
+
     return True
 
 
 def process_all_configs(configs):
     """处理所有配置"""
     total = len(configs)
-    success = sum(1 for i, cfg in enumerate(configs, 1) if (print(f"\n===== 开始处理配置 {i}/{total} =====") or True) and process_single_config(cfg))
+    success = sum(1 for i, cfg in enumerate(configs, 1) if
+                  (print(f"\n===== 开始处理配置 {i}/{total} =====") or True) and process_single_config(cfg))
     print(f"\n===== 所有配置处理完毕 =====")
     print(f"总配置数: {total}, 成功: {success}, 失败: {total - success}")
 
@@ -295,10 +406,11 @@ if __name__ == "__main__":
          "output_prefix": "hardware_output_layer52"},
         {"output_shape": (1280, 1, 1), "start_addr": 103797, "end_addr": 103939,
          "output_prefix": "hardware_output_layer53"},
+        # ... 其他层配置保持不变 ...
         {"output_shape": (1000, 1, 1), "start_addr": 103940, "end_addr": 104051,
-         "output_prefix": "hardware_output_layer54"}
+         "output_prefix": "hardware_output_layer54", "top5_addr": 104052}
     ]
 
     # 生成完整配置列表
-    CONFIGS = [{**base,** layer} for layer in layers]
+    CONFIGS = [{**base, **layer} for layer in layers]
     process_all_configs(CONFIGS)

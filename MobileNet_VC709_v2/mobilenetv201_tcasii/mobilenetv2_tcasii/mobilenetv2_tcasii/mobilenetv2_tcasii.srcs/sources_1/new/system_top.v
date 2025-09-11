@@ -77,6 +77,9 @@ wire [BRAM_BAND_WIDTH-1 :0] Weight10_in, Weight11_in, Weight12_in;
 wire [BRAM_BAND_WIDTH-1 :0] Weight20_in, Weight21_in, Weight22_in;
 
 wire ofmap_wea;
+wire ofmap_valid_mux;
+wire softmax_write_valid;
+
 ///
 ///------------------------------------------------------------------------
 
@@ -137,6 +140,7 @@ wire ReLU_enable;
 wire [BRAM_BAND_WIDTH-1:0] ofmap_write_0, ofmap_write_1, ofmap_write_2;
 wire [BRAM_BAND_WIDTH-1:0] ofmap_write_3, ofmap_write_4, ofmap_write_5;
 wire [BRAM_BAND_WIDTH-1:0] ofmap_write_6, ofmap_write_7, ofmap_write_8;
+wire [BRAM_BAND_WIDTH-1:0] softmax_out;
 wire ofmap_write_ena;
 
 
@@ -169,6 +173,8 @@ wire ofmap_write_ena;
     wire [DATA_BRAM_ADDR_WIDTH-1:0] bram0_write_addr, bram1_write_addr, bram2_write_addr;
     wire [DATA_BRAM_ADDR_WIDTH-1:0] bram3_write_addr, bram4_write_addr, bram5_write_addr;
     wire [DATA_BRAM_ADDR_WIDTH-1:0] bram6_write_addr, bram7_write_addr, bram8_write_addr;
+
+    wire [DATA_BRAM_ADDR_WIDTH-1:0] softmax_write_addr;
     
     wire [BRAM_BAND_WIDTH-1 : 0 ] bram0_write_value, bram1_write_value, bram2_write_value;
     wire [BRAM_BAND_WIDTH-1 : 0 ] bram3_write_value, bram4_write_value, bram5_write_value;
@@ -186,7 +192,7 @@ wire [KERNEL_BRAM_ADDR_WIDTH-1:0] kernel_read_addr0, kernel_read_addr1, kernel_r
 wire [KERNEL_BRAM_ADDR_WIDTH-1:0] kernel_read_addr3, kernel_read_addr4, kernel_read_addr5;
 wire [KERNEL_BRAM_ADDR_WIDTH-1:0] kernel_read_addr6, kernel_read_addr7, kernel_read_addr8;
 wire kernel_bram_en;    
-
+wire softmax_en;
 wire M1_bram_en;                
 wire [M1_BRAM_ADDR_WIDTH -1:0] M1_read_addr;
 wire [9*32-1:0] M1_bram_in;
@@ -198,7 +204,8 @@ wire[DATA_BRAM_ADDR_WIDTH-1:0] bram0_read_addr_mux, bram1_read_addr_mux, bram2_r
 wire[DATA_BRAM_ADDR_WIDTH-1:0] bram3_read_addr_mux, bram4_read_addr_mux, bram5_read_addr_mux;
 wire[DATA_BRAM_ADDR_WIDTH-1:0] bram6_read_addr_mux, bram7_read_addr_mux, bram8_read_addr_mux;
 wire data_bram_ena_mux;
-assign bram0_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram0_read_addr;
+wire[DATA_BRAM_ADDR_WIDTH-1:0] softmax_read_addr;
+assign bram0_read_addr_mux = test_read_mode?bram0_read_addr_tb:((softmax_en && softmax_finish == 0)? softmax_read_addr:bram0_read_addr);
 assign bram1_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram1_read_addr;
 assign bram2_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram2_read_addr;
 assign bram3_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram3_read_addr;
@@ -208,6 +215,8 @@ assign bram6_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram6_read_addr;
 assign bram7_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram7_read_addr;
 assign bram8_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram8_read_addr;
 assign data_bram_ena_mux = test_read_mode?1'b1:data_bram_ena;
+
+assign ofmap_valid_mux = (mode == 3'd6) ? softmax_write_valid : ofmap_wea;
 //--------------------Shortcut test-------------------//
 wire [HORIZENTAL_VERTICAL_COUNTER_WIDTH-1:0] read_h_block_idx;
 wire [HORIZENTAL_VERTICAL_COUNTER_WIDTH-1:0] read_v_block_idx;
@@ -217,13 +226,14 @@ wire [7:0] row_block_num;
 wire shortcut_addr_sel;
 wire avgpool_chan_done;
 wire avgpool_chan_start;
+
 central_control central_control0(
 /** User Config Register Signal Declaration **/
     .clk(clk),
     .rst_n(rst),
     .ena(enable),
     .busy(busy),
-    .complete(complete),
+    .complete(complete || softmax_finish),
     .reg_config_data_in(reg_config_data_in),    // user config register data input  
     .reg_config_addr(reg_config_addr),       // user config register mapped address                
     .reg_config_valid(reg_config_valid)       // user config register data valid, when asserted, reg_config_data_in was written in corresponding register
@@ -313,7 +323,8 @@ counter_dw counter_dw0
   .row_block_num(row_block_num),
   .shortcut_addr_sel(shortcut_addr_sel),
   .avgpool_chan_start(avgpool_chan_start),
-  .avgpool_chan_done(avgpool_chan_done)
+  .avgpool_chan_done(avgpool_chan_done),
+  .softmax_en(softmax_en)
 );
 
 
@@ -406,7 +417,7 @@ BRAM_DMA BRAM_DMA0
     .Ofmap_vert_num(ofmap_v_cnt),
     .Ofmap_channel_num(ofmap_channel_cnt),
     .ofmap_channel(ofmap_channel),
-    .ofmap_valid(ofmap_wea),
+    .ofmap_valid(ofmap_valid_mux),
     //shortcut
     .SC_base_addr(SC_base_addr),
     
@@ -465,13 +476,31 @@ Kernel_Bram_DMA Kernel_Bram_DMA0
     .M1_bram_in(M1_bram_in),
     .M1_out(bias_in)
     );
-
+softmax u_softmax(
+    .clk(clk),
+    .rst_n(rst),
+    .softmax_en(softmax_en),
+    .m0(M0),
+    .zero_point(Output_zero_point),
+    .data_in(bram0_read_input),
+    .bram_read_base_addr(Ifmap_base_addr),
+    .bram_write_base_addr(Ofmap_base_addr),
+    .softmax_read_addr(softmax_read_addr),
+    .softmax_write_addr(softmax_write_addr),
+    .softmax_out(softmax_out),
+    .softmax_write_valid(softmax_write_valid),
+    .softmax_finish(softmax_finish)
+);
+wire [71:0] ofmap_write_0_mux;
+assign ofmap_write_0_mux = (softmax_write_valid == 1'b1) ? softmax_out : ofmap_write_0;
+wire [17:0] bram0_write_addr_mux;
+assign bram0_write_addr_mux = (softmax_write_valid == 1'b1) ?  softmax_write_addr :bram0_write_addr; 
 Data_BRAM_0 Data_Bram_0 (
   .clka(clk),    // input wire clka
   .ena(data_bram_ena),      // input wire ena
   .wea(bram_write_wea[0]),      // input wire [0 : 0] wea
-  .addra(bram0_write_addr),  // input wire [13 : 0] addra
-  .dina(ofmap_write_0),    // input wire [71 : 0] dina
+  .addra(bram0_write_addr_mux),  // input wire [13 : 0] addra
+  .dina(ofmap_write_0_mux),    // input wire [71 : 0] dina
   .clkb(clk),    // input wire clkb
   .enb(data_bram_ena_mux),      // input wire enb
   .addrb(bram0_read_addr_mux),  // input wire [13 : 0] addrb

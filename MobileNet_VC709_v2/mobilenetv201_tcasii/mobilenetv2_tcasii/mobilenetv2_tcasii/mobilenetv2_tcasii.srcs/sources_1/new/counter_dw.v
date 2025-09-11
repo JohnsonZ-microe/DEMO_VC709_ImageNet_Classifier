@@ -98,7 +98,8 @@ module counter_dw#
 
     //-----------------------Average Pooling test------------------//
     output reg avgpool_chan_start,
-    output reg avgpool_chan_done
+    output reg avgpool_chan_done,
+    output softmax_en
 
   );
 
@@ -125,6 +126,7 @@ module counter_dw#
   wire stride;                  // stride = 0 : stride is 1   ||   stride = 1 : stride is 2
   assign stride = General_config[3];
   assign Mode = General_config[2:0];
+  assign softmax_en = (Mode == 3'b110) ? 1'b1 : 1'b0;
   wire [7:0] ifmap_size;
   assign ifmap_size = (ifmap_size_no_first_layer== 0)? 8'd224: ifmap_size_no_first_layer;
   assign ifmap_size_out = ifmap_size;

@@ -8,7 +8,7 @@ module central_control(
     input         complete,
     output logic [31:0] reg_config_data_in,    // user config register data input
     output logic [3:0]  reg_config_addr,       // user config register mapped address
-    output logic        reg_config_valid       // user config register data valid, when asserted, reg_config_data_in was written in corresponding register
+    output logic        reg_config_valid      // user config register data valid, when asserted, reg_config_data_in was written in corresponding register
   );
 
 
@@ -17,7 +17,7 @@ module central_control(
   localparam CONFIGURE = 2'd1;
   localparam LAYER_CNT = 2'd2;
 
-
+  
   logic [1:0] current_state;
   logic [1:0] next_state;
 
@@ -98,15 +98,14 @@ module central_control(
       cnt_layer <= 7'd0;
     else if(current_state == LAYER_CNT)
     begin
-      if(cnt_layer == 7'd70)
-        cnt_layer <= 0;
+      if(cnt_layer == 7'd65)
+        cnt_layer <= cnt_layer;
       else if(complete)
         cnt_layer <= cnt_layer + 1'b1;
       else
         cnt_layer <= cnt_layer;
     end
   end
-
   always_comb
   begin
     //------------------------average pooling test-----------------------//
@@ -787,8 +786,17 @@ module central_control(
   config_data[63][5] = 32'd0; // SC base addr
   config_data[63][6] = 32'b0000000000000000_01001011_00000000; // [15:8] output zero ，[7:0] input zero
   config_data[63][7] = 32'b0010001111_00001110000_0000001_0_011; 
-  //general config [31:22]: ifmp, [21:11] ofmp_channel, [10:4]: ifmp_size,  [3]:stride: 0代表stride=1，1代表stride =2, [2:0]: 00 IDLE 01 CONV 02 DW 03 PW 04 SC 05 AVGPOOL 06 FC;
-  end
+  //general config [31:22]: ifmp, [21:11] ofmp_channel, [10:4]: ifmp_size,  [3]:stride: 0代表stride=1，1代表stride =2, [2:0]: 00 IDLE 01 CONV 02 DW 03 PW 04 SC 05 AVGPOOL;
+  
 
-
+  //layer 54 input (1000,1,1) output (1000,1,1) softmax
+  config_data[64][0] = 32'd39; // M0
+  config_data[64][1] = 32'd103940; // ifmp BRAM base addr
+  config_data[64][2] = 32'd104052; // ofmp BRAM base addr
+  config_data[64][3] = 32'd0; // weight BRAM base addr
+  config_data[64][4] = 32'd0; // M1 BRAM base addr
+  config_data[64][5] = 32'd0; // SC base addr
+  config_data[64][6] = 32'b0000000000000000_01001011_00000000; 
+  config_data[64][7] = 32'b0000000000_00000000000_0000001_0_110; //[2:0] 00 IDLE 01 CONV 02 DW 03 PW 04 SC 05 AVGPOOL 06 SOFTMAX;
+end
 endmodule

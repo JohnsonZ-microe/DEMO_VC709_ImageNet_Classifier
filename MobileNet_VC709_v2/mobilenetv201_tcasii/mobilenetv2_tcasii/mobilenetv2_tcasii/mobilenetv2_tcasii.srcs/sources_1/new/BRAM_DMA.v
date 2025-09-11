@@ -580,6 +580,9 @@ always@(*) begin
         else if (mode == 3'd5)begin
             bram_write_wea <= 9'b000000001;
         end
+        else if (mode == 3'd6)begin
+            bram_write_wea <= 9'b000000001;
+        end
         else begin
         case(write_scenarios)
                 4'b0000: begin
