@@ -35,16 +35,17 @@ module system_top#
     parameter M1_BRAM_ADDR_WIDTH = 13
 )
 (
-    input clk,
-    input rst,
-    input enable,
+    input clk_in_p,
+    input clk_in_n,
+    input rstp_sys,
+    input enable
     //-------------------DEBUG-------------------//
-    input test_read_mode,  // 1'b1: tb control, 1'b0: normal control
-    input [DATA_BRAM_ADDR_WIDTH-1:0] bram0_read_addr_tb,  // tb control read address
+    //input test_read_mode,  // 1'b1: tb control, 1'b0: normal control
+    //input [DATA_BRAM_ADDR_WIDTH-1:0] bram0_read_addr_tb,  // tb control read address
 //    input [31:0] reg_config_data_in,   // user config register data input  
 //    input [3:0] reg_config_addr,       // user config register mapped address  
     //       --------     DEBUG  -------            //
-    output [DATA_WIDTH-1:0] conv_output0, conv_output1, conv_output2
+    //output [DATA_WIDTH-1:0] conv_output0, conv_output1, conv_output2
     //---------------------------------------------//
              
 //    input reg_config_valid            // user config register data valid, when asserted, reg_config_data_in was written in corresponding register
@@ -82,6 +83,24 @@ wire softmax_write_valid;
 
 ///
 ///------------------------------------------------------------------------
+
+
+wire rst_n;
+assign rst_n = ~rstp_sys;
+    
+wire locked;
+wire clk;
+
+clk_wiz_0 clk_gen
+(
+    // Clock out ports
+    .clk_out1(clk),        // output clk_out1
+    // Status and control signals
+    .reset(rstp_sys),           // input reset
+    .locked(locked),       // output locked
+    // Clock in ports
+    .clk_in1_p(clk_in_p),    // input clk_in1_p
+    .clk_in1_n(clk_in_n));   // input clk_in1_n
 
 //// ---------- cable between counter_dw and Kernel_Bram_DMA ----------------////
 ///
@@ -205,16 +224,28 @@ wire[DATA_BRAM_ADDR_WIDTH-1:0] bram3_read_addr_mux, bram4_read_addr_mux, bram5_r
 wire[DATA_BRAM_ADDR_WIDTH-1:0] bram6_read_addr_mux, bram7_read_addr_mux, bram8_read_addr_mux;
 wire data_bram_ena_mux;
 wire[DATA_BRAM_ADDR_WIDTH-1:0] softmax_read_addr;
-assign bram0_read_addr_mux = test_read_mode?bram0_read_addr_tb:((softmax_en && softmax_finish == 0)? softmax_read_addr:bram0_read_addr);
-assign bram1_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram1_read_addr;
-assign bram2_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram2_read_addr;
-assign bram3_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram3_read_addr;
-assign bram4_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram4_read_addr;
-assign bram5_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram5_read_addr;
-assign bram6_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram6_read_addr;
-assign bram7_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram7_read_addr;
-assign bram8_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram8_read_addr;
-assign data_bram_ena_mux = test_read_mode?1'b1:data_bram_ena;
+//-----------------------------------DEBUG-------------------------------//
+// assign bram0_read_addr_mux = test_read_mode?bram0_read_addr_tb:((softmax_en && softmax_finish == 0)? softmax_read_addr:bram0_read_addr);
+// assign bram1_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram1_read_addr;
+// assign bram2_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram2_read_addr;
+// assign bram3_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram3_read_addr;
+// assign bram4_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram4_read_addr;
+// assign bram5_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram5_read_addr;
+// assign bram6_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram6_read_addr;
+// assign bram7_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram7_read_addr;
+// assign bram8_read_addr_mux = test_read_mode?bram0_read_addr_tb:bram8_read_addr;
+// assign data_bram_ena_mux = test_read_mode?1'b1:data_bram_ena;
+//------------------------------------------------------------------------//
+assign bram0_read_addr_mux = ((softmax_en && softmax_finish == 0)? softmax_read_addr:bram0_read_addr);
+assign bram1_read_addr_mux = bram1_read_addr;
+assign bram2_read_addr_mux = bram2_read_addr;
+assign bram3_read_addr_mux = bram3_read_addr;
+assign bram4_read_addr_mux = bram4_read_addr;
+assign bram5_read_addr_mux = bram5_read_addr;
+assign bram6_read_addr_mux = bram6_read_addr;
+assign bram7_read_addr_mux = bram7_read_addr;
+assign bram8_read_addr_mux = bram8_read_addr;
+assign data_bram_ena_mux = data_bram_ena;
 
 assign ofmap_valid_mux = (mode == 3'd6) ? softmax_write_valid : ofmap_wea;
 //--------------------Shortcut test-------------------//
@@ -230,7 +261,7 @@ wire avgpool_chan_start;
 central_control central_control0(
 /** User Config Register Signal Declaration **/
     .clk(clk),
-    .rst_n(rst),
+    .rst_n(rst_n),
     .ena(enable),
     .busy(busy),
     .complete(complete || softmax_finish),
@@ -242,7 +273,7 @@ central_control central_control0(
 counter_dw counter_dw0
 (
     .clk(clk)     	    ,
-    .rst_n(rst)   	    ,
+    .rst_n(rst_n)   	    ,
 	.enable(enable)		,
     .reg_config_data_in(reg_config_data_in),          // user config register data input  
     .reg_config_addr(reg_config_addr),             // user config register mapped address                
@@ -331,7 +362,7 @@ counter_dw counter_dw0
 mac_array_x9 mac_array_x9
 (
 	.clk(clk)           ,
-	.rst_n(rst)         ,
+	.rst_n(rst_n)         ,
 	.tlast(tlast)         ,               //input
   .tlast_pw(tlast_pw) , //input
 	.mode(mode)      ,
@@ -395,7 +426,7 @@ mac_array_x9 mac_array_x9
 BRAM_DMA BRAM_DMA0
 (
     .clk(clk),
-    .rst(rst),
+    .rst(rst_n),
     .mode(mode),
     .ifmap_size(ifmap_size),
     .ofmap_size(ofmap_size),
@@ -446,7 +477,7 @@ BRAM_DMA BRAM_DMA0
 Kernel_Bram_DMA Kernel_Bram_DMA0
 (
     .clk(clk),
-    .rst(rst),
+    .rst(rst_n),
     .mode(mode), 
     // Kernel BRAM read channel
     .kernel_pw_p(kernel_p) ,                                //input
@@ -478,7 +509,7 @@ Kernel_Bram_DMA Kernel_Bram_DMA0
     );
 softmax u_softmax(
     .clk(clk),
-    .rst_n(rst),
+    .rst_n(rst_n),
     .softmax_en(softmax_en),
     .m0(M0),
     .zero_point(Output_zero_point),

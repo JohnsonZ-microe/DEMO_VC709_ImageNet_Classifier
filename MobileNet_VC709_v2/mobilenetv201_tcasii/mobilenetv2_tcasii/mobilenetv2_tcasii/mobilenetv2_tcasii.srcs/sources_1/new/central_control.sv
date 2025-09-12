@@ -790,7 +790,7 @@ module central_control(
   
 
   //layer 54 input (1000,1,1) output (1000,1,1) softmax
-  config_data[64][0] = 32'd39; // M0
+  config_data[64][0] = 32'd113; // M0
   config_data[64][1] = 32'd103940; // ifmp BRAM base addr
   config_data[64][2] = 32'd104052; // ofmp BRAM base addr
   config_data[64][3] = 32'd0; // weight BRAM base addr

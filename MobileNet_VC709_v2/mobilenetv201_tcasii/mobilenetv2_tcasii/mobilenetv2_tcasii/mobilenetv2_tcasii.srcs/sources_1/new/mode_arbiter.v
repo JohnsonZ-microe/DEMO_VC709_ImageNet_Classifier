@@ -183,49 +183,50 @@ module mode_arbiter
     );
     
     always@(*) begin
+        calculation_res = { (9*DATA_WIDTH){1'b0} }; 
         if(mode==2'd1)begin  //conv mode
             case(conv_cnt)
                 2'd0: begin
-                    calculation_res[1*DATA_WIDTH-1:0*DATA_WIDTH] <= conv_output0;
-                    calculation_res[2*DATA_WIDTH-1:1*DATA_WIDTH] <= conv_output1;
-                    calculation_res[3*DATA_WIDTH-1:2*DATA_WIDTH] <= conv_output2;
+                    calculation_res[1*DATA_WIDTH-1:0*DATA_WIDTH] = conv_output0;
+                    calculation_res[2*DATA_WIDTH-1:1*DATA_WIDTH] = conv_output1;
+                    calculation_res[3*DATA_WIDTH-1:2*DATA_WIDTH] = conv_output2;
                 end
                 2'd1: begin
-                    calculation_res[4*DATA_WIDTH-1:3*DATA_WIDTH] <= conv_output0;
-                    calculation_res[5*DATA_WIDTH-1:4*DATA_WIDTH] <= conv_output1;
-                    calculation_res[6*DATA_WIDTH-1:5*DATA_WIDTH] <= conv_output2;
+                    calculation_res[4*DATA_WIDTH-1:3*DATA_WIDTH] = conv_output0;
+                    calculation_res[5*DATA_WIDTH-1:4*DATA_WIDTH] = conv_output1;
+                    calculation_res[6*DATA_WIDTH-1:5*DATA_WIDTH] = conv_output2;
                 end
                 2'd2:  begin
-                    calculation_res[7*DATA_WIDTH-1:6*DATA_WIDTH] <= conv_output0;
-                    calculation_res[8*DATA_WIDTH-1:7*DATA_WIDTH] <= conv_output1;
-                    calculation_res[9*DATA_WIDTH-1:8*DATA_WIDTH] <= conv_output2;
+                    calculation_res[7*DATA_WIDTH-1:6*DATA_WIDTH] = conv_output0;
+                    calculation_res[8*DATA_WIDTH-1:7*DATA_WIDTH] = conv_output1;
+                    calculation_res[9*DATA_WIDTH-1:8*DATA_WIDTH] = conv_output2;
                 end
                 default:
-                    calculation_res <= 0;
+                    calculation_res = 0;
             endcase
         end
         else begin    //DW and PW mode
             if(sum_valid) begin
-                calculation_res[1*DATA_WIDTH-1:0*DATA_WIDTH] <= ReLU_0_out;
-                calculation_res[2*DATA_WIDTH-1:1*DATA_WIDTH] <= ReLU_1_out;
-                calculation_res[3*DATA_WIDTH-1:2*DATA_WIDTH] <= ReLU_2_out;
-                calculation_res[4*DATA_WIDTH-1:3*DATA_WIDTH] <= ReLU_3_out;
-                calculation_res[5*DATA_WIDTH-1:4*DATA_WIDTH] <= ReLU_4_out;
-                calculation_res[6*DATA_WIDTH-1:5*DATA_WIDTH] <= ReLU_5_out;
-                calculation_res[7*DATA_WIDTH-1:6*DATA_WIDTH] <= ReLU_6_out;
-                calculation_res[8*DATA_WIDTH-1:7*DATA_WIDTH] <= ReLU_7_out;
-                calculation_res[9*DATA_WIDTH-1:8*DATA_WIDTH] <= ReLU_8_out;
+                calculation_res[1*DATA_WIDTH-1:0*DATA_WIDTH] = ReLU_0_out;
+                calculation_res[2*DATA_WIDTH-1:1*DATA_WIDTH] = ReLU_1_out;
+                calculation_res[3*DATA_WIDTH-1:2*DATA_WIDTH] = ReLU_2_out;
+                calculation_res[4*DATA_WIDTH-1:3*DATA_WIDTH] = ReLU_3_out;
+                calculation_res[5*DATA_WIDTH-1:4*DATA_WIDTH] = ReLU_4_out;
+                calculation_res[6*DATA_WIDTH-1:5*DATA_WIDTH] = ReLU_5_out;
+                calculation_res[7*DATA_WIDTH-1:6*DATA_WIDTH] = ReLU_6_out;
+                calculation_res[8*DATA_WIDTH-1:7*DATA_WIDTH] = ReLU_7_out;
+                calculation_res[9*DATA_WIDTH-1:8*DATA_WIDTH] = ReLU_8_out;
             end
             else begin
-                calculation_res[1*DATA_WIDTH-1:0*DATA_WIDTH] <= 0;
-                calculation_res[2*DATA_WIDTH-1:1*DATA_WIDTH] <= 0;
-                calculation_res[3*DATA_WIDTH-1:2*DATA_WIDTH] <= 0;
-                calculation_res[4*DATA_WIDTH-1:3*DATA_WIDTH] <= 0;
-                calculation_res[5*DATA_WIDTH-1:4*DATA_WIDTH] <= 0;
-                calculation_res[6*DATA_WIDTH-1:5*DATA_WIDTH] <= 0;
-                calculation_res[7*DATA_WIDTH-1:6*DATA_WIDTH] <= 0;
-                calculation_res[8*DATA_WIDTH-1:7*DATA_WIDTH] <= 0;
-                calculation_res[9*DATA_WIDTH-1:8*DATA_WIDTH] <= 0;
+                calculation_res[1*DATA_WIDTH-1:0*DATA_WIDTH] = 0;
+                calculation_res[2*DATA_WIDTH-1:1*DATA_WIDTH] = 0;
+                calculation_res[3*DATA_WIDTH-1:2*DATA_WIDTH] = 0;
+                calculation_res[4*DATA_WIDTH-1:3*DATA_WIDTH] = 0;
+                calculation_res[5*DATA_WIDTH-1:4*DATA_WIDTH] = 0;
+                calculation_res[6*DATA_WIDTH-1:5*DATA_WIDTH] = 0;
+                calculation_res[7*DATA_WIDTH-1:6*DATA_WIDTH] = 0;
+                calculation_res[8*DATA_WIDTH-1:7*DATA_WIDTH] = 0;
+                calculation_res[9*DATA_WIDTH-1:8*DATA_WIDTH] = 0;
             end
         end
     end

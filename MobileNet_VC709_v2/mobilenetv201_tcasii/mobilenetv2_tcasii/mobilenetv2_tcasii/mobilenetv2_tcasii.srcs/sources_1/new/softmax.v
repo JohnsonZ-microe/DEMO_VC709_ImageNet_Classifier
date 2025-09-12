@@ -25,6 +25,7 @@ module softmax#(
 	parameter DATA_WIDTH      =  8,
     parameter POW_WIDTH       =  32,
     parameter M0_WIDTH         =32,
+    parameter SHIFT_BIT        = 9,
     parameter DATA_BRAM_ADDR_WIDTH = 18,
     parameter TOPK_NUM       =  5,
     parameter TOPK_IDX_WIDTH     =  10,
@@ -129,7 +130,7 @@ end
 wire signed [31:0] test1,test2,test3;
 assign test1 = ($signed(data_in[DATA_WIDTH*1-1:DATA_WIDTH*0]) - zero_point);
 assign test2 = m0*($signed(data_in[DATA_WIDTH*1-1:DATA_WIDTH*0]) - zero_point);
-assign test3 = (m0*($signed(data_in[DATA_WIDTH*1-1:DATA_WIDTH*0]) - zero_point)) >> 8;
+assign test3 = (m0*($signed(data_in[DATA_WIDTH*1-1:DATA_WIDTH*0]) - zero_point)) >> SHIFT_BIT;
 wire signed [8:0] zero_point_signed_9bit;
 assign zero_point_signed_9bit = $signed({{1{zero_point[7]}}, zero_point}); // 8位有符号数扩展到9位
 always@(posedge clk)begin
@@ -144,21 +145,21 @@ always@(posedge clk)begin
     else if(softmax_st == STAGE1 && stage1_finish == 0)begin
         if(bram_read_counter == BRAM_READ_CYCLE + 2)begin
             bram_read_counter <=0;
-            data_reg[bram_read_counter_reg3*9+0] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*1-1:DATA_WIDTH*0]}) - zero_point_signed_9bit)) >> 8;
+            data_reg[bram_read_counter_reg3*9+0] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*1-1:DATA_WIDTH*0]}) - zero_point_signed_9bit)) >> SHIFT_BIT;
             stage1_finish <=  1'b1;
         end
         else begin
             bram_read_counter <= bram_read_counter +1;
             softmax_read_addr <= bram_read_base_addr + bram_read_counter;
-            data_reg[bram_read_counter_reg3*9+0] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*1-1:DATA_WIDTH*0]}) - zero_point_signed_9bit)) >> 8;
-            data_reg[bram_read_counter_reg3*9+1] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*2-1:DATA_WIDTH*1]}) - zero_point_signed_9bit)) >> 8;
-            data_reg[bram_read_counter_reg3*9+2] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*3-1:DATA_WIDTH*2]}) - zero_point_signed_9bit)) >> 8;
-            data_reg[bram_read_counter_reg3*9+3] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*4-1:DATA_WIDTH*3]}) - zero_point_signed_9bit)) >> 8;
-            data_reg[bram_read_counter_reg3*9+4] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*5-1:DATA_WIDTH*4]}) - zero_point_signed_9bit)) >> 8;
-            data_reg[bram_read_counter_reg3*9+5] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*6-1:DATA_WIDTH*5]}) - zero_point_signed_9bit)) >> 8;
-            data_reg[bram_read_counter_reg3*9+6] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*7-1:DATA_WIDTH*6]}) - zero_point_signed_9bit)) >> 8;
-            data_reg[bram_read_counter_reg3*9+7] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*8-1:DATA_WIDTH*7]}) - zero_point_signed_9bit)) >> 8;
-            data_reg[bram_read_counter_reg3*9+8] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*9-1:DATA_WIDTH*8]}) - zero_point_signed_9bit)) >> 8;
+            data_reg[bram_read_counter_reg3*9+0] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*1-1:DATA_WIDTH*0]}) - zero_point_signed_9bit)) >> SHIFT_BIT;
+            data_reg[bram_read_counter_reg3*9+1] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*2-1:DATA_WIDTH*1]}) - zero_point_signed_9bit)) >> SHIFT_BIT;
+            data_reg[bram_read_counter_reg3*9+2] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*3-1:DATA_WIDTH*2]}) - zero_point_signed_9bit)) >> SHIFT_BIT;
+            data_reg[bram_read_counter_reg3*9+3] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*4-1:DATA_WIDTH*3]}) - zero_point_signed_9bit)) >> SHIFT_BIT;
+            data_reg[bram_read_counter_reg3*9+4] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*5-1:DATA_WIDTH*4]}) - zero_point_signed_9bit)) >> SHIFT_BIT;
+            data_reg[bram_read_counter_reg3*9+5] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*6-1:DATA_WIDTH*5]}) - zero_point_signed_9bit)) >> SHIFT_BIT;
+            data_reg[bram_read_counter_reg3*9+6] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*7-1:DATA_WIDTH*6]}) - zero_point_signed_9bit)) >> SHIFT_BIT;
+            data_reg[bram_read_counter_reg3*9+7] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*8-1:DATA_WIDTH*7]}) - zero_point_signed_9bit)) >> SHIFT_BIT;
+            data_reg[bram_read_counter_reg3*9+8] <= (m0*($signed({1'b0,data_in[DATA_WIDTH*9-1:DATA_WIDTH*8]}) - zero_point_signed_9bit)) >> SHIFT_BIT;
         end
     end
     else begin

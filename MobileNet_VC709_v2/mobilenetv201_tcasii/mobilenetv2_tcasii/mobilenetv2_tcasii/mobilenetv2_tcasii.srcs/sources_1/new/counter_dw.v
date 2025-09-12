@@ -287,7 +287,7 @@ module counter_dw#
         end
       end
       default:
-        bram_next_st <= bram_next_st;
+        bram_next_st <= IDLE;
     endcase
   end
 

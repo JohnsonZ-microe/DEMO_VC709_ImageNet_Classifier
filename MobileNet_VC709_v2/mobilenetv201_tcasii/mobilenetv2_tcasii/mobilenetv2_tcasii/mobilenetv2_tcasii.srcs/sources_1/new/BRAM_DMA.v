@@ -635,68 +635,77 @@ end
  //------------------------------------------------------------//
  // bram_write_hori_block_addr subaddress generation   
     
-    always@(*) begin
+always@(*) begin
+    bram_write_hori_block_addr_0 = 18'd0;
+    bram_write_hori_block_addr_1 = 18'd0;
+    bram_write_hori_block_addr_2 = 18'd0;
+    bram_write_hori_block_addr_3 = 18'd0;
+    bram_write_hori_block_addr_4 = 18'd0;
+    bram_write_hori_block_addr_5 = 18'd0;
+    bram_write_hori_block_addr_6 = 18'd0;
+    bram_write_hori_block_addr_7 = 18'd0;
+    bram_write_hori_block_addr_8 = 18'd0;
     if(!rst) begin
-        bram_write_hori_block_addr_0 <= 18'd0;
-        bram_write_hori_block_addr_1 <= 18'd0;
-        bram_write_hori_block_addr_2 <= 18'd0;
-        bram_write_hori_block_addr_3 <= 18'd0;
-        bram_write_hori_block_addr_4 <= 18'd0;
-        bram_write_hori_block_addr_5 <= 18'd0;
-        bram_write_hori_block_addr_6 <= 18'd0;
-        bram_write_hori_block_addr_7 <= 18'd0;
-        bram_write_hori_block_addr_8 <= 18'd0;
+        bram_write_hori_block_addr_0 = 18'd0;
+        bram_write_hori_block_addr_1 = 18'd0;
+        bram_write_hori_block_addr_2 = 18'd0;
+        bram_write_hori_block_addr_3 = 18'd0;
+        bram_write_hori_block_addr_4 = 18'd0;
+        bram_write_hori_block_addr_5 = 18'd0;
+        bram_write_hori_block_addr_6 = 18'd0;
+        bram_write_hori_block_addr_7 = 18'd0;
+        bram_write_hori_block_addr_8 = 18'd0;
     end
     else if(bram_st == 0)begin
-        bram_write_hori_block_addr_0 <= 18'd0;
-        bram_write_hori_block_addr_1 <= 18'd0;
-        bram_write_hori_block_addr_2 <= 18'd0;
-        bram_write_hori_block_addr_3 <= 18'd0;
-        bram_write_hori_block_addr_4 <= 18'd0;
-        bram_write_hori_block_addr_5 <= 18'd0;
-        bram_write_hori_block_addr_6 <= 18'd0;
-        bram_write_hori_block_addr_7 <= 18'd0;
-        bram_write_hori_block_addr_8 <= 18'd0;
+        bram_write_hori_block_addr_0 = 18'd0;
+        bram_write_hori_block_addr_1 = 18'd0;
+        bram_write_hori_block_addr_2 = 18'd0;
+        bram_write_hori_block_addr_3 = 18'd0;
+        bram_write_hori_block_addr_4 = 18'd0;
+        bram_write_hori_block_addr_5 = 18'd0;
+        bram_write_hori_block_addr_6 = 18'd0;
+        bram_write_hori_block_addr_7 = 18'd0;
+        bram_write_hori_block_addr_8 = 18'd0;
     end
     else begin
         case(write_scenarios)
             4'b0000: begin
-                bram_write_hori_block_addr_0 <= write_h_block_idx*ofmap_channel;
+                bram_write_hori_block_addr_0 = write_h_block_idx*ofmap_channel;
             end
             4'b0001: begin
-                bram_write_hori_block_addr_1 <= write_h_block_idx*ofmap_channel;     
+                bram_write_hori_block_addr_1 = write_h_block_idx*ofmap_channel;     
             end
             4'b0010: begin
-                bram_write_hori_block_addr_2 <= write_h_block_idx*ofmap_channel;
+                bram_write_hori_block_addr_2 = write_h_block_idx*ofmap_channel;
             end
             4'b0100: begin
-                bram_write_hori_block_addr_3 <= write_h_block_idx*ofmap_channel; 
+                bram_write_hori_block_addr_3 = write_h_block_idx*ofmap_channel; 
             end
             4'b0101: begin
-                bram_write_hori_block_addr_4 <= write_h_block_idx*ofmap_channel;
+                bram_write_hori_block_addr_4 = write_h_block_idx*ofmap_channel;
             end
             4'b0110: begin
-                bram_write_hori_block_addr_5 <= write_h_block_idx*ofmap_channel;
+                bram_write_hori_block_addr_5 = write_h_block_idx*ofmap_channel;
             end
             4'b1000: begin
-                bram_write_hori_block_addr_6 <= write_h_block_idx*ofmap_channel;
+                bram_write_hori_block_addr_6 = write_h_block_idx*ofmap_channel;
             end
             4'b1001: begin
-                bram_write_hori_block_addr_7 <= write_h_block_idx*ofmap_channel;
+                bram_write_hori_block_addr_7 = write_h_block_idx*ofmap_channel;
             end
             4'b1010: begin
-                bram_write_hori_block_addr_8 <= write_h_block_idx*ofmap_channel;
+                bram_write_hori_block_addr_8 = write_h_block_idx*ofmap_channel;
             end
             default: begin
-                bram_write_hori_block_addr_0 <= 18'd0;
-                bram_write_hori_block_addr_1 <= 18'd0;
-                bram_write_hori_block_addr_2 <= 18'd0;
-                bram_write_hori_block_addr_3 <= 18'd0;
-                bram_write_hori_block_addr_4 <= 18'd0;
-                bram_write_hori_block_addr_5 <= 18'd0;
-                bram_write_hori_block_addr_6 <= 18'd0;
-                bram_write_hori_block_addr_7 <= 18'd0;
-                bram_write_hori_block_addr_8 <= 18'd0;
+                bram_write_hori_block_addr_0 = 18'd0;
+                bram_write_hori_block_addr_1 = 18'd0;
+                bram_write_hori_block_addr_2 = 18'd0;
+                bram_write_hori_block_addr_3 = 18'd0;
+                bram_write_hori_block_addr_4 = 18'd0;
+                bram_write_hori_block_addr_5 = 18'd0;
+                bram_write_hori_block_addr_6 = 18'd0;
+                bram_write_hori_block_addr_7 = 18'd0;
+                bram_write_hori_block_addr_8 = 18'd0;
             end
         endcase
     end
@@ -705,68 +714,77 @@ end
 //------------------------------------------------------------//
  // bram_base_vert_block_addr subaddress generation   
     
-    always@(*) begin
+always@(*) begin
+    bram_write_vert_block_addr_0 = 18'd0;
+    bram_write_vert_block_addr_1 = 18'd0;
+    bram_write_vert_block_addr_2 = 18'd0;
+    bram_write_vert_block_addr_3 = 18'd0;
+    bram_write_vert_block_addr_4 = 18'd0;
+    bram_write_vert_block_addr_5 = 18'd0;
+    bram_write_vert_block_addr_6 = 18'd0;
+    bram_write_vert_block_addr_7 = 18'd0;
+    bram_write_vert_block_addr_8 = 18'd0;
     if(!rst) begin
-        bram_write_vert_block_addr_0 <= 18'd0;
-        bram_write_vert_block_addr_1 <= 18'd0;
-        bram_write_vert_block_addr_2 <= 18'd0;
-        bram_write_vert_block_addr_3 <= 18'd0;
-        bram_write_vert_block_addr_4 <= 18'd0;
-        bram_write_vert_block_addr_5 <= 18'd0;
-        bram_write_vert_block_addr_6 <= 18'd0;
-        bram_write_vert_block_addr_7 <= 18'd0;
-        bram_write_vert_block_addr_8 <= 18'd0;
+        bram_write_vert_block_addr_0 = 18'd0;
+        bram_write_vert_block_addr_1 = 18'd0;
+        bram_write_vert_block_addr_2 = 18'd0;
+        bram_write_vert_block_addr_3 = 18'd0;
+        bram_write_vert_block_addr_4 = 18'd0;
+        bram_write_vert_block_addr_5 = 18'd0;
+        bram_write_vert_block_addr_6 = 18'd0;
+        bram_write_vert_block_addr_7 = 18'd0;
+        bram_write_vert_block_addr_8 = 18'd0;
     end
     else if(bram_st == 0)begin
-        bram_write_vert_block_addr_0 <= 18'd0;
-        bram_write_vert_block_addr_1 <= 18'd0;
-        bram_write_vert_block_addr_2 <= 18'd0;
-        bram_write_vert_block_addr_3 <= 18'd0;
-        bram_write_vert_block_addr_4 <= 18'd0;
-        bram_write_vert_block_addr_5 <= 18'd0;
-        bram_write_vert_block_addr_6 <= 18'd0;
-        bram_write_vert_block_addr_7 <= 18'd0;
-        bram_write_vert_block_addr_8 <= 18'd0;
+        bram_write_vert_block_addr_0 = 18'd0;
+        bram_write_vert_block_addr_1 = 18'd0;
+        bram_write_vert_block_addr_2 = 18'd0;
+        bram_write_vert_block_addr_3 = 18'd0;
+        bram_write_vert_block_addr_4 = 18'd0;
+        bram_write_vert_block_addr_5 = 18'd0;
+        bram_write_vert_block_addr_6 = 18'd0;
+        bram_write_vert_block_addr_7 = 18'd0;
+        bram_write_vert_block_addr_8 = 18'd0;
     end
     else begin
         case(write_scenarios)
             4'b0000: begin
-                bram_write_vert_block_addr_0 <= write_v_block_idx* ofmap_row_block_num*ofmap_channel;
+                bram_write_vert_block_addr_0 = write_v_block_idx* ofmap_row_block_num*ofmap_channel;
             end
             4'b0001: begin
-                bram_write_vert_block_addr_1 <= write_v_block_idx* ofmap_row_block_num*ofmap_channel;
+                bram_write_vert_block_addr_1 = write_v_block_idx* ofmap_row_block_num*ofmap_channel;
             end
             4'b0010: begin
-                bram_write_vert_block_addr_2 <= write_v_block_idx* ofmap_row_block_num*ofmap_channel;
+                bram_write_vert_block_addr_2 = write_v_block_idx* ofmap_row_block_num*ofmap_channel;
             end
             4'b0100: begin
-                bram_write_vert_block_addr_3 <= write_v_block_idx* ofmap_row_block_num*ofmap_channel;
+                bram_write_vert_block_addr_3 = write_v_block_idx* ofmap_row_block_num*ofmap_channel;
             end
             4'b0101: begin
-                bram_write_vert_block_addr_4 <= write_v_block_idx* ofmap_row_block_num*ofmap_channel;
+                bram_write_vert_block_addr_4 = write_v_block_idx* ofmap_row_block_num*ofmap_channel;
             end
             4'b0110: begin
-                bram_write_vert_block_addr_5 <= write_v_block_idx* ofmap_row_block_num*ofmap_channel;
+                bram_write_vert_block_addr_5 = write_v_block_idx* ofmap_row_block_num*ofmap_channel;
             end
             4'b1000: begin
-                bram_write_vert_block_addr_6 <= write_v_block_idx* ofmap_row_block_num*ofmap_channel;
+                bram_write_vert_block_addr_6 = write_v_block_idx* ofmap_row_block_num*ofmap_channel;
             end
             4'b1001: begin
-                bram_write_vert_block_addr_7 <= write_v_block_idx* ofmap_row_block_num*ofmap_channel;
+                bram_write_vert_block_addr_7 = write_v_block_idx* ofmap_row_block_num*ofmap_channel;
             end
             4'b1010: begin
-                bram_write_vert_block_addr_8 <= write_v_block_idx* ofmap_row_block_num*ofmap_channel;
+                bram_write_vert_block_addr_8 = write_v_block_idx* ofmap_row_block_num*ofmap_channel;
             end
             default: begin
-                bram_write_vert_block_addr_0 <= 18'd0;
-                bram_write_vert_block_addr_1 <= 18'd0;
-                bram_write_vert_block_addr_2 <= 18'd0;
-                bram_write_vert_block_addr_3 <= 18'd0;
-                bram_write_vert_block_addr_4 <= 18'd0;
-                bram_write_vert_block_addr_5 <= 18'd0;
-                bram_write_vert_block_addr_6 <= 18'd0;
-                bram_write_vert_block_addr_7 <= 18'd0;
-                bram_write_vert_block_addr_8 <= 18'd0;
+                bram_write_vert_block_addr_0 = 18'd0;
+                bram_write_vert_block_addr_1 = 18'd0;
+                bram_write_vert_block_addr_2 = 18'd0;
+                bram_write_vert_block_addr_3 = 18'd0;
+                bram_write_vert_block_addr_4 = 18'd0;
+                bram_write_vert_block_addr_5 = 18'd0;
+                bram_write_vert_block_addr_6 = 18'd0;
+                bram_write_vert_block_addr_7 = 18'd0;
+                bram_write_vert_block_addr_8 = 18'd0;
             end
         endcase
     end

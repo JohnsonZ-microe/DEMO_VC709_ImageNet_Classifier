@@ -62,3 +62,12 @@ Thumbs.db
 *.JPEG
 *.pdf
 *.vsdx
+
+# folder
+/MobileNet_VC709/
+MobileNet_VC709_v2/mobilenetv2_tcasii
+MobileNet_VC709_v2/project_1
+MobileNet_VC709_v2/pygame_gui
+MobileNet_VC709_v2/tcasii
+MobileNet_VC709_v2/uart_loop
+MobileNet_VC709_v2/doc_picture

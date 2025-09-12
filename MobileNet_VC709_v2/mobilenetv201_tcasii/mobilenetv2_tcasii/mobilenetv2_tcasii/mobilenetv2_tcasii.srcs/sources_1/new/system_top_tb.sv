@@ -21,7 +21,8 @@
 
 
 module system_top_tb();
-  bit clk;
+  bit clk_in_p;  
+  bit clk_in_n;
   logic rst;
   logic ena;
   logic [31:0] reg_config_data_in;
@@ -33,21 +34,24 @@ module system_top_tb();
   reg test_read_mode;  // 1'b1: tb control, 1'b0: normal control
   reg [17:0] bram0_read_addr_tb;  // tb control read address
   system_top system_top0(
-               .clk(clk),
-               .rst(rst),
-               .enable(ena),
-               .test_read_mode(test_read_mode),  // 1'b1: tb control, 1'b0: normal control
-               .bram0_read_addr_tb(bram0_read_addr_tb),  // tb control read address
+               .clk_in_p(clk_in_p),
+               .clk_in_n(clk_in_n),
+               .rstp_sys(rst),
+               .enable(ena)
+              //  .test_read_mode(test_read_mode),  // 1'b1: tb control, 1'b0: normal control
+              //  .bram0_read_addr_tb(bram0_read_addr_tb),  // tb control read address
                //        --------------   DEBUG
-               .conv_output0(conv_output0), .conv_output1(conv_output1), .conv_output2(conv_output2)
+              //  .conv_output0(conv_output0), .conv_output1(conv_output1), .conv_output2(conv_output2)
                //  ------------------------------------------------
              );
 
-  always #5 clk = ~clk;
+  always #5 clk_in_p = ~clk_in_p;
+  assign clk_in_n = ~clk_in_p;
+
 
   initial
   begin
-    clk = 0;
+    clk_in_p = 0;
     ena = 0;
     rst = 1;
     reg_config_data_in = 0;
@@ -105,7 +109,7 @@ module system_top_tb();
     //    else $display("ERROR File conv_out_2.txt NOT open successfully");
     forever
     begin
-      @(posedge clk);
+      @(posedge clk_in_p);
 
       // 在信号有效时记录数据
       if(ena)
@@ -157,8 +161,8 @@ module system_top_tb();
         
         for (i = 0; i < 104100; i = i + 1) begin  // BRAM深度
             // 读BRAM的时序控制
-            @(posedge clk);
-            @(posedge clk);
+            @(posedge clk_in_p);
+            @(posedge clk_in_p);
          
             #1;  // 等待输出稳定
             

@@ -590,7 +590,7 @@ output_scale = 0.15309934318065643
 output_zero = 75
 output_1000 = output_scale * (output_1000 - output_zero)
 output_1000_tensor = torch.from_numpy(output_1000).clone().detach()
-ofmp_file_name = f"outputs\\software_output_softmax.csv"
+# ofmp_file_name = f"outputs\\software_output_softmax.csv"
 np.savetxt(ofmp_file_name, output_1000, delimiter=",")
 probabilities = torch.nn.functional.softmax(output_1000_tensor, dim=0)
 
