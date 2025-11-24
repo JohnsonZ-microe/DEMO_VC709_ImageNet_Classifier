@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-// Date        : Fri Sep 12 12:02:59 2025
+// Date        : Wed Sep 17 20:51:21 2025
 // Host        : DESKTOP-4RLG61U running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
 //               D:/Postgraduate/project/MobileNet/MobileNet_VC709_v2/mobilenetv201_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii/mobilenetv2_tcasii.srcs/sources_1/ip/Data_Bram_6/Data_Bram_6_stub.v
@@ -15,14 +15,14 @@
 // Please paste the declaration into a Verilog source file or add the file as an additional source.
 (* x_core_info = "blk_mem_gen_v8_4_2,Vivado 2018.3" *)
 module Data_Bram_6(clka, ena, wea, addra, dina, clkb, enb, addrb, doutb)
-/* synthesis syn_black_box black_box_pad_pin="clka,ena,wea[0:0],addra[17:0],dina[71:0],clkb,enb,addrb[17:0],doutb[71:0]" */;
+/* synthesis syn_black_box black_box_pad_pin="clka,ena,wea[0:0],addra[14:0],dina[71:0],clkb,enb,addrb[14:0],doutb[71:0]" */;
   input clka;
   input ena;
   input [0:0]wea;
-  input [17:0]addra;
+  input [14:0]addra;
   input [71:0]dina;
   input clkb;
   input enb;
-  input [17:0]addrb;
+  input [14:0]addrb;
   output [71:0]doutb;
 endmodule

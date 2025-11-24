@@ -211,7 +211,7 @@ def generate_comparison_groups(start_layer, end_layer, shortcut_layers=None):
 if __name__ == "__main__":
     # 配置参数 - 直接在代码中修改以下值
     start_layer = 1  # 起始层数
-    end_layer = 54 # 结束层数
+    end_layer = 53 # 结束层数
     shortcut_layers = [9,15,18,24,27,30,36,39,45,48]  # 包含shortcut的层列表，如 [9, 15, 18]，无则设为[]
     output_dir = "comparison_results"  # 结果输出目录
 

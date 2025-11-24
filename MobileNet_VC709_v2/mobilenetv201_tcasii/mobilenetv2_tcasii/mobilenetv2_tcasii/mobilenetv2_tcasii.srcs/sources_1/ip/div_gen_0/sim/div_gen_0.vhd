@@ -138,7 +138,7 @@ BEGIN
       C_XDEVICEFAMILY => "virtex7",
       C_HAS_ARESETN => 0,
       C_HAS_ACLKEN => 0,
-      C_LATENCY => 2,
+      C_LATENCY => 43,
       ALGORITHM_TYPE => 1,
       DIVISOR_WIDTH => 36,
       DIVIDEND_WIDTH => 41,

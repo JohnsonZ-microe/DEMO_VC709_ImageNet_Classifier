@@ -192,7 +192,10 @@ param_file.write(f"Layer 1:\n")
 param_file.write(f"  M0: {M0}\n")
 param_file.write(f"  输入零点: {input_zero} (二进制: {int_to_bin(input_zero)})\n")
 param_file.write(f"  输出零点: {output_zero} (二进制: {int_to_bin(output_zero)})\n\n")
-
+# with pd.ExcelWriter(f"outputs\\ofmp1.xlsx") as writer:
+#     for ch in range(ofmp[1].shape[0]):
+#         df = pd.DataFrame(ofmp[1][ch])
+#         df.to_excel(writer, sheet_name=f"channel_{ch}", index=False, header=False)
 out1_extract = output_fm_list[0]
 flag_ratio = (ofmp[1] == output_fm_list[0]).mean() * 100
 
@@ -249,7 +252,10 @@ print(f"{flag_ratio:.2f}% of values are the same between the pytorch and numpy q
 pickle.dump(M1, open("coe\\layer2_M1.p", "wb"))
 pickle.dump(weight_quantized, open("coe\\layer2_weight.p", "wb"))
 np.save("outputs\\software_output_layer2.npy", ofmp[2])
-
+# with pd.ExcelWriter(f"outputs\\ofmp2.xlsx") as writer:
+#     for ch in range(ofmp[2].shape[0]):
+#         df = pd.DataFrame(ofmp[2][ch])
+#         df.to_excel(writer, sheet_name=f"channel_{ch}", index=False, header=False)
 # %% Layer3 inference
 print(" Layer 3 PW inference start ")
 print(" Hierarchy configuration: FMin=112, Cin=32, Fmout=112, Cout=16, s=1")
@@ -504,10 +510,10 @@ flag_2d = flag.reshape((flag.shape[0] * flag.shape[1]), -1)
 print(flag.sum() / get_element_numbers(ofmp52) * 100, '%', "Layer 52 conv2d 1*1")
 ofmp_file_name = f"outputs\\software_output_layer52.npy"
 np.save(ofmp_file_name, ofmp52)
-# with pd.ExcelWriter(f"accelerate\\ofmp52.xlsx") as writer:
-#     for ch in range(ofmp52.shape[0]):
-#         df = pd.DataFrame(ofmp52[ch])
-#         df.to_excel(writer, sheet_name=f"channel_{ch}", index=False, header=False)
+with pd.ExcelWriter(f"outputs\\ofmp52.xlsx") as writer:
+    for ch in range(ofmp52.shape[0]):
+        df = pd.DataFrame(ofmp52[ch])
+        df.to_excel(writer, sheet_name=f"channel_{ch}", index=False, header=False)
 # %%
 
 # AVG_POOLING

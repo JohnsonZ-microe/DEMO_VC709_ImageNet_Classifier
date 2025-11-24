@@ -151,6 +151,7 @@ def main():
     input_result["shortcut_info"] = None  # 输入层不是shortcut层
     input_result["base_layer_number"] = current_layer_number  # 输入层编号为0
     all_results.append(input_result)
+    print(f"  {input_layer_name} 使用地址数量: {input_result['total_addresses']}")  # 打印地址数量
     current_start = input_result["end_address"] + 1
     current_layer_number += 1  # 下一个基础层编号
 
@@ -176,6 +177,9 @@ def main():
             "zero_point": zero_point
         } if is_shortcut else None
         all_results.append(result)
+
+        # 打印当前层使用的地址数量
+        print(f"  {layer_name} 使用地址数量: {result['total_addresses']}")
 
         # 特别处理第9层的shortcut输出名称
         if layer_num == 9 and is_shortcut:
@@ -222,18 +226,23 @@ def main():
 
     # 控制台显示完成信息
     print("\n===== 生成完成 =====")
-    print(f"已按指定格式保存到 'layer_addresses.txt' 文件中")
+    print(f"已按指定格式保存到 'Data_bram_addresses.txt' 文件中")
     print(f"总层数: {len(all_results)}")
     print(f"基础层数量: {current_layer_number}")
     shortcut_count = sum(
         1 for r in all_results if r.get("shortcut_info") and r["shortcut_info"].get("is_shortcut", False))
     print(f"shortcut层数: {shortcut_count}")
 
+    # 计算并显示总地址数量
+    total_all_addresses = sum(r["total_addresses"] for r in all_results)
+    print(f"所有层总共使用的地址数量: {total_all_addresses}")
+
     # 验证第9层的shortcut是否存在并正确命名
     layer9_shortcut = next((r for r in all_results if r.get("base_layer_number") == 9 and
                             r.get("shortcut_info") and r["shortcut_info"].get("is_shortcut", False)), None)
     if layer9_shortcut:
         print(f"第9层的shortcut输出名称: hardware_output_layer9_shortcut")
+        print(f"第9层的shortcut使用地址数量: {layer9_shortcut['total_addresses']}")
     else:
         print(f"注意: 未找到第9层的shortcut层，请检查层定义")
 

@@ -14,3 +14,7 @@ set_property IOSTANDARD LVCMOS18 [get_ports rstp_sys]
 ## SW2 - 16 - 1
 set_property PACKAGE_PIN AV30 [get_ports enable]
 set_property IOSTANDARD LVCMOS18 [get_ports enable]
+
+## SW2 - 16 - 1
+set_property PACKAGE_PIN AM39 [get_ports ram]
+set_property IOSTANDARD LVCMOS18 [get_ports ram]

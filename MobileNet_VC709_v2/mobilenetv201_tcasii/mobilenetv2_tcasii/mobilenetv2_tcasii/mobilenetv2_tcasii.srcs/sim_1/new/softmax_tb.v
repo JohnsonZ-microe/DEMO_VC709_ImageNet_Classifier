@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 100ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -26,7 +26,7 @@ module softmax_tb(
     reg clk;
     reg rst_n;
     reg softmax_en;
-    always #5 clk = ~clk;
+    always #2.5 clk = ~clk;
     wire [71:0]data_in;
     wire [7:0]data0,data1,data2,data3,data4,data5,data6,data7,data8;
     reg [7:0]counter;
@@ -64,8 +64,10 @@ module softmax_tb(
         .rst_n(rst_n),
         .softmax_en(1'b1),
         .data_in(data_in),
-        .bram_read_base_addr(),
-        .bram_write_base_addr(18'd0),
+        .m0(113),
+        .zero_point(8'b01001011),
+        .bram_read_base_addr(18'd9680),
+        .bram_write_base_addr(18'd9792),
         .softmax_read_addr(),
         .softmax_write_addr(),
         .softmax_out(),

@@ -274,13 +274,13 @@ def process_all_configs(configs):
 if __name__ == "__main__":
     # 基础配置（公共参数）
     base = {
-        "bram_files": [f"bram{i}.txt" for i in range(9)],
+        "bram_files": [f"bram{i}_extended.txt" for i in range(9)],
         "window_size": 3
     }
 
     # 层配置参数（仅包含差异化参数）
     layers = [
-        {"output_shape": (32, 112, 112), "start_addr": 5625, "end_addr": 11400,
+        {"output_shape": (32, 112, 112), "start_addr": 5776, "end_addr": 11551,
          "output_prefix": "hardware_output_layer1", "output_dir": "outputs"},
         {"output_shape": (32, 112, 112), "start_addr": 11401, "end_addr": 17176,
          "output_prefix": "hardware_output_layer2"},
@@ -298,8 +298,10 @@ if __name__ == "__main__":
          "output_prefix": "hardware_output_layer8"},
         {"output_shape": (24, 56, 56), "start_addr": 52555, "end_addr": 53637,
          "output_prefix": "hardware_output_layer9"},
+
         {"output_shape": (24, 56, 56), "start_addr": 53638, "end_addr": 54720,
          "output_prefix": "hardware_output_layer9_shortcut"},
+        
         {"output_shape": (144, 56, 56), "start_addr": 54721, "end_addr": 60496,
          "output_prefix": "hardware_output_layer10"},
         {"output_shape": (144, 28, 28), "start_addr": 60497, "end_addr": 62096,
