@@ -26,7 +26,7 @@
 # 二、软件部分
 
 ## 神经网络软件部分
-.jpg、.JEPG文件为神经网络的输入，.npy、.pkl文件为参数M0、M1的数据PT文件用于保存模型,Imagenet_classes用于输出判断结果er。
+.jpg、.JEPG文件为神经网络的输入，.npy、.pkl文件为参数M0、M1的数据PT文件用于保存模型,Imagenet_classes用于输出判断结果。
 
 ---
 **量化MobileNetV2推理**
