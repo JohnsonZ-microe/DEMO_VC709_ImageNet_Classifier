@@ -57,7 +57,7 @@ module system_top_tb();
     reg_config_data_in = 0;
     reg_config_valid=0;
     reg_config_addr =0;
-    #200;
+    @(posedge system_top0.clk_gen.locked);
      rst = 0;
     #10;
      rst = 1;
@@ -107,17 +107,6 @@ module system_top_tb();
     //    f2 = $fopen("conv_out_2.txt", "w");
     //    if(f2) $display("File conv_out_2.txt open successfully");
     //    else $display("ERROR File conv_out_2.txt NOT open successfully");
-    forever
-    begin
-      @(posedge clk_in_p);
-
-      // 在信号有效时记录数据
-      if(ena)
-      begin
-        // $fwrite(f0, "%d\n%d\n%d\n", conv_output0, conv_output1, conv_output2);
-        // $display("T = %t: ofmap_write_ena triggered, data written", $time);
-      end
-    end
   end
 
   initial begin
@@ -205,7 +194,7 @@ integer fd;  // 文件句柄变量
 integer file_handle;
 // 初始化所有计数器（仿真开始时执行�?次）
 reg [14:0] complete_reg;
-always @(posedge clk_in_p) begin
+always @(posedge system0.clk) begin
     complete_reg <= {complete_reg[13:0], system_top0.complete};
 end
 
@@ -260,7 +249,7 @@ initial begin
 end
 // 初始化所有计数器（仿真开始时执行�?次）
 
-always @(posedge clk_in_p) begin  // 时钟沿触�?
+always @(posedge system0.clk) begin  // 时钟沿触�?
 
     complete_prev = system_top0.complete;
     if(complete_reg[14])begin

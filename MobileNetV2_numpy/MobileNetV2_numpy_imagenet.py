@@ -2,7 +2,6 @@ import os
 import pickle
 import random
 
-import cupy as cp
 import numpy as np
 import torch
 import torchvision
@@ -11,7 +10,7 @@ from torch.utils.data import Subset
 from torchvision import datasets, transforms
 from tqdm import tqdm
 
-from MobileNetV2_numpy import numpy_inference
+from MobileNetV2_numpy_wrapper import numpy_inference
 # 加载之前保存的量化参数
 M0_int_n_list = np.load("M0_int_n_list.npy")
 M0_SC_int_n_list = np.load("M0_SC_int_n_list.npy")

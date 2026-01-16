@@ -40,10 +40,16 @@ module system_top#
     
     input rstp_sys,
     input enable,
-    output ram,
-    output  imp_data0,imp_data1,imp_data2,imp_data3,imp_data4,imp_data5,imp_data6,imp_data7,imp_data8,
-    output  imp_addr0,imp_addr1,imp_addr2,imp_addr3,imp_addr4,imp_addr5,imp_addr6,imp_addr7,imp_addr8,
-    output [8:0] imp_wea
+    input [31:0] pcie_addr,
+    input [127:0] pcie_data_in,
+    input pcie_clk,
+    input pcie_rst_n,
+    input pcie_enable,
+    output [127:0] pcie_data_out
+    // output ram,
+    // output  imp_data0,imp_data1,imp_data2,imp_data3,imp_data4,imp_data5,imp_data6,imp_data7,imp_data8,
+    // output  imp_addr0,imp_addr1,imp_addr2,imp_addr3,imp_addr4,imp_addr5,imp_addr6,imp_addr7,imp_addr8,
+    // output [8:0] imp_wea
     //-------------------DEBUG-------------------//
     //input test_read_mode,  // 1'b1: tb control, 1'b0: normal control
     //input [DATA_BRAM_ADDR_WIDTH-1:0] bram0_read_addr_tb,  // tb control read address
@@ -55,6 +61,22 @@ module system_top#
              
 //    input reg_config_valid            // user config register data valid, when asserted, reg_config_data_in was written in corresponding register
     );
+// ------------- pcie interface -------------- //
+reg pcie_data_bram_0_en,pcie_data_bram_1_en,pcie_data_bram_2_en,
+     pcie_data_bram_3_en,pcie_data_bram_4_en,pcie_data_bram_5_en,
+     pcie_data_bram_6_en,pcie_data_bram_7_en,pcie_data_bram_8_en;
+reg pcie_kernel_bram_0_en,pcie_kernel_bram_1_en,pcie_kernel_bram_2_en,
+     pcie_kernel_bram_3_en,pcie_kernel_bram_4_en,pcie_kernel_bram_5_en,
+     pcie_kernel_bram_6_en,pcie_kernel_bram_7_en,pcie_kernel_bram_8_en;
+reg pcie_m1_bram_en;
+always @( *) begin
+  case(pcie_addr[20:16])
+    5'b00000: pcie_data_bram_0_en = 1'b1;
+    5'b00001: pcie_data_bram_1_en = 1'b1;
+    5'b00010: pcie_data_bram_2_en = 1'b1;
+
+  endcase
+end
     
 //// ---------- cable between counter_dw and BRAM_DMA ----------------////
 ///

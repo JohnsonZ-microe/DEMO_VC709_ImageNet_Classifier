@@ -200,7 +200,7 @@ out1_extract = output_fm_list[0]
 flag_ratio = (ofmp[1] == output_fm_list[0]).mean() * 100
 
 print(" Layer 1 inference finished ")
-print(f"{flag_ratio:.2f}% of values are the same of values are the same between the pytorch and numpy quantization schemes")
+# print(f"{flag_ratio:.2f}% of values are the same of values are the same between the pytorch and numpy quantization schemes")
 np.save("outputs\\software_output_layer1.npy", ofmp[1])
 
 pickle.dump(M1, open("coe\\layer1_M1.p","wb"))
@@ -248,7 +248,7 @@ out2_extract = output_fm_list[1]
 flag_ratio = (ofmp[2]  == output_fm_list[1]).mean() * 100
 
 print(" Layer 2 inference finished ")
-print(f"{flag_ratio:.2f}% of values are the same between the pytorch and numpy quantization schemes")
+# print(f"{flag_ratio:.2f}% of values are the same between the pytorch and numpy quantization schemes")
 pickle.dump(M1, open("coe\\layer2_M1.p", "wb"))
 pickle.dump(weight_quantized, open("coe\\layer2_weight.p", "wb"))
 np.save("outputs\\software_output_layer2.npy", ofmp[2])
@@ -297,7 +297,7 @@ out3_extract = output_fm_list[2]
 flag_ratio = (ofmp[3]  == output_fm_list[2]).mean() * 100
 
 print(" Layer 3 inference finished ")
-print(f"{flag_ratio:.2f}% of values are the same between the pytorch and numpy quantization schemes")
+# print(f"{flag_ratio:.2f}% of values are the same between the pytorch and numpy quantization schemes")
 
 pickle.dump(M1, open("coe\\layer3_M1.p", "wb"))
 pickle.dump(weight_quantized, open("coe\\layer3_weight.p", "wb"))
@@ -348,7 +348,7 @@ for n, (start_idx, kernel_size_list, stride_list, padding_list, ofm_size_list, h
 
     ofmp_scale_list = output_scale_list[start_idx + shortcut_para_idx:start_idx + 3 + shortcut_para_idx]
     ofmp_zero_list = output_zero_list[start_idx + shortcut_para_idx:start_idx + 3 + shortcut_para_idx]
-    print(ofmp_scale_list)
+    # print(ofmp_scale_list)
 
     weight_scale_list = []
     weight_zero_list = []
@@ -406,7 +406,7 @@ for n, (start_idx, kernel_size_list, stride_list, padding_list, ofm_size_list, h
     for idx in range(start_idx + 1, start_idx + 4):
         flag_ratio = (ofmp[idx]  == output_fm_list[out_index]).mean() * 100
         print(" Layer", idx, " inference finished ")
-        print(f"{flag_ratio:.2f}% of values are the same between the pytorch and numpy quantization schemes")
+        # print(f"{flag_ratio:.2f}% of values are the same between the pytorch and numpy quantization schemes")
         out_index = out_index + 1
 
 
@@ -450,8 +450,8 @@ for n, (start_idx, kernel_size_list, stride_list, padding_list, ofm_size_list, h
         out_index = out_index + 1
         shortcut_para_idx = shortcut_para_idx + 1
         print(" Layer", idx, " inference finished ")
-        print(f"{flag_ratio:.2f}%  of values are the same between the pytorch and numpy quantization schemes after layer", start_idx + 3,
-              " shortcut")
+        # print(f"{flag_ratio:.2f}%  of values are the same between the pytorch and numpy quantization schemes after layer", start_idx + 3,
+        #       " shortcut")
 
 # Layer52
 input_scale = output_scale_list[60]
@@ -483,8 +483,8 @@ M0_save = np.round(M0)
 M0_cal = np.round(2 ** 16 * input_scale * weight_scale / output_scale)
 M1_save = M1
 M1_cal = np.round(2 ** 16 * bias / output_scale).astype("int32")
-print("M0 == M0_cal " + str(M0_save == M0_cal))
-print("M1 == M1_cal " + str(compare_2_numpy(M1_save, M1_cal)))
+# print("M0 == M0_cal " + str(M0_save == M0_cal))
+# print("M1 == M1_cal " + str(compare_2_numpy(M1_save, M1_cal)))
 M0 = M0_cal
 M1 = M1_cal
 
@@ -492,7 +492,7 @@ M1_file_name = f"{output_dir}\\layer52_M1.p"
 pickle.dump(M1, open(M1_file_name, "wb"))
 weight_file_name = f"{output_dir}\\layer52_weight.p"
 pickle.dump(weight_quantized, open(weight_file_name, "wb"))
-print("layer52",M0, n, M1)
+# print("layer52",M0, n, M1)
 
 ofmp52 = QuantizedConv2D_M(input_zero, input_quantized, output_zero, weight_quantized, kernel_size, stride,
                            padding,
@@ -507,13 +507,13 @@ for i in range(ofmp52.shape[0]):
             if (abs(ofmp52[i][j][k] - out52_extract[i][j][k]) == 0):
                 flag[i][j][k] = 1
 flag_2d = flag.reshape((flag.shape[0] * flag.shape[1]), -1)
-print(flag.sum() / get_element_numbers(ofmp52) * 100, '%', "Layer 52 conv2d 1*1")
+# print(flag.sum() / get_element_numbers(ofmp52) * 100, '%', "Layer 52 conv2d 1*1")
 ofmp_file_name = f"outputs\\software_output_layer52.npy"
 np.save(ofmp_file_name, ofmp52)
-with pd.ExcelWriter(f"outputs\\ofmp52.xlsx") as writer:
-    for ch in range(ofmp52.shape[0]):
-        df = pd.DataFrame(ofmp52[ch])
-        df.to_excel(writer, sheet_name=f"channel_{ch}", index=False, header=False)
+# with pd.ExcelWriter(f"outputs\\ofmp52.xlsx") as writer:
+#     for ch in range(ofmp52.shape[0]):
+#         df = pd.DataFrame(ofmp52[ch])
+#         df.to_excel(writer, sheet_name=f"channel_{ch}", index=False, header=False)
 # %%
 
 # AVG_POOLING
@@ -565,29 +565,29 @@ output_1000_save = output_1000.reshape(1000,1,1)
 ofmp_file_name = f"outputs\\software_output_layer54.npy"
 np.save(ofmp_file_name, output_1000_save)
 # np.savetxt("outputs\\software_output_layer54.csv",output_1000)
-flag = np.zeros(output_1000.shape)
-for i in range(output_1000.shape[0]):
-    if (abs(output_1000[i] - output1000_extract[i]) == 0):
-        flag[i] = 1
-print(flag.sum() / get_element_numbers(output_1000) * 100, '%', "output")
-
-flag = np.zeros(output_1000.shape)
-for i in range(output_1000.shape[0]):
-    if (abs(output_1000[i] - output1000_extract[i]) <= 1):
-        flag[i] = 1
-print(flag.sum() / get_element_numbers(output_1000) * 100, '%', "output diff<=1")
-
-flag = np.zeros(output_1000.shape)
-for i in range(output_1000.shape[0]):
-    if (abs(output_1000[i] - output1000_extract[i]) <= 3):
-        flag[i] = 1
-print(flag.sum() / get_element_numbers(output_1000) * 100, '%', "output diff<= 3")
-
-flag = np.zeros(output_1000.shape)
-for i in range(output_1000.shape[0]):
-    if (abs(output_1000[i] - output1000_extract[i]) <= 5):
-        flag[i] = 1
-print(flag.sum() / get_element_numbers(output_1000) * 100, '%', "output diff<= 5")
+# flag = np.zeros(output_1000.shape)
+# for i in range(output_1000.shape[0]):
+#     if (abs(output_1000[i] - output1000_extract[i]) == 0):
+#         flag[i] = 1
+# print(flag.sum() / get_element_numbers(output_1000) * 100, '%', "output")
+#
+# flag = np.zeros(output_1000.shape)
+# for i in range(output_1000.shape[0]):
+#     if (abs(output_1000[i] - output1000_extract[i]) <= 1):
+#         flag[i] = 1
+# print(flag.sum() / get_element_numbers(output_1000) * 100, '%', "output diff<=1")
+#
+# flag = np.zeros(output_1000.shape)
+# for i in range(output_1000.shape[0]):
+#     if (abs(output_1000[i] - output1000_extract[i]) <= 3):
+#         flag[i] = 1
+# print(flag.sum() / get_element_numbers(output_1000) * 100, '%', "output diff<= 3")
+#
+# flag = np.zeros(output_1000.shape)
+# for i in range(output_1000.shape[0]):
+#     if (abs(output_1000[i] - output1000_extract[i]) <= 5):
+#         flag[i] = 1
+# print(flag.sum() / get_element_numbers(output_1000) * 100, '%', "output diff<= 5")
 
 diff[54] = [(output_1000 - output1000_extract).min(), (output_1000 - output1000_extract).max()]
 diff_count[54] = np.where(output_1000 - output1000_extract != 0)

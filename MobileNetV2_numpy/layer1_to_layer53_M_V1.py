@@ -6,7 +6,7 @@ import torchvision
 from torchvision import transforms
 from PIL import Image
 import torchextractor as tx
-from conv_norm_dp_pw_M_V1 import QuantizedConv2D_M, pw1_dw_pw2_M, pw1_dw_pw2_M_cal, get_element_numbers, compare_2_numpy, short_cut_M
+from conv_round import QuantizedConv2D_M, pw1_dw_pw2_M, get_element_numbers, compare_2_numpy, short_cut_M
 import torch
 import xlsxwriter
 # 导入相关库
