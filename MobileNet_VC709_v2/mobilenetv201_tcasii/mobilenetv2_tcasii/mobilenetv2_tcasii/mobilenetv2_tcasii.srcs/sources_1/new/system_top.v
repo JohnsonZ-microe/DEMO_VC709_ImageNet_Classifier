@@ -37,15 +37,13 @@ module system_top#
 (
     input clk_in_p,
     input clk_in_n,
-    
     input rstp_sys,
-    input enable,
+    input control_source,
     input [31:0] pcie_addr,
     input [127:0] pcie_data_in,
-    input pcie_clk,
-    input pcie_rst_n,
-    input pcie_enable,
-    output [127:0] pcie_data_out
+    // input pcie_rst_n,
+    // input pcie_enable,
+    output reg [127:0] pcie_data_out
     // output ram,
     // output  imp_data0,imp_data1,imp_data2,imp_data3,imp_data4,imp_data5,imp_data6,imp_data7,imp_data8,
     // output  imp_addr0,imp_addr1,imp_addr2,imp_addr3,imp_addr4,imp_addr5,imp_addr6,imp_addr7,imp_addr8,
@@ -62,21 +60,22 @@ module system_top#
 //    input reg_config_valid            // user config register data valid, when asserted, reg_config_data_in was written in corresponding register
     );
 // ------------- pcie interface -------------- //
-reg pcie_data_bram_0_en,pcie_data_bram_1_en,pcie_data_bram_2_en,
-     pcie_data_bram_3_en,pcie_data_bram_4_en,pcie_data_bram_5_en,
-     pcie_data_bram_6_en,pcie_data_bram_7_en,pcie_data_bram_8_en;
-reg pcie_kernel_bram_0_en,pcie_kernel_bram_1_en,pcie_kernel_bram_2_en,
-     pcie_kernel_bram_3_en,pcie_kernel_bram_4_en,pcie_kernel_bram_5_en,
-     pcie_kernel_bram_6_en,pcie_kernel_bram_7_en,pcie_kernel_bram_8_en;
-reg pcie_m1_bram_en;
-always @( *) begin
-  case(pcie_addr[20:16])
-    5'b00000: pcie_data_bram_0_en = 1'b1;
-    5'b00001: pcie_data_bram_1_en = 1'b1;
-    5'b00010: pcie_data_bram_2_en = 1'b1;
+reg [8:0] pcie_data_bram_en;
+reg [8:0] pcie_kernel_bram_en;
+reg       pcie_m1_bram_en;
 
-  endcase
+always @(*) begin
+  pcie_data_bram_en   = 9'b0;
+  pcie_kernel_bram_en = 9'b0;
+
+  if (pcie_addr[20:16] <= 5'h08) begin
+    pcie_data_bram_en[pcie_addr[20:16]] = 1'b1;
+  end 
+  else if (pcie_addr[20:16] >= 5'h09 && pcie_addr[20:16] <= 5'h11) begin
+    pcie_kernel_bram_en[pcie_addr[20:16] - 5'h09] = 1'b1;
+  end
 end
+
     
 //// ---------- cable between counter_dw and BRAM_DMA ----------------////
 ///
@@ -203,7 +202,6 @@ wire [BRAM_BAND_WIDTH-1:0] ofmap_write_3, ofmap_write_4, ofmap_write_5;
 wire [BRAM_BAND_WIDTH-1:0] ofmap_write_6, ofmap_write_7, ofmap_write_8;
 wire [BRAM_BAND_WIDTH-1:0] softmax_out;
 wire ofmap_write_ena;
-
 
 ///
 ///------------------------------------------------------------------------
@@ -333,14 +331,15 @@ central_control central_control0(
     .complete(complete || softmax_finish),
     .reg_config_data_in(reg_config_data_in),    // user config register data input  
     .reg_config_addr(reg_config_addr),       // user config register mapped address                
-    .reg_config_valid(reg_config_valid)       // user config register data valid, when asserted, reg_config_data_in was written in corresponding register
+    .reg_config_valid(reg_config_valid),       // user config register data valid, when asserted, reg_config_data_in was written in corresponding register
+    .control_source(control_source)
  );
 
 counter_dw counter_dw0
 (
     .clk(clk)     	    ,
     .rst_n(rstp_sys)   	    ,
-	.enable(enable)		,
+	.enable(control_source)		,
     .reg_config_data_in(reg_config_data_in),          // user config register data input  
     .reg_config_addr(reg_config_addr),             // user config register mapped address                
     .reg_config_valid(reg_config_valid),            // user config register data valid, when asserted, reg_config_data_in was written in corresponding register
@@ -668,13 +667,18 @@ always @(posedge clk) begin
     end
 end
 always @( *) begin
-  case(mode_save)
-    3'd1:for(i=0;i<9;i=i+1) bram_write_addr[i] = bram_write_addr_reg[i][0];
-    3'd2:for(i=0;i<9;i=i+1) bram_write_addr[i] = bram_write_addr_reg[i][3];
-    3'd3:for(i=0;i<9;i=i+1) bram_write_addr[i] = bram_write_addr_reg[i][0];
-    3'd6: bram_write_addr[0] = bram0_write_addr_mux;
-    default:for(i=0;i<9;i=i+1) bram_write_addr[i] = bram_write_addr_reg[i][3];
-  endcase
+  if(control_source == 1'b0) begin
+    for(i=0;i<9;i=i+1) bram_write_addr[i] = pcie_addr[14:0];
+  end
+  else begin
+    case(mode_save)
+      3'd1:for(i=0;i<9;i=i+1) bram_write_addr[i] = bram_write_addr_reg[i][0];
+      3'd2:for(i=0;i<9;i=i+1) bram_write_addr[i] = bram_write_addr_reg[i][3];
+      3'd3:for(i=0;i<9;i=i+1) bram_write_addr[i] = bram_write_addr_reg[i][0];
+      3'd6: bram_write_addr[0] = bram0_write_addr_mux;
+      default:for(i=0;i<9;i=i+1) bram_write_addr[i] = bram_write_addr_reg[i][3];
+    endcase
+  end
 end
 always @(posedge clk) begin
   if(!rstp_sys) begin
@@ -697,16 +701,18 @@ always @(posedge clk) begin
     bram7_read_addr_mux_reg <= 0;
     bram8_read_addr_mux_reg <= 0;
   end
+  else if(control_source == 1'b0) begin
+    bram0_read_addr_mux_reg <= pcie_addr[14:0];
+    bram1_read_addr_mux_reg <= pcie_addr[14:0];
+    bram2_read_addr_mux_reg <= pcie_addr[14:0];
+    bram3_read_addr_mux_reg <= pcie_addr[14:0];
+    bram4_read_addr_mux_reg <= pcie_addr[14:0];
+    bram5_read_addr_mux_reg <= pcie_addr[14:0];
+    bram6_read_addr_mux_reg <= pcie_addr[14:0];
+    bram7_read_addr_mux_reg <= pcie_addr[14:0];
+    bram8_read_addr_mux_reg <= pcie_addr[14:0];
+  end
   else begin
-    data_bram_ena_0 <= data_bram_ena;
-    data_bram_ena_1 <= data_bram_ena;
-    data_bram_ena_2 <= data_bram_ena;
-    data_bram_ena_3 <= data_bram_ena;
-    data_bram_ena_4 <= data_bram_ena;
-    data_bram_ena_5 <= data_bram_ena;
-    data_bram_ena_6 <= data_bram_ena;
-    data_bram_ena_7 <= data_bram_ena;
-    data_bram_ena_8 <= data_bram_ena;
     bram0_read_addr_mux_reg <= bram0_read_addr_mux;
     bram1_read_addr_mux_reg <= bram1_read_addr_mux;
     bram2_read_addr_mux_reg <= bram2_read_addr_mux;
@@ -794,47 +800,87 @@ end
 reg [71:0] ofmap_write_0_reg_mux, ofmap_write_1_mux, ofmap_write_2_mux, ofmap_write_3_mux;
 reg [71:0] ofmap_write_4_mux, ofmap_write_5_mux, ofmap_write_6_mux, ofmap_write_7_mux, ofmap_write_8_mux;
 always @(*) begin
-  case(mode_reg2)
-    3'd1:begin
-      ofmap_write_0_reg_mux = ofmap_write_0_reg2;
-      ofmap_write_1_mux = ofmap_write_1_reg2;
-      ofmap_write_2_mux = ofmap_write_2_reg2;
-      ofmap_write_3_mux = ofmap_write_3_reg2;
-      ofmap_write_4_mux = ofmap_write_4_reg2;
-      ofmap_write_5_mux = ofmap_write_5_reg2;
-      ofmap_write_6_mux = ofmap_write_6_reg2;
-      ofmap_write_7_mux = ofmap_write_7_reg2;
-      ofmap_write_8_mux = ofmap_write_8_reg2;
+  if(control_source == 1'b0) begin
+    ofmap_write_0_reg_mux = pcie_data_in[127:56];
+    ofmap_write_1_mux = pcie_data_in[127:56];
+    ofmap_write_2_mux = pcie_data_in[127:56];
+    ofmap_write_3_mux = pcie_data_in[127:56];
+    ofmap_write_4_mux = pcie_data_in[127:56];
+    ofmap_write_5_mux = pcie_data_in[127:56];
+    ofmap_write_6_mux = pcie_data_in[127:56];
+    ofmap_write_7_mux = pcie_data_in[127:56];
+    ofmap_write_8_mux = pcie_data_in[127:56];
     end
-    3'd2:begin
-      ofmap_write_0_reg_mux = ofmap_write_0_mux;
-      ofmap_write_1_mux = ofmap_write_1;
-      ofmap_write_2_mux = ofmap_write_2;
-      ofmap_write_3_mux = ofmap_write_3;
-      ofmap_write_4_mux = ofmap_write_4;
-      ofmap_write_5_mux = ofmap_write_5;
-      ofmap_write_6_mux = ofmap_write_6;
-      ofmap_write_7_mux = ofmap_write_7;
-      ofmap_write_8_mux = ofmap_write_8;
-    end
-    default :begin
-      ofmap_write_0_reg_mux = ofmap_write_0_mux;
-      ofmap_write_1_mux = ofmap_write_1;
-      ofmap_write_2_mux = ofmap_write_2;
-      ofmap_write_3_mux = ofmap_write_3;
-      ofmap_write_4_mux = ofmap_write_4;
-      ofmap_write_5_mux = ofmap_write_5;
-      ofmap_write_6_mux = ofmap_write_6;
-      ofmap_write_7_mux = ofmap_write_7;
-      ofmap_write_8_mux = ofmap_write_8;
-    end
-      
-  endcase
+  else begin
+    case(mode_reg2)
+      3'd1:begin
+        ofmap_write_0_reg_mux = ofmap_write_0_reg2;
+        ofmap_write_1_mux = ofmap_write_1_reg2;
+        ofmap_write_2_mux = ofmap_write_2_reg2;
+        ofmap_write_3_mux = ofmap_write_3_reg2;
+        ofmap_write_4_mux = ofmap_write_4_reg2;
+        ofmap_write_5_mux = ofmap_write_5_reg2;
+        ofmap_write_6_mux = ofmap_write_6_reg2;
+        ofmap_write_7_mux = ofmap_write_7_reg2;
+        ofmap_write_8_mux = ofmap_write_8_reg2;
+      end
+      3'd2:begin
+        ofmap_write_0_reg_mux = ofmap_write_0_mux;
+        ofmap_write_1_mux = ofmap_write_1;
+        ofmap_write_2_mux = ofmap_write_2;
+        ofmap_write_3_mux = ofmap_write_3;
+        ofmap_write_4_mux = ofmap_write_4;
+        ofmap_write_5_mux = ofmap_write_5;
+        ofmap_write_6_mux = ofmap_write_6;
+        ofmap_write_7_mux = ofmap_write_7;
+        ofmap_write_8_mux = ofmap_write_8;
+      end
+      default :begin
+        ofmap_write_0_reg_mux = ofmap_write_0_mux;
+        ofmap_write_1_mux = ofmap_write_1;
+        ofmap_write_2_mux = ofmap_write_2;
+        ofmap_write_3_mux = ofmap_write_3;
+        ofmap_write_4_mux = ofmap_write_4;
+        ofmap_write_5_mux = ofmap_write_5;
+        ofmap_write_6_mux = ofmap_write_6;
+        ofmap_write_7_mux = ofmap_write_7;
+        ofmap_write_8_mux = ofmap_write_8;
+      end
+        
+    endcase
+  end
+end
+
+reg [8:0]data_bram_we;
+always @( *) begin
+  if(control_source == 2'b00) begin
+    data_bram_we = pcie_data_bram_en;
+  end
+  else begin
+    data_bram_we = bram_write_wea;
+  end
+end
+
+always @( *) begin
+  if(control_source == 1'b0)begin
+    case(pcie_addr[20:16])
+      5'b00000:pcie_data_out = {bram0_read_input,56'd0};
+      5'b00001:pcie_data_out = {bram1_read_input,56'd0};
+      5'b00010:pcie_data_out = {bram2_read_input,56'd0};
+      5'b00011:pcie_data_out = {bram3_read_input,56'd0};
+      5'b00100:pcie_data_out = {bram4_read_input,56'd0};
+      5'b00101:pcie_data_out = {bram5_read_input,56'd0};
+      5'b00110:pcie_data_out = {bram6_read_input,56'd0};
+      5'b00111:pcie_data_out = {bram7_read_input,56'd0};
+      5'b01000:pcie_data_out = {bram8_read_input,56'd0};
+      default: pcie_data_out = 128'd0;
+    endcase
+  end
 end
 Data_BRAM_0 Data_Bram_0 (
   .clka(clk),    // input wire clka
   .ena(1'b1),      // input wire ena
-  .wea(bram_write_wea[0]),      // input wire [0 : 0] wea
+  .wea(data_bram_we[0]),      // input wire [0 : 0] wea
   .addra(bram_write_addr[0]),  // input wire [13 : 0] addra
   .dina(ofmap_write_0_reg_mux),    // input wire [71 : 0] dina
   .clkb(clk),    // input wire clkb
@@ -846,7 +892,7 @@ Data_BRAM_0 Data_Bram_0 (
 Data_Bram_1 Data_Bram_1 (
   .clka(clk),    // input wire clka
   .ena(1'b1),      // input wire ena
-  .wea(bram_write_wea[1]),      // input wire [0 : 0] wea
+  .wea(data_bram_we[1]),      // input wire [0 : 0] wea
   .addra(bram_write_addr[1]),  // input wire [13 : 0] addra
   .dina(ofmap_write_1_mux),    // input wire [71 : 0] dina
   .clkb(clk),    // input wire clkb
@@ -858,7 +904,7 @@ Data_Bram_1 Data_Bram_1 (
 Data_Bram_2 Data_Bram_2 (
   .clka(clk),    // input wire clka
   .ena(1'b1),      // input wire ena
-  .wea(bram_write_wea[2]),      // input wire [0 : 0] wea
+  .wea(data_bram_we[2]),      // input wire [0 : 0] wea
   .addra(bram_write_addr[2]),  // input wire [13 : 0] addra
   .dina(ofmap_write_2_mux),    // input wire [71 : 0] dina
   .clkb(clk),    // input wire clkb
@@ -870,7 +916,7 @@ Data_Bram_2 Data_Bram_2 (
 Data_Bram_3 Data_Bram_3 (
   .clka(clk),    // input wire clka
   .ena(1'b1),      // input wire ena
-  .wea(bram_write_wea[3]),      // input wire [0 : 0] wea
+  .wea(data_bram_we[3]),      // input wire [0 : 0] wea
   .addra(bram_write_addr[3]),  // input wire [13 : 0] addra
   .dina(ofmap_write_3_mux),    // input wire [71 : 0] dina
   .clkb(clk),    // input wire clkb
@@ -883,7 +929,7 @@ Data_Bram_3 Data_Bram_3 (
 Data_Bram_4 Data_Bram_4 (
   .clka(clk),    // input wire clka
   .ena(1'b1),      // input wire ena
-  .wea(bram_write_wea[4]),      // input wire [0 : 0] wea
+  .wea(data_bram_we[4]),      // input wire [0 : 0] wea
   .addra(bram_write_addr[4]),  // input wire [13 : 0] addra
   .dina(ofmap_write_4_mux),    // input wire [71 : 0] dina
   .clkb(clk),    // input wire clkb
@@ -895,7 +941,7 @@ Data_Bram_4 Data_Bram_4 (
 Data_Bram_5 Data_Bram_5 (
   .clka(clk),    // input wire clka
   .ena(1'b1),      // input wire ena
-  .wea(bram_write_wea[5]),      // input wire [0 : 0] wea
+  .wea(data_bram_we[5]),      // input wire [0 : 0] wea
   .addra(bram_write_addr[5]),  // input wire [13 : 0] addra
   .dina(ofmap_write_5_mux),    // input wire [71 : 0] dina
   .clkb(clk),    // input wire clkb
@@ -907,7 +953,7 @@ Data_Bram_5 Data_Bram_5 (
 Data_Bram_6 Data_Bram_6 (
   .clka(clk),    // input wire clka
   .ena(1'b1),      // input wire ena
-  .wea(bram_write_wea[6]),      // input wire [0 : 0] wea
+  .wea(data_bram_we[6]),      // input wire [0 : 0] wea
   .addra(bram_write_addr[6]),  // input wire [13 : 0] addra
   .dina(ofmap_write_6_mux),    // input wire [71 : 0] dina
   .clkb(clk),    // input wire clkb
@@ -919,7 +965,7 @@ Data_Bram_6 Data_Bram_6 (
 Data_Bram_7 Data_Bram_7 (
   .clka(clk),    // input wire clka
   .ena(1'b1),      // input wire ena
-  .wea(bram_write_wea[7]),      // input wire [0 : 0] wea
+  .wea(data_bram_we[7]),      // input wire [0 : 0] wea
   .addra(bram_write_addr[7]),  // input wire [13 : 0] addra
   .dina(ofmap_write_7_mux),    // input wire [71 : 0] dina
   .clkb(clk),    // input wire clkb
@@ -931,7 +977,7 @@ Data_Bram_7 Data_Bram_7 (
 Data_Bram_8 Data_Bram_8 (
   .clka(clk),    // input wire clka
   .ena(1'b1),      // input wire ena
-  .wea(bram_write_wea[8]),      // input wire [0 : 0] wea
+  .wea(data_bram_we[8]),      // input wire [0 : 0] wea
   .addra(bram_write_addr[8]),  // input wire [13 : 0] addra
   .dina(ofmap_write_8_mux),    // input wire [71 : 0] dina
   .clkb(clk),    // input wire clkb
@@ -1041,94 +1087,177 @@ always @(posedge clk) begin
     kernel8_read_input_reg <= kernel8_read_input;
   end
 end
+
+
 Kernel_Bram_0 Kernel_Bram_0 (
+  //----------------PCIe-----------------//
   .clka(clk),    // input wire clka
-  .ena(1'b1),      // input wire ena
-  .wea(1'b0),      // input wire [0 : 0] wea
-  .addra(kernel_read_addr0_reg),  // input wire [15 : 0] addra
-  .dina(0),    // input wire [71 : 0] dina
-  .douta(kernel0_read_input)  // output wire [71 : 0] douta
+  .ena(pcie_kernel_bram_en[0]),      // input wire ena
+  .wea(1'b1),      // input wire [0 : 0] wea
+  .addra(pcie_addr[15:0]),  // input wire [15 : 0] addra
+  .dina(pcie_data_in[127:56]),    // input wire [71 : 0] dina
+  //-------------Accelerator--------------//
+  .clkb(clk),
+  .enb(1'b1),      // input wire enb
+  .addrb(kernel_read_addr0_reg),  // input wire [15 : 0] addrb
+  .doutb(kernel0_read_input)  // output wire [71 : 0] douta
 );
 
 Kernel_Bram_1 Kernel_Bram_1 (
+  //-----------------PCIe-----------------//
   .clka(clk),    // input wire clka
-  .ena(1'b1),      // input wire ena
-  .wea(1'b0),      // input wire [0 : 0] wea
-  .addra(kernel_read_addr1_reg),  // input wire [15 : 0] addra
-  .dina(0),    // input wire [71 : 0] dina
-  .douta(kernel1_read_input)  // output wire [71 : 0] douta
+  .ena(pcie_kernel_bram_en[1]),      // input wire ena
+  .wea(1'b1),      // input wire [0 : 0] wea
+  .addra(pcie_addr[15:0]),  // input wire [15 : 0] addra
+  .dina(pcie_data_in[127:56]),    // input wire [71 : 0] dina
+  //-------------Accelerator--------------//
+  .clkb(clk),
+  .enb(1'b1),      // input wire enb
+  .addrb(kernel_read_addr1_reg),  // input wire [15 : 0] addrb
+  .doutb(kernel1_read_input)  // output wire [71 : 0] douta
 );
 
 Kernel_Bram_2 Kernel_Bram_2 (
+  //-----------------PCIe-----------------//
   .clka(clk),    // input wire clka
-  .ena(1'b1),      // input wire ena
-  .wea(1'b0),      // input wire [0 : 0] wea
-  .addra(kernel_read_addr2_reg),  // input wire [15 : 0] addra
-  .dina(0),    // input wire [71 : 0] dina
-  .douta(kernel2_read_input)  // output wire [71 : 0] douta
+  .ena(pcie_kernel_bram_en[2]),      // input wire ena
+  .wea(1'b1),      // input wire [0 : 0] wea
+  .addra(pcie_addr[15:0]),  // input wire [15 : 0] addra
+  .dina(pcie_data_in[127:56]),    // input wire [71 : 0] dina
+  //-------------Accelerator--------------//
+  .clkb(clk),
+  .enb(1'b1),      // input wire enb
+  .addrb(kernel_read_addr2_reg),  // input wire [15 : 0] addrb
+  .doutb(kernel2_read_input)  // output wire [71 : 0] douta
 );
 
 Kernel_Bram_3 Kernel_Bram_3 (
+  //-----------------PCIe-----------------//
   .clka(clk),    // input wire clka
-  .ena(1'b1),      // input wire ena
-  .wea(1'b0),      // input wire [0 : 0] wea
-  .addra(kernel_read_addr3_reg),  // input wire [15 : 0] addra
-  .dina(0),    // input wire [71 : 0] dina
-  .douta(kernel3_read_input)  // output wire [71 : 0] douta
+  .ena(pcie_kernel_bram_en[3]),      // input wire ena
+  .wea(1'b1),      // input wire [0 : 0] wea
+  .addra(pcie_addr[15:0]),  // input wire [15 : 0] addra
+  .dina(pcie_data_in[127:56]),    // input wire [71 : 0] dina
+  //-------------Accelerator--------------//
+  .clkb(clk),
+  .enb(1'b1),      // input wire enb
+  .addrb(kernel_read_addr3_reg),  // input wire [15 : 0] addrb
+  .doutb(kernel3_read_input)  // output wire [71 : 0] douta
 );
 
 Kernel_Bram_4 Kernel_Bram_4 (
+  //-----------------PCIe-----------------//
   .clka(clk),    // input wire clka
-  .ena(1'b1),      // input wire ena
-  .wea(1'b0),      // input wire [0 : 0] wea
-  .addra(kernel_read_addr4_reg),  // input wire [15 : 0] addra
-  .dina(0),    // input wire [71 : 0] dina
-  .douta(kernel4_read_input)  // output wire [71 : 0] douta
+  .ena(pcie_kernel_bram_en[4]),      // input wire ena
+  .wea(1'b1),      // input wire [0 : 0] wea
+  .addra(pcie_addr[15:0]),  // input wire [15 : 0] addra
+  .dina(pcie_data_in[127:56]),    // input wire [71 : 0] dina
+  //-------------Accelerator--------------//
+  .clkb(clk),
+  .enb(1'b1),      // input wire enb
+  .addrb(kernel_read_addr4_reg),  // input wire [15 : 0] addrb
+  .doutb(kernel4_read_input)  // output wire [71 : 0] douta
 );
 
 Kernel_Bram_5 Kernel_Bram_5 (
+  //-----------------PCIe-----------------//
   .clka(clk),    // input wire clka
-  .ena(1'b1),      // input wire ena
-  .wea(1'b0),      // input wire [0 : 0] wea
-  .addra(kernel_read_addr5_reg),  // input wire [15 : 0] addra
-  .dina(0),    // input wire [71 : 0] dina
-  .douta(kernel5_read_input)  // output wire [71 : 0] douta
+  .ena(pcie_kernel_bram_en[5]),      // input wire ena
+  .wea(1'b1),      // input wire [0 : 0] wea
+  .addra(pcie_addr[15:0]),  // input wire [15 : 0] addra
+  .dina(pcie_data_in[127:56]),    // input wire [71 : 0] dina
+  //-------------Accelerator--------------//
+  .clkb(clk),
+  .enb(1'b1),      // input wire enb
+  .addrb(kernel_read_addr5_reg),  // input wire [15 : 0] addrb
+  .doutb(kernel5_read_input)  // output wire [71 : 0] douta
 );
 
 Kernel_Bram_6 Kernel_Bram_6 (
+  //-----------------PCIe-----------------//
   .clka(clk),    // input wire clka
-  .ena(1'b1),      // input wire ena
-  .wea(1'b0),      // input wire [0 : 0] wea
-  .addra(kernel_read_addr6_reg),  // input wire [15 : 0] addra
-  .dina(0),    // input wire [71 : 0] dina
-  .douta(kernel6_read_input)  // output wire [71 : 0] douta
+  .ena(pcie_kernel_bram_en[6]),      // input wire ena
+  .wea(1'b1),      // input wire [0 : 0] wea
+  .addra(pcie_addr[15:0]),  // input wire [15 : 0] addra
+  .dina(pcie_data_in[127:56]),    // input wire [71 : 0] dina
+  //-------------Accelerator--------------//
+  .clkb(clk),
+  .enb(1'b1),      // input wire enb
+  .addrb(kernel_read_addr6_reg),  // input wire [15 : 0] addrb
+  .doutb(kernel6_read_input)  // output wire [71 : 0] douta
 );
 
 Kernel_Bram_7 Kernel_Bram_7 (
+  //-----------------PCIe-----------------//
   .clka(clk),    // input wire clka
-  .ena(1'b1),      // input wire ena
-  .wea(1'b0),      // input wire [0 : 0] wea
-  .addra(kernel_read_addr7_reg),  // input wire [15 : 0] addra
-  .dina(0),    // input wire [71 : 0] dina
-  .douta(kernel7_read_input)  // output wire [71 : 0] douta
+  .ena(pcie_kernel_bram_en[1]),      // input wire ena
+  .wea(1'b1),      // input wire [0 : 0] wea
+  .addra(pcie_addr[15:0]),  // input wire [15 : 0] addra
+  .dina(pcie_data_in[127:56]),    // input wire [71 : 0] dina
+  //-------------Accelerator--------------//
+  .clkb(clk),
+  .enb(1'b1),      // input wire enb
+  .addrb(kernel_read_addr7_reg),  // input wire [15 : 0] addrb
+  .doutb(kernel7_read_input)  // output wire [71 : 0] douta
 );
 
 Kernel_Bram_8 Kernel_Bram_8 (
+  //-----------------PCIe-----------------//
   .clka(clk),    // input wire clka
-  .ena(1'b1),      // input wire ena
-  .wea(1'b0),      // input wire [0 : 0] wea
-  .addra(kernel_read_addr8_reg),  // input wire [15 : 0] addra
-  .dina(0),    // input wire [71 : 0] dina
-  .douta(kernel8_read_input)  // output wire [71 : 0] douta
+  .ena(pcie_kernel_bram_en[8]),      // input wire ena
+  .wea(1'b1),      // input wire [0 : 0] wea
+  .addra(pcie_addr[15:0]),  // input wire [15 : 0] addra
+  .dina(pcie_data_in[127:56]),    // input wire [71 : 0] dina
+  //-------------Accelerator--------------//
+  .clkb(clk),
+  .enb(1'b1),      // input wire enb
+  .addrb(kernel_read_addr8_reg),  // input wire [15 : 0] addrb
+  .doutb(kernel8_read_input)  // output wire [71 : 0] douta
 );
 
+reg [288-1:0] m1_data_in_buf;
+always @(posedge clk) begin
+  if(!rstp_sys) begin
+    m1_data_in_buf <= 216'd0;
+  end
+  else begin
+    case(pcie_addr[15:13])
+      3'd0: m1_data_in_buf[287:216] <= pcie_data_in[127:56];
+      3'd1: m1_data_in_buf[215:144] <= pcie_data_in[127:56];
+      3'd2: m1_data_in_buf[143:72] <= pcie_data_in[127:56];
+      3'd3: m1_data_in_buf[71:0] <= pcie_data_in[127:56];
+      default:
+      m1_data_in_buf <= 288'd0;
+    endcase
+  end
+end
+reg [12:0] m1_write_addr;
+always @(posedge clk) begin
+  if(!rstp_sys) begin
+    pcie_m1_bram_en <= 0;
+    m1_write_addr <= 0;
+  end
+  else if(control_source==1'b0 && pcie_addr[15:13]==3'd3)begin
+    pcie_m1_bram_en <= 1'b1;
+    m1_write_addr <= pcie_addr[12:0];
+  end
+  else begin
+    pcie_m1_bram_en <= 1'b0;
+
+end
+end
 M1_Bram M1_Bram (
+  //-----------------PCIe-----------------//
   .clka(clk),    // input wire clka
-  .ena(M1_bram_en),      // input wire ena
-  .wea(1'b0),      // input wire [0 : 0] wea
-  .addra(M1_read_addr),  // input wire [15 : 0] addra
-  .dina(0),    // input wire [71 : 0] dina
-  .douta(M1_bram_in)  // output wire [71 : 0] douta
+  .ena(pcie_m1_bram_en),      // input wire ena
+  .wea(1'b1),      // input wire [0 : 0] wea
+  .addra(m1_write_addr),  // input wire [15 : 0] addra
+  .dina(pcie_data_in[127:56]),    // input wire [71 : 0] dina
+  //-------------Accelerator--------------//
+  .clkb(clk),    // input wire clkb
+  .enb(1'b1),      // input wire enb
+  .addrb(M1_read_addr),  // input wire [15 : 0] addrb
+  .doutb(M1_bram_in)  // output wire [71 : 0] douta
 );
 
 

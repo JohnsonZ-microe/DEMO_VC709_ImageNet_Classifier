@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2025 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2026 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -60,7 +60,10 @@ Kernel_Bram_5 your_instance_name (
   .wea(wea),      // input wire [0 : 0] wea
   .addra(addra),  // input wire [15 : 0] addra
   .dina(dina),    // input wire [71 : 0] dina
-  .douta(douta)  // output wire [71 : 0] douta
+  .clkb(clkb),    // input wire clkb
+  .enb(enb),      // input wire enb
+  .addrb(addrb),  // input wire [15 : 0] addrb
+  .doutb(doutb)  // output wire [71 : 0] doutb
 );
 // INST_TAG_END ------ End INSTANTIATION Template ---------
 

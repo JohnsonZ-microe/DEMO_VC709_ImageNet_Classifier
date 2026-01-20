@@ -6,6 +6,7 @@ module central_control(
     input         ena,
     input         busy,
     input         complete,
+    input         control_source,
     output logic [31:0] reg_config_data_in,    // user config register data input
     (* max_fanout = 64 *)
     output logic [3:0]  reg_config_addr,       // user config register mapped address
@@ -27,7 +28,6 @@ module central_control(
 
   logic [31:0] config_data [0:70][0:`ADDR_LAST];
 
-
   always_ff@(posedge clk or negedge rst_n)
   begin
     if(!rst_n)
@@ -42,7 +42,7 @@ module central_control(
     unique case(current_state)
              IDLE:
              begin
-               if(ena || (~busy))
+               if(control_source && (~busy))
                  next_state = CONFIGURE;
                else
                  next_state = IDLE;

@@ -6,14 +6,14 @@ set_property IOSTANDARD DIFF_SSTL15 [get_ports clk_in_p]
 set_property IOSTANDARD DIFF_SSTL15 [get_ports clk_in_n]
 set_property PACKAGE_PIN H19 [get_ports clk_in_p]
 set_property PACKAGE_PIN G18 [get_ports clk_in_n]
-
+2
 ## SW5
 set_property PACKAGE_PIN AP40 [get_ports rstp_sys]
 set_property IOSTANDARD LVCMOS18 [get_ports rstp_sys]
 
 ## SW2 - 16 - 1
-set_property PACKAGE_PIN AV30 [get_ports enable]
-set_property IOSTANDARD LVCMOS18 [get_ports enable]
+set_property PACKAGE_PIN AV30 [get_ports control_source]
+set_property IOSTANDARD LVCMOS18 [get_ports control_source]
 
 ## SW2 - 16 - 1
 set_property PACKAGE_PIN AM39 [get_ports ram]
