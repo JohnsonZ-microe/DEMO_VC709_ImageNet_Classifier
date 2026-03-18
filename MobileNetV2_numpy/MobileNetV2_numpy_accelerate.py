@@ -54,7 +54,7 @@ preprocess = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
 ])
 
-filename = "dog.jpg"
+filename = "toilet_tissue.jpg"
 input_image = Image.open(filename)  # 打开图像
 input_tensor = preprocess(input_image)  # 预处理图像
 input_batch = input_tensor.unsqueeze(0)  # 增加一个维度，使其成为一个批次的图像
@@ -150,7 +150,7 @@ input_zero = np.array(114).astype("uint8")
 input_batch = input_batch.detach().numpy()[0]
 input_quantized = input_zero + input_batch / input_scale
 input_quantized = np.round(input_quantized).astype("uint8")
-
+pickle.dump(input_quantized, open("coe\\ifmap.p",  "wb"))
 # %%
 # Layer1 inference
 print(" Layer 1 CONV inference start ")
@@ -397,7 +397,7 @@ for n, (start_idx, kernel_size_list, stride_list, padding_list, ofm_size_list, h
 
         ofmp_file_name = f"outputs\\software_output_layer{layer_num}.npy"
         np.save(ofmp_file_name, ofmp[layer_num])
-        # with pd.ExcelWriter(f"accelerate\\ofmp{layer_num}.xlsx") as writer:
+        # with pd.ExcelWriter(f"outputs\\ofmp{layer_num}.xlsx") as writer:
         #     for ch in range(ofmp[layer_num].shape[0]):
         #         df = pd.DataFrame(ofmp[layer_num][ch])
         #         df.to_excel(writer, sheet_name=f"channel_{ch}", index=False, header=False)
@@ -561,7 +561,11 @@ for i in range(1000):
 
 print(output_1000.argmax())
 output1000_extract = output_fm_list[62]
+output_1000 = output_1000.astype(np.int32).astype(np.uint8)
+
+# print(output_1000_uint8 == output_1000)
 output_1000_save = output_1000.reshape(1000,1,1)
+
 ofmp_file_name = f"outputs\\software_output_layer54.npy"
 np.save(ofmp_file_name, output_1000_save)
 # np.savetxt("outputs\\software_output_layer54.csv",output_1000)
@@ -589,12 +593,14 @@ np.save(ofmp_file_name, output_1000_save)
 #         flag[i] = 1
 # print(flag.sum() / get_element_numbers(output_1000) * 100, '%', "output diff<= 5")
 
-diff[54] = [(output_1000 - output1000_extract).min(), (output_1000 - output1000_extract).max()]
-diff_count[54] = np.where(output_1000 - output1000_extract != 0)
+# diff[54] = [(output_1000 - output1000_extract).min(), (output_1000 - output1000_extract).max()]
+# diff_count[54] = np.where(output_1000 - output1000_extract != 0)
 
 output_scale = 0.15309934318065643
 output_zero = 75
+output_1000 = output_1000.astype(np.int16)
 output_1000 = output_scale * (output_1000 - output_zero)
+
 output_1000_tensor = torch.from_numpy(output_1000).clone().detach()
 # ofmp_file_name = f"outputs\\software_output_softmax.csv"
 np.savetxt(ofmp_file_name, output_1000, delimiter=",")

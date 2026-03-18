@@ -10,6 +10,10 @@ def compare_npy_files(hardware_path, software_path, group_name="Unnamed Group"):
         hard = np.load(hardware_path)
         soft = np.load(software_path)
 
+        # Record shapes immediately after loading
+        hard_shape = hard.shape
+        soft_shape = soft.shape
+
         # Convert to float32 to prevent overflow in subtraction
         hard = hard.astype(np.float32)
         soft = soft.astype(np.float32)
@@ -19,10 +23,12 @@ def compare_npy_files(hardware_path, software_path, group_name="Unnamed Group"):
             return {
                 "group": group_name,
                 "status": "Error",
-                "message": f"Shape mismatch: hardware={hard.shape}, software={soft.shape}",
+                "message": f"Shape mismatch: hardware={hard_shape}, software={soft_shape}",
                 "diff_count": None,
                 "diffs": None,
-                "full_diff_path": None
+                "full_diff_path": None,
+                "hardware_shape": hard_shape,
+                "software_shape": soft_shape
             }
 
         # Create difference mask
@@ -69,7 +75,10 @@ def compare_npy_files(hardware_path, software_path, group_name="Unnamed Group"):
                 "message": "The two arrays are completely consistent",
                 "diff_count": 0,
                 "diffs": None,
-                "full_diff_path": None
+                "full_diff_path": None,
+                "shape": hard_shape,
+                "hardware_shape": hard_shape,
+                "software_shape": soft_shape
             }
         else:
             return {
@@ -80,7 +89,10 @@ def compare_npy_files(hardware_path, software_path, group_name="Unnamed Group"):
                 "diffs": all_diffs,
                 "total_elements": hard.size,
                 "diff_ratio": diff_count / hard.size * 100,
-                "full_diff_path": None
+                "full_diff_path": None,
+                "shape": hard_shape,
+                "hardware_shape": hard_shape,
+                "software_shape": soft_shape
             }
 
     except FileNotFoundError as e:
@@ -90,7 +102,9 @@ def compare_npy_files(hardware_path, software_path, group_name="Unnamed Group"):
             "message": f"File not found: {str(e)}",
             "diff_count": None,
             "diffs": None,
-            "full_diff_path": None
+            "full_diff_path": None,
+            "hardware_shape": None,
+            "software_shape": None
         }
     except Exception as e:
         return {
@@ -99,7 +113,9 @@ def compare_npy_files(hardware_path, software_path, group_name="Unnamed Group"):
             "message": f"Comparison failed: {str(e)}",
             "diff_count": None,
             "diffs": None,
-            "full_diff_path": None
+            "full_diff_path": None,
+            "hardware_shape": None,
+            "software_shape": None
         }
 
 
@@ -132,11 +148,13 @@ def compare_multiple_groups(groups, output_dir="comparison_results"):
 
         results.append(result)
 
-        # Print summary
+        # Print summary with shape info
         if result["status"] == "Consistent":
-            print(f"✅ {result['message']}")
+            shape_info = result.get("shape", "N/A")
+            print(f"✅ {result['message']} (Shape: {shape_info})")
         elif result["status"] == "Inconsistent":
-            print(f"❌ {result['message']}")
+            shape_info = result.get("shape", "N/A")
+            print(f"❌ {result['message']} (Shape: {shape_info})")
             print(f"   Difference ratio: {result['diff_ratio']:.4f}%")
         else:
             print(f"❌ {result['message']}")
@@ -147,6 +165,8 @@ def compare_multiple_groups(groups, output_dir="comparison_results"):
         summary.append({
             "Group Name": res["group"],
             "Status": res["status"],
+            "Hardware Shape": res.get("hardware_shape", "N/A"),
+            "Software Shape": res.get("software_shape", "N/A"),
             "Difference Count": res["diff_count"] if res["diff_count"] is not None else "N/A",
             "Difference Ratio": f"{res['diff_ratio']:.4f}%" if res.get("diff_ratio") is not None else "N/A",
             "Full Difference File": res["full_diff_path"] if res["full_diff_path"] else "None",
@@ -211,8 +231,8 @@ def generate_comparison_groups(start_layer, end_layer, shortcut_layers=None):
 if __name__ == "__main__":
     # 配置参数 - 直接在代码中修改以下值
     start_layer = 1  # 起始层数
-    end_layer = 53 # 结束层数
-    shortcut_layers = [9,15,18,24,27,30,36,39,45,48]  # 包含shortcut的层列表，如 [9, 15, 18]，无则设为[]
+    end_layer = 54  # 结束层数
+    shortcut_layers = [9, 15, 18, 24, 27, 30, 36, 39, 45, 48]  # 包含shortcut的层列表，如 [9, 15, 18]，无则设为[]
     output_dir = "comparison_results"  # 结果输出目录
 
     # 生成比较组并执行比较

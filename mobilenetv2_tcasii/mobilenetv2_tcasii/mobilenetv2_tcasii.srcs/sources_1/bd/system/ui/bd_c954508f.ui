@@ -1,0 +1,52 @@
+{
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS
+#  -string -flagsOSRD
+preplace port bram_rst_a_0 -pg 1 -y 620 -defaultsOSRD
+preplace port bram_clk_a_0 -pg 1 -y 470 -defaultsOSRD
+preplace port user_lnk_up_0 -pg 1 -y 130 -defaultsOSRD
+preplace port clk_n -pg 1 -y 310 -defaultsOSRD
+preplace port clk_p -pg 1 -y 350 -defaultsOSRD
+preplace port pcie_7x_mgt_rtl_0 -pg 1 -y 100 -defaultsOSRD
+preplace port CLKIN -pg 1 -y 100 -defaultsOSRD
+preplace port reset_rtl_0 -pg 1 -y 130 -defaultsOSRD
+preplace port bram_en_a_0 -pg 1 -y 590 -defaultsOSRD
+preplace portBus bram_rddata_a_0 -pg 1 -y 590 -defaultsOSRD
+preplace portBus bram_we_a_0 -pg 1 -y 650 -defaultsOSRD
+preplace portBus bram_addr_a_0 -pg 1 -y 440 -defaultsOSRD
+preplace portBus bram_wrdata_a_0 -pg 1 -y 560 -defaultsOSRD
+preplace inst axi_clock_converter_0 -pg 1 -lvl 5 -y 350 -defaultsOSRD
+preplace inst xlconstant_0 -pg 1 -lvl 3 -y 100 -defaultsOSRD
+preplace inst xlconstant_1 -pg 1 -lvl 2 -y 390 -defaultsOSRD
+preplace inst xdma_0 -pg 1 -lvl 4 -y 120 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 1 -y 330 -defaultsOSRD
+preplace inst axi_bram_ctrl_0 -pg 1 -lvl 6 -y 580 -defaultsOSRD
+preplace netloc axi_bram_ctrl_0_bram_clk_a 1 6 1 1480J
+preplace netloc axi_bram_ctrl_0_bram_addr_a 1 6 1 1470J
+preplace netloc CLKIN_1 1 0 4 NJ 100 NJ 100 310J 160 480J
+preplace netloc xdma_0_axi_aclk 1 4 1 810
+preplace netloc xdma_0_user_lnk_up 1 4 3 820J 130 NJ 130 NJ
+preplace netloc xdma_0_axi_aresetn 1 4 1 800
+preplace netloc xlconstant_0_dout 1 3 1 470J
+preplace netloc axi_bram_ctrl_0_bram_rst_a 1 6 1 1480
+preplace netloc axi_bram_ctrl_0_bram_wrdata_a 1 6 1 1480
+preplace netloc clk_p_1 1 0 1 N
+preplace netloc axi_clock_converter_0_M_AXI 1 5 1 1150
+preplace netloc xdma_0_M_AXI 1 4 1 830
+preplace netloc axi_bram_ctrl_0_bram_we_a 1 6 1 N
+preplace netloc bram_rddata_a_0_1 1 0 7 NJ 590 NJ 590 NJ 590 NJ 590 800J 710 NJ 710 1470
+preplace netloc reset_rtl_0_1 1 0 4 -90J 170 NJ 170 NJ 170 490J
+preplace netloc xdma_0_pcie_mgt 1 4 3 NJ 90 NJ 90 1470J
+preplace netloc Net1 1 2 4 N 390 N 390 820 600 NJ
+preplace netloc Net 1 1 5 N 330 N 330 N 330 790 580 N
+preplace netloc axi_bram_ctrl_0_bram_en_a 1 6 1 1480
+preplace netloc clk_n_1 1 0 1 -90
+levelinfo -pg 1 -110 30 230 390 640 990 1310 1500 -top -100 -bot 1160
+"
+}
+{
+   "da_axi4_cnt":"19",
+   "da_board_cnt":"10",
+   "da_clkrst_cnt":"2",
+   "da_xdma_cnt":"2"
+}

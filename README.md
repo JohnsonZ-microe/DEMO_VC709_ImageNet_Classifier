@@ -1,4 +1,50 @@
 **中文版（Chinese version）**
+
+## 目录
+
+- [一、项目概览](#一项目概览)
+- [二、软件部分](#二软件部分)
+  - [神经网络软件部分](#神经网络软件部分)
+  - [验证代码](#验证代码)
+- [三、硬件部分](#三硬件部分)
+  - [加速器硬件架构](#加速器硬件架构)
+  - [Vivado加速器工程文件](#vivado加速器工程文件)
+  - [主要模块说明](#主要模块说明)
+    - [system\_top.v](#system_topv)
+      - [central\_control.sv](#central_controlsv)
+      - [counter\_dw.v](#counter_dwv)
+      - [mac\_array\_x9.v](#mac_array_x9v)
+        - [mac\_array.v](#mac_arrayv)
+      - [BRAM\_DMA.v](#bram_dmav)
+        - [divider.v](#dividerv)
+      - [Kernel\_Bram\_DMA.v](#kernel_bram_dmav)
+      - [softmax.v](#softmaxv)
+- [四、运行及复现](#四运行及复现)
+  - [软件执行验证](#软件执行验证)
+  - [.coe文件生成](#coe文件生成)
+  - [加速器行为级仿真与验证](#加速器行为级仿真与验证)
+  - [Linux主机与VC709通信实现PCIe数据传输](#linux主机与vc709通信实现pcie数据传输)
+    - [XDMA IP Config](#xdma-ip-config)
+    - [AXI Clock Converter Config](#axi-clock-converter-config)
+    - [AXI BRAM Controller Config](#axi-bram-controller-config)
+    - [Clocking Wizard Config](#clocking-wizard-config)
+    - [Constant Config](#constant-config)
+    - [地址配置](#地址配置)
+    - [主机与FPGA板连接](#主机与fpga板连接)
+  - [上板验证](#上板验证)
+  - [图形化界面](#图形化界面)
+- [五、一些问题的解决过程](#五一些问题的解决过程)
+  - [硬件设计的结果与pytorch模型的输出结果不一致](#硬件设计的结果与pytorch模型的输出结果不一致)
+  - [报错: RuntimeError: Quantized backend not supported](#报错-runtimeerror-quantized-backend-not-supported)
+  - [机箱短路](#机箱短路)
+  - [无法开机](#无法开机)
+  - [编译xdma报错mmiowb相关问题](#编译xdma报错mmiowb相关问题)
+  - [运行load\_driver.sh脚本报错: `not found.sh: 3`:](#运行load_driversh脚本报错-not-foundsh-3)
+  - [0地址读写出错](#0地址读写出错)
+  - [读写数据不匹配，不匹配位置随机发生](#读写数据不匹配不匹配位置随机发生)
+  - [读数据错位](#读数据错位)
+- [六、项目背景](#六项目背景)
+
 # 一、项目概览
 
 
@@ -26,7 +72,7 @@
 # 二、软件部分
 
 ## 神经网络软件部分
-.jpg、.JEPG文件为神经网络的输入，.npy、.pkl文件为参数M0、M1的数据PT文件用于保存模型,Imagenet_classes用于输出判断结果。
+.jpg、.JPEG文件为神经网络的输入，.npy、.pkl文件为参数M0、M1的数据PT文件用于保存模型,Imagenet_classes用于输出判断结果。
 
 ---
 **量化MobileNetV2推理**
@@ -47,7 +93,7 @@
 
 - **MobileNetV2_numpy_wrapper.py & MobileNetV2_numpy_imagenet.py**
   - **MobileNetV2_numpy_wrapper.py** :将模型包装为函数,调用`conv_accelerate.py`进行加速。
-  - **MobileNetV2_numpy_imagenet.py**：在imagenet验证集上测试该模型的图像分类能力，使用前需设置验证集路径。
+  - **MobileNetV2_numpy_imagenet.py**：在Imagenet验证集上测试该模型的图像分类能力，使用前需设置验证集路径。
 
 ---
 **numpy模型与torchvision模型对比**
@@ -197,7 +243,7 @@ softmax 模块，用于实现网络最后一层的 softmax 计算。
 1.配置python运行环境（Numpy/torchvision/...)
 2.运行`MobileNetV2_numpy_accelerate.py`文件，运行成功会得到下列结果。程序会打印出top5的类别以及概率。
 ![alt text](fig/acc_result.png)
-如果希望能够得到该神经网络的accuracy，可以在下载imagenet验证集后运行`MobileNetV2_numpy_imagenet.py`。结果为：
+如果希望能够得到该神经网络的accuracy，可以在下载Imagenet验证集后运行`MobileNetV2_numpy_imagenet.py`。结果为：
 - Top-1 Accuracy：**71.61%**
 - Top-5 Accuracy：**90.11%**
 
@@ -214,19 +260,102 @@ softmax 模块，用于实现网络最后一层的 softmax 计算。
 ![alt text](fig/comparision_hard_soft.png)
 
 ---
-## 加速器综合与bit流生成
-在Vivado执行Synthesis和Implementation之后即可生成bitstream。
+
+
+## Linux主机与VC709通信实现PCIe数据传输
+本项目已经完成了从加速器与FPGA的通信，因此直接进行Implementation之后就可以开始上板验证。如果希望能替换为自己的加速器，可以参考以下配置过程。此部分主要参考[WangXuan95/Xilinx-FPGA-PCIe-XDMA-Tutorial: Xilinx FPGA PCIe 保姆级教程 ——基于 PCIe XDMA IP核](https://github.com/WangXuan95/Xilinx-FPGA-PCIe-XDMA-Tutorial)。
+
+
+整体的实现过程为：
+PCIe --- DMA/Bridge --- AXI --- AXI Clock Converter --- AXI BRAM Controller
+其中DMA用于将PCIe信号转为AXI信号，通过AXI Clock Converter实现不同时钟域的AXI信号变换，再通过AXI BRAM Controller来实现对加速器的控制。整体框图如下所示：
+
+![alt text](fig/PCIe_Architecture.png)
+
+以下为具体的配置：
 
 ---
 
-## Linux主机与VC709通信实现PCIe数据传输
+### XDMA IP Config
+![alt](fig/xmda1.png)
+配置如上所示，
+	Mode选择basic即可
+	PCIe Block Location：决定了block在芯片中的物理位置，可以根据自己的时序情况灵活选择
+	Lane Width：按需选择，目前的延长线支持到X8
+	Link Speed：代表的是 PCIe 的速率，可以自由指定，2.5 GT/s 代表 PCIe Gen1， 5.0 GT/s 代表 PCIe Gen2，8.0 GT/s 代表 PCIe Gen3 。本例中取 5.0 GT/s
+	AXI Data Width：是 AXI 总线中数据总线的宽度，也即一个周期最多可以读/写的比特数量。可以自由指定，但要和 AXI slave 保持一致。本例中取 128 bit。
+	AXI Clock Frequency：AXI 总线的时钟频率，可以自由指定，只要 AXI slave 能工作在这个频率下就行
+![alt](fig/xdma2.png)
+![alt](fig/xdma3.png)
+![alt](fig/xdma4.png)
+![alt](fig/xdma5.png)
+其余页配置如上所示，按默认就好，无需修改。最后一页的H2C与C2H数目代表并行传输的通道数，可按需修改，不过要在主机软件端同步自行修改。
+
+---
+### AXI Clock Converter Config
+![alt](fig/ACCC1.png)
+使用该模块是因为PCIe部分与加速器部分在不同时钟域，配置如上即可，Data Width可根据XDMA配置对应设置。
+
+---
+### AXI BRAM Controller Config
+![alt](fig/ABCC1.png)
+配置如上即可，注意设置READ LATENCY，根据自己的项目中BRAM的读取延迟设置，当前项目中设置为6，即读地址后的第六个周期读出数据。
+
+---
+### Clocking Wizard Config
+![alt](fig/clk1.png)
+![alt](fig/clk2.png)
+时钟产生按需设置，产生的时钟供加速器部分使用，PCIe部分有自己专用的时钟。
+
+---
+### Constant Config
+![alt](fig/cons1.png)
+![alt](fig/cons2.png)
+PCIe中断端接全0，本项目中未使用到中断。
+![alt](fig/cons3.png)
+Clock Converter复位端接1，保证常工作。
+
+---
+
+### 地址配置
+![alt](fig/address1.png)
+本项目为满足并行计算的位宽需求，将片上 BRAM 配置为单地址对应 72bit 位宽的存储模式；而 AXI 总线采用字节寻址规范（单地址对应 8bit/1Byte），单拍突发传输位宽为 128bit。在 Linux 主机上进行数据传输时，只需要调用dma_file_transfer.sh就可以实现读写。为最大化总线传输效率，本项目采用如下位宽匹配、地址映射与地址空间规划方案。
+- **数据位宽匹配方案**
+针对 AXI 总线 128bit 传输位宽与 BRAM 72bit 存储位宽的差异，读写通道分别采用如下适配策略：
+写通道（AXI → BRAM）：AXI 写传输仅采集数据总线的低 72bit 作为有效数据写入 BRAM；上位机传输程序需提前完成数据格式对齐：每 72bit 有效数据后拼接 56bit 无效填充位（固定为 0），组成 128bit 的 AXI 单拍传输数据单元，匹配总线位宽要求。
+读通道（BRAM → AXI）：从 BRAM 读出的 72bit 有效数据，通过高位补 56bit 0 的方式扩展为 128bit 完整位宽，直接接入 AXI 读数据端口，完成总线侧的位宽适配。
+- **地址映射规则**
+1 个 BRAM 地址对应的 72bit 有效数据，映射到 AXI 总线需占用 16Byte（128bit）的地址空间，即1 个 BRAM 地址对应 16 个 AXI 字节地址。
+因此在AXI与BRAM连接时，需舍弃 AXI 地址的低 4 位（字节偏移位），BRAM 地址与 AXI 地址的映射关系为：BRAM_addr = AXI_addr[24:4]
+该规则下，AXI 每完成 1 次 128bit 数据传输，AXI 地址自增 16，对应 BRAM 地址自增 1，实现地址空间的一一匹配。
+以 Data BRAM 0 为例，其对应片选信号为1、BRAM 侧起始地址为 0，则 BRAM 地址线应设置为21'h010000；对应 Linux 主机端（字节寻址）的起始地址为0x0100000。由于系统每次传输 128 位（16 字节），主机端地址变化为0x0100000, 0x0100010, 0x0100020，对应加速器端口 BRAM 地址变化为21'h010000, 21'h010001, 21'h010002，从而实现正确的写入。
+-  **地址空间规划**
+本项目共使用 19 路独立 BRAM，单路 BRAM 最大存储深度为 64KB，对应地址位宽为 16bit（[15:0]）；额外分配 5bit 地址线作为 BRAM 片选信号（支持最大 32 路 BRAM 扩展），因此 BRAM 侧总计需要 21bit 地址位宽。
+结合上述地址映射规则（AXI 地址低 4 位不参与 BRAM 寻址），AXI 总线侧需提供25bit 地址位宽。AXI 总线为字节寻址，因此需为该项目分配32MB（2^25 Byte）的连续地址空间。
+为了实现片选功能，首先要在顶层模块中加入对应的控制逻辑。这部分可以参考`system_top.v`。另外对于 **数据传输/加速器推理** 的状态控制，本设计中通过检测`pcie_addr` 和 `pcie_data_in`来实现，只有向特定位置写入特定数值，才能实现状态的切换。
+
+---
+
+### 主机与FPGA板连接
+在完成以上步骤后，将FPGA板与主机通过PCIe线连接，并通过Vivado将加速器的程序烧录到FPGA板上，然后再开启主机。**注意：如果在主机开启的情况下进行烧录，主机会完全卡住。**
+随后将`xdma`文件夹拷到主机上，进入`xdma/driver/tests`打开终端，就可以开始验证是否成功建立数据通信。
 
 ---
 
 ## 上板验证
+建立起Linux主机与VC709的通信后，接着可以进行单张图片的推理测试。在终端中先后执行`python3 ifmap_preprocess.py`和`python3 inference_one_image.py`，终端会打印出该图片的top5分类结果。单张图片的推理过程分为以下阶段：
+写输入-写权重-写M1-开始推理-检查是否推理完成-结束推理-读取结果-分类
+![alt text](fig/inference_one_image.png)
+单张图片推理成功之后，可以进行整个Imagenet验证集的验证。
+首先需要在`batch_eval_fpga.py`的`USER_CONFIG`中设置好相应的路径，包括验证集，GT Label等。终端打印推理进度的频率可以通过设置`verbose_every`来修改。设置完成后，在终端中运行`python3 batch_eval_fpga.py`，输入一次当前用户的密码，即可开始推理。
+验证过程中，每一张图片大约需耗时1.2s，完整验证Imagenet验证集的50000张图片需要约17小时。
+为了避免验证过程中电脑宕机等意外情况导致进度丢失，程序运行过程中每完成一张图片的推理就会更新一次检查点。在有检查点的情况下，启动程序时会提示是否要从上次进度继续。
+![alt text](fig/batch_eval.png)
 
 ---
-
+## 图形化界面
+在终端中运行`sudo -v`授权后，可以通过执行`python3 ui_fpga_app.py`来打开图形化界面。可以通过拖拽或是选择来打开需要进行推理的图像或文件夹。推理完成后，top5推理结果会显示在窗口右侧。若是多张图片的推理，则可以左右切换图片来查看结果，且所有图片推理完成后，程序会输出推理结果的csv文件到`ui_outputs`文件夹。
+![alt text](fig/gui.png)
 # 五、一些问题的解决过程
 
 
@@ -236,11 +365,11 @@ softmax 模块，用于实现网络最后一层的 softmax 计算。
 
 - **解决方法**：compare_each_layer的python代码中，使用的是numpy搭建的神经网络，读取torchvision模型中的input_scale, output scale, bias, weight scale，并用于计算M0 M1，使用float64精度。并且将torchvision模型的每一层的输入送入该模型中，避免产生累积误差。最后对每一层的输出进行比较。从运行结果中可以直观地看出，只有第51层输出中有5个数不同，其余层都是完全相同的。
 然而，如果使用round对M0 M1进行处理，则会导致两个模型之间每一层输出都有一定程度上的差异。例如，在使用dog.jpg这张图片作为输入的时候，最终输出只有20%左右的数字是一样的。
-但为了在设计的加速器上实现该神经网络，本项目必须使用int32作为M0 M1的精度。为了了解这样做对图像分类任务的效果造成的影响，在MobileNetV2_numpy_imagenet.py中使用了int32精度的M0 M1，并对imagenet的验证集的50000张图片进行推理，accuracy为top1：71.61%，top5：90.11%。而torchvision的模型的accuracy为top1：71.71%，top5：90.25%。这样的精度损失是完全可以接受的。
+但为了在设计的加速器上实现该神经网络，本项目必须使用int32作为M0 M1的精度。为了了解这样做对图像分类任务的效果造成的影响，在MobileNetV2_numpy_imagenet.py中使用了int32精度的M0 M1，并对Imagenet的验证集的50000张图片进行推理，accuracy为top1：71.61%，top5：90.11%。而torchvision的模型的accuracy为**top1：71.71% top5：90.25%**。这样的精度损失是完全可以接受的。
 
 ---
 
-##	报错: RuntimeError: Quantized backend not supported
+## 报错: RuntimeError: Quantized backend not supported
 原因：当前环境不支持量化操作所需要的后端
 
 问题原因：'qnnpack’是一种专为 ARM CPU 设计的量化后端，而 ‘fbgemm’ 则是一种适用于 x86 CPU 和 ARM CPU 的通用量化后端。
@@ -248,18 +377,65 @@ softmax 模块，用于实现网络最后一层的 softmax 计算。
 解决方法：修改torchvision中mobilenetv2的第74行，将backend从qnnpack改为fbgemm，如图：
 ![alt text](fig/f1.png)
 
----
-
-## Linux主机与VC709通信实现PCIe数据传输时主机无法识别到VC709
-现象：将VC709与Linux主机通过PCIe延长线连接之后，出现了主机开机时卡在Logo界面，无法进入系统的情况。
 
 ---
 
+## 机箱短路
+现象：把VC709直接放置在机箱上容易造成短路，导致FPGA指示灯不亮，且“粘连”在机箱上
 
-<!-- ## implicit declaration of mmiowb()
-报错
+问题原因：这是由于FPGA后方直接暴露了焊点，容易与金属机箱接触短路。
 
-解决方法：注释掉mmiowb(); -->
+解决方法：在FPGA与机箱接触的地方垫一层绝缘层，通常泡沫纸，硬纸板都可以。
+
+---
+## 无法开机
+现象：将VC709与Linux主机通过PCIe延长线连接之后，出现了主机开机时卡在Logo界面，xdma user_link_up正常发光，但主机无法进入系统的情况。
+
+问题原因：xdma ip配置错误
+
+解决方法：具体参考[WangXuan95/Xilinx-FPGA-PCIe-XDMA-Tutorial: Xilinx FPGA PCIe 保姆级教程 ——基于 PCIe XDMA IP核](https://github.com/WangXuan95/Xilinx-FPGA-PCIe-XDMA-Tutorial)，尤其是PCIE ID那一页下方保持相同即可
+
+---
+## 编译xdma报错mmiowb相关问题
+现象：在编译linux系统中的xdma代码时系统报错，无法编译。
+
+原因：linux内核更新后不支持旧方法，在ubuntu20以后需要更新编译方法
+
+解决方法：参考[WangXuan95/Xilinx-FPGA-PCIe-XDMA-Tutorial: Xilinx FPGA PCIe 保姆级教程 ——基于 PCIe XDMA IP核](https://github.com/WangXuan95/Xilinx-FPGA-PCIe-XDMA-Tutorial)项目中的pull request # 3可以解决。使用 gh pr checkout 3切换分支。
+
+---
+## 运行load_driver.sh脚本报错: `not found.sh: 3`:
+现象：编译完成后运行相关测试脚本报错。
+
+原因：原脚本使用windows中的换行符，直接在linux中使用会报错。
+
+解决方法：在终端中使用dos2unix命令转换格式。其余相关脚本均需要转换。
+
+---
+## 0地址读写出错
+现象：实际读写过程中0x00000000地址读写无法匹配，读出的数据并不是写入的数据
+
+原因：当前axi_bram控制模块会在写边界中把地址拉为0，同时写使能会随机拉高导致零地址数据被覆盖。
+
+解决方法：避免使用0x00000000地址。
+
+---
+## 读写数据不匹配，不匹配位置随机发生
+现象：实际读写过程中随机出现一些地址读写无法匹配，读出的数据并不是写入的数据
+
+原因：代码中可能存在一些latch，FPGA无法实现。
+
+解决方法：检查代码，避免使用latch。
+
+---
+## 读数据错位
+现象：读出数据后发现数据错位，甚至出现一些重复的数据覆盖了原数据。
+
+原因：axi_bram_control读延迟未正确设置。
+
+解决方法：正确设置axi_bram_control读延迟，本项目延迟设置为6，即读地址发出后六个时钟周期返回对应读数据。
+
+
 
 # 六、项目背景
 本项目由赵忠宇、陈家宝于2021年实现了软件设计部分和硬件设计的主要模块。谢易达于2025年完善了硬件设计部分，并增加了用于验证结果的软件部分。王廉丰于2026年完成了PCIe通信以及最终的上板验证部分。

@@ -100,7 +100,11 @@ def QuantizedConv2D_M(input_zero, input_quantized, output_zero, weight_quantized
 
         # 应用量化参数并计算输出
         output = np.round(((M0 * conv_sums + M1[:, np.newaxis, np.newaxis]) * (2 ** (-n))) + output_zero)
-
+        # step1_m0_mul_conv = M0 * conv_sums
+        # step2_add_m1 = step1_m0_mul_conv + M1[:, np.newaxis, np.newaxis]
+        # step3_shift = step2_add_m1 * (2 ** (-n))
+        # step4_add_zero = step3_shift + output_zero
+        # output = np.round(step4_add_zero)
     return output
 
 
@@ -115,7 +119,7 @@ def pw1_dw_pw2_M(input_scale, input_zero, input_quantized, output_scale, output_
         conv_mode=2
     )
     out1 = relu(out1, output_zero[0])
-
+    out1 = np.clip(out1, 0, 255)
     # 深度卷积
     out2 = QuantizedConv2D_M(
         input_zero[1], out1, output_zero[1],
@@ -124,7 +128,7 @@ def pw1_dw_pw2_M(input_scale, input_zero, input_quantized, output_scale, output_
         conv_mode=1
     )
     out2 = relu(out2, output_zero[1])
-
+    out2 = np.clip(out2, 0, 255)
     # 点卷积2
     out3 = QuantizedConv2D_M(
         input_zero[2], out2, output_zero[2],
@@ -132,8 +136,8 @@ def pw1_dw_pw2_M(input_scale, input_zero, input_quantized, output_scale, output_
         padding[2], ofm_size[2], M0[2], n[2], M1[2],
         conv_mode=2
     )
-    out1 = np.clip(out1, 0, 255)
-    out2 = np.clip(out2, 0, 255)
+
+
     out3 = np.clip(out3, 0, 255)
     # 类型转换
     return (out1.astype("uint8"),

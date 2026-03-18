@@ -33,7 +33,7 @@ def process_single_txt(txt_path: str, output_dir: str) -> bool:
         return False
     if not os.path.isfile(txt_path):
         print(f"❌ 不是合法文件：{txt_path}")
-        return False
+        return Falsez
     if not txt_path.endswith('.txt'):
         print(f"❌ 非TXT文件：{txt_path}，仅支持TXT格式")
         return False

@@ -74,3 +74,6 @@ MobileNet_VC709_v2/项目文档
 /Report/
 /FPGA/
 /.idea/
+/MobileNet_VC709_v2/
+MobileNetV2_numpy/bin_output
+MobileNetV2_numpy/standalone
